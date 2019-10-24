@@ -1,2 +1,2 @@
-# concepts-of-programming-languages
+# Concepts of programming languages
 
