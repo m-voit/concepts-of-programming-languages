@@ -1,3 +1,5 @@
+package main
+
 import "testing"
 
 func TestPointers(t *testing.T) {

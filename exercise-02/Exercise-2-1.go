@@ -7,13 +7,13 @@ func main() {
 
 	swapIntegerVariables(&a, &b)
 
-	println("Swapped variables:", a, b)
+	fmt.Println("Swapped variables:", a, b)
 
 	pA, pB := &a, &b
 
 	swapIntegerPointers(&pA, &pB)
 
-	println("Swapped pointers:", a, b)
+	fmt.Println("Swapped pointers:", pA, pB)
 }
 
 func swapIntegerVariables(a *int, b *int) {
