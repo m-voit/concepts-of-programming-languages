@@ -15,8 +15,8 @@ type Lexer struct {
 	current int
 }
 
-// NewLexer :
-func NewLexer(input string) *Lexer {
+// CreateLexer :
+func CreateLexer(input string) *Lexer {
 	lexer := new(Lexer)
 	lexer.input = input
 	lexer.current = 0
