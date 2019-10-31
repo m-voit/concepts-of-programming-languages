@@ -2,7 +2,7 @@
 
 Master of Informatics course at the Technical University of Applied Sciences Rosenheim.
 
-## Notizen
+## Seminararbeit
 
 - Vortrag und Ausarbeitung in Englisch.
 - Mündliches in deutsch.
