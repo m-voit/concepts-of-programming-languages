@@ -5,4 +5,4 @@ Master of Informatics course at the Technical University of Applied Sciences Ros
 ## Notizen
 
 - Vortrag und Ausarbeitung in Englisch.
-- Mündlich in deutsch.
+- Mündliches in deutsch.
