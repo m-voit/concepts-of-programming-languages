@@ -1,5 +1,3 @@
-package lexer
-
 // <expression> ::= <term> { <or> <term> }
 // <term> ::= <factor> { <and> <factor> }
 // <factor> ::= <var> | <not> <factor> | (<expression>)
@@ -7,6 +5,8 @@ package lexer
 // <and> ::= '&'
 // <not> ::= '!'
 // <var> := '[a-zA-Z0-9]*'
+
+package lexer
 
 // Lexer :
 type Lexer struct {
