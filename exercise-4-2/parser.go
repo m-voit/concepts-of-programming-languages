@@ -1,7 +1,3 @@
-package parser
-
-import "github.com/m-voit/concepts-of-programming-languages/exercise-4-1/lexer"
-
 // <expression> ::= <term> { <or> <term> }
 // <term> ::= <factor> { <and> <factor> }
 // <factor> ::= <var> | <not> <factor> | (<expression>)
@@ -9,6 +5,10 @@ import "github.com/m-voit/concepts-of-programming-languages/exercise-4-1/lexer"
 // <and> ::= '&'
 // <not> ::= '!'
 // <var> ::= '[a-zA-Z0-9]*'
+
+package parser
+
+import ("github.com/m-voit/concepts-of-programming-languages/exercise-4-1/lexer")
 
 type node interface {
 	Eval(vars map[string]bool) bool
@@ -41,11 +41,11 @@ func (value *val) Eval(vars map[string]bool) bool {
 type Parser struct {
 	rootNode node
 	token string
-	lexer *lexer.lexer
+	lexer *lexer.Lexer
 }
 
 // CreateParser :
-func CreateParser(lexer *lexer.lexer) *Parser {
+func CreateParser(lexer *lexer.Lexer) *Parser {
 	parser := Parser{lexer: lexer}
 	parser.parse()
 	return &parser
