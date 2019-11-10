@@ -1,37 +1,25 @@
 # Concepts of programming languages
 
-Master of Informatics course at the Technical University of Applied Sciences Rosenheim.
+Master of Informatics course at Rosenheim Technical University of Applied Sciences.
 
-## Seminararbeit
+## Seminar paper
 
-- Vortrag und Ausarbeitung in Englisch.
-- Mündliches in deutsch.
+- Written in English.
+- Written in GitHub flavoured Markdown. Should look good on GitHub.
+- Should be 7-10 Pages as PDF. (10.000–20.000 Characters max.)
+- Compare functional programming in JavaScript with Go.
+- Use references and prove claims.
+- Answer the following question. How good is functional JavaScript suited to implement a parser.
+- Implement Boolparser and AST.
+- Use functional language features of JavaScript.
+- Outline the differences between functional programming in JavaScript and Go.
+- Use the parser to outline the differences, not a simple Hello World example.
+- Code with unit tests in a GitHub Repository.
+- Submission at 09/01/2020.
 
-- erlang compare go parallell programming with erlan
+## Presentation
 
-- markdown auf github
-- muss auf github gut aussehen
-- bei funktionalen Sprachen bool parser
-- phd thesis raft algorithm
-
-- compare functional programming in javascript with go
-- boolparser + ast
-- nur funktionale programmieraspekte aus javascript verwenden
-
-# Paper
-- 7-10 Seiten (10.000 - 20.000 Zeichen max.)
-- GitHub Markdown
-- Die Unterschiede zwischen JavaScript funktionaler Programmierung zu funktionaler Programmierung in Go anhand des Boolparser Beispiels ausführen, nicht an einem HelloWorld Beispiel.
-- code mit unit tests in github.
-- Quellen, Behauptungen belegen.
-- Wie gut eignet sich die Sprache zur Umsetzung des Problems.
-- Abgabe 09.01.2020
-
-# Vortrag
-- 15min
-- Anfang Januar
-- Erste beiden Januar Termine
-- Ort: Brückenstraße 1 bei QAware
-
-# Aufbau
-- 
+- Slides in English, presentation in German.
+- Duration: 15 minutes.
+- First halve of January 2020.
+- Location: Brückenstraße 1 at QAware office.
