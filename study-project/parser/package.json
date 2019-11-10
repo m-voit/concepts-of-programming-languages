@@ -1,0 +1,15 @@
+{
+  "name": "parser",
+  "version": "1.0.0",
+  "description": "Parser in functional JavaScript.",
+  "main": "parser.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "m-voit",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "eslint": "^6.6.0"
+  }
+}
