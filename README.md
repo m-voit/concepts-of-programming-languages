@@ -2,6 +2,10 @@
 
 Master of Informatics course at Rosenheim Technical University of Applied Sciences.
 
+## Notes
+
+- To run a local go file use `ctrl + f5` or open the debug menu and use "Start Without Debugging"
+
 ## Seminar paper
 
 - Written in English.
