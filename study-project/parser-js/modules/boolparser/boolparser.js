@@ -6,7 +6,7 @@
  * @returns Result.
  */
 function parseExpression(input) {
-  //
+  return input;
 }
 
 /**
@@ -20,7 +20,7 @@ function parseExpression(input) {
  * @returns Result.
  */
 function parseOr(input) {
-  //
+  return input;
 }
 
 /**
@@ -34,7 +34,7 @@ function parseOr(input) {
  * @returns Result.
  */
 function parseAnd(input) {
-  //
+  return input;
 }
 
 /**
@@ -48,7 +48,7 @@ function parseAnd(input) {
  * @returns Result.
  */
 function parseNot(input) {
-  //
+  return input;
 }
 
 /**
@@ -61,7 +61,7 @@ function parseNot(input) {
  * @returns Result.
  */
 function parseExclamationMarks(input) {
-  //
+  return input;
 }
 
 /**
@@ -74,7 +74,7 @@ function parseExclamationMarks(input) {
  * @returns Result.
  */
 function parseAtom(input) {
-  //
+  return input;
 }
 
 /**
@@ -87,7 +87,7 @@ function parseAtom(input) {
  * @returns Result.
  */
 function parseVariable(input) {
-  //
+  return input;
 }
 
 /**
@@ -98,7 +98,7 @@ function parseVariable(input) {
  * @returns Node.
  */
 function makeNot(num, node) {
-  //
+  return num + node;
 }
 
 /**
@@ -112,7 +112,7 @@ function makeNot(num, node) {
  * @returns Result.
  */
 function makeAnd(argument) {
-  //
+  return argument;
 }
 
 /**
@@ -126,7 +126,7 @@ function makeAnd(argument) {
  * @returns Result.
  */
 function makeOr(argument) {
-  //
+  return argument;
 }
 
 /**
@@ -136,7 +136,7 @@ function makeOr(argument) {
  * @param {string} string
  */
 function expect(string) {
-  //
+  return string;
 }
 
 /**
@@ -153,5 +153,5 @@ export {
   makeNot,
   makeAnd,
   makeOr,
-  expect
+  expect,
 };
