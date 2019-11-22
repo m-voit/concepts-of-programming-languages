@@ -4,12 +4,14 @@
   "description": "Parser in functional JavaScript.",
   "main": "parser.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "echo \"Error: no start specified\" && exit 1",
+    "test": "jest"
   },
   "author": "m-voit",
   "license": "UNLICENSED",
   "private": true,
   "devDependencies": {
-    "eslint": "^6.6.0"
+    "eslint": "^6.6.0",
+    "jest": "^24.9.0"
   }
 }
