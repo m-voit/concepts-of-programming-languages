@@ -4,23 +4,33 @@ This paper compares functional programming in Go with functional programming in 
 It compares the type system, functions and functional programming in Go with JavaScript.
 As a practical example for the comparison of the two programming languages a bool parser is implemented in both languages.
 
+<!-- Functions -->
+<!-- Lambdas/closures -->
+<!-- Higher order functions -->
+<!-- Sum/product types -->
+<!-- Immutable types -->
+<!-- Pattern matching -->
+<!-- Monads -->
+<!-- Function literals -->
+<!-- Currying -->
+
 ## Type system
 
-### Type system in Go
+<!--### Type system in Go
 
-### Type system in JavaScript
+### Type system in JavaScript-->
 
-## Functions
+## Functional Composition
 
-### Functions in Go
+## Clojures and Lambda Expressions
 
-### Functions in JavaScript
+## Higher Order Functions
 
-## Functional programming
+<!--## Functional programming
 
 ### Functional programming in Go
 
-### Functional programming in JavaScript
+### Functional programming in JavaScript-->
 
 ## Bool parser as example
 
