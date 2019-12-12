@@ -27,3 +27,9 @@ Master of Informatics course at Rosenheim Technical University of Applied Scienc
 - Duration: 15 minutes.
 - First halve of January 2020.
 - Location: Brückenstraße 1 at QAware office.
+
+## Questions
+
+- Is npm as "build" tool ok?
+- High level overview over functional programming in go vs js.
+- Only use boolparser as skeleton for the paper.
