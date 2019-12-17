@@ -1,8 +1,31 @@
-let node = ();
+/**
+ * @param {Map<string, boolean>} vars
+ * @returns Boolean
+ */
+function evaluateOr(vars) {
+  //
+}
 
 /**
- * @returns True when matched or false when not
+ * @param {Map<string, boolean>} vars
+ * @returns Boolean
  */
-function evaluate() {
+function evaluateAnd(vars) {
+  //
+}
+
+/**
+ * @param {Map<string, boolean>} vars
+ * @returns Boolean
+ */
+function evaluateNot(vars) {
+  //
+}
+
+/**
+ * @param {Map<string, boolean>} vars
+ * @returns Boolean
+ */
+function evaluateValue(vars) {
   //
 }
