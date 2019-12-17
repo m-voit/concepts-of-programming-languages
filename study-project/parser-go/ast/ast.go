@@ -2,9 +2,7 @@ package ast
 
 import "fmt"
 
-//
-// ----------  AST  ------------
-//
+/* Node ***************************************/
 
 // Node is the interface to eval an abstract syntax tree (AST)
 type Node interface {
@@ -13,6 +11,8 @@ type Node interface {
 	// Missing vars (there are no key in the map) are evaluated to false.
 	Eval(vars map[string]bool) bool
 }
+
+/* Or ***************************************/
 
 // Or is the logical OR Operator in an AST
 type Or struct {
@@ -29,6 +29,8 @@ func (o Or) String() string {
 	return fmt.Sprintf("|(%v,%v)", o.LHS, o.RHS)
 }
 
+/* And ***************************************/
+
 // And is the logical AND Operator in an AST
 type And struct {
 	LHS Node
@@ -44,6 +46,8 @@ func (a And) String() string {
 	return fmt.Sprintf("&(%v,%v)", a.LHS, a.RHS)
 }
 
+/* Not ***************************************/
+
 // Not is the NOT operator in the AST
 type Not struct {
 	Ex Node
@@ -57,6 +61,8 @@ func (n Not) Eval(vars map[string]bool) bool {
 func (n Not) String() string {
 	return fmt.Sprintf("!(%v)", n.Ex)
 }
+
+/* Value ***************************************/
 
 // Val is a boolean variable in an AST
 type Val struct {
