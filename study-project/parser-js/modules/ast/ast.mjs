@@ -14,88 +14,125 @@
  */
 
 /**
- * Ast node.
- */
-function AstNode() {
-  this.evaluate = function evaluate(vars) {};
-}
-
-/**
  * Or is the logical OR Operator in an AST.
  *
- * @param lhs
- * @param rhs
+ * @param lhs An AST node.
+ * @param rhs An AST node.
  */
-function Or(lhs, rhs) {
-  this.lhs = lhs;
-  this.rhs = rhs;
+class Or {
+  constructor(lhs, rhs) {
+    this.lhs = lhs;
+    this.rhs = rhs;
+  }
 
-  this.lhs.evaluateOr() = evaluateOr(vars, this);
-  this.rhs.evaluateOr() = evaluateOr(vars, this);
+  /**
+   * Evaluate the AST.
+   *
+   * @param {Map<string, boolean>} vars
+   * @returns True or false.
+   */
+  evaluate(vars) {
+    return this.lhs.evaluate(vars) || this.rhs.evaluate(vars);
+  }
 }
 
-/**
- * @param {Map<string, boolean>} vars
- * @param {Or} or
- * @returns Boolean
- */
-function evaluateOr(vars, or) {
-  return or.lhs.evaluateOr(vars) || or.rhs.evaluateOr(vars);
-}
+// /**
+//  * @param {Map<string, boolean>} vars
+//  * @param {Or} or
+//  * @returns Boolean
+//  */
+// function evaluateOr(vars, or) {
+//   return or.evaluateLhs(vars) || or.evaluateRhs(vars);
+// }
 
 /**
  * And is the logical AND Operator in an AST.
  *
- * @param lhs
- * @param rhs
+ * @param lhs An AST node.
+ * @param rhs An AST node.
  */
-function And(lhs, rhs) {
-  this.lhs = lhs;
-  this.rhs = rhs;
+class And {
+  constructor(lhs, rhs) {
+    this.lhs = lhs;
+    this.rhs = rhs;
+  }
 
-  this.lhs.evaluateAnd() = evaluateAnd(vars, this);
-  this.rhs.evaluateAnd() = evaluateAnd(vars, this);
+  /**
+   * Evaluate the AST.
+   *
+   * @param {Map<string, boolean>} vars
+   * @returns True or false.
+   */
+  evaluate(vars) {
+    return this.lhs.evaluate(vars) && this.rhs.evaluate(vars);
+  }
 }
+
+// /**
+//  * @param {Map<string, boolean>} vars
+//  * @param {And} and
+//  * @returns Boolean
+//  */
+// function evaluateAnd(vars, and) {
+//   return and.lhs.evaluateAnd(vars) && and.rhs.evaluateAnd(vars);
+// }
 
 /**
- * @param {Map<string, boolean>} vars
- * @param {And} and
- * @returns Boolean
+ * Not is the NOT operator in the AST.
+ *
+ * @param ex An AST node.
  */
-function evaluateAnd(vars, and) {
-  return and.lhs.evaluateAnd(vars) && and.rhs.evaluateAnd(vars);
+class Not {
+  constructor(ex) {
+    this.ex = ex;
+  }
+
+  /**
+   * Evaluate the AST.
+   *
+   * @param {Map<string, boolean>} vars
+   * @returns True or false.
+   */
+  evaluate(vars) {
+    return !this.ex.evaluate(vars);
+  }
 }
 
-/**
- * Not is the NOT operator in the AST
- */
-function Not() {
-  this.lhs.evaluateNot() = evaluateAnd(vars, this);
-}
-
-/**
- * @param {Map<string, boolean>} vars
- * @param {Not} not
- * @returns Boolean
- */
-function evaluateNot(vars, not) {
-  return !not.evaluateNot(vars, not);
-}
+// /**
+//  * @param {Map<string, boolean>} vars
+//  * @param {Not} not
+//  * @returns Boolean
+//  */
+// function evaluateNot(vars, not) {
+//   return !not.evaluateNot(vars, not);
+// }
 
 /**
  * Value is a boolean variable in an AST.
  *
  * @param {string} name
  */
-function Value(name) {
-  this.name = name;
+class Value {
+  constructor(name) {
+    this.name = name;
+  }
+
+  /**
+   * Evaluate the AST.
+   *
+   * @param {Map<string, boolean>} vars
+   * @returns True or false.
+   */
+  evaluate(vars) {
+    return vars.get(this.name);
+  }
 }
 
-/**
- * @param {Map<string, boolean>} vars
- * @param {Value} value
- * @returns Boolean
- */
-function evaluateValue(vars, value) {
-  return vars[value.name];
-}
+// /**
+//  * @param {Map<string, boolean>} vars
+//  * @param {Value} value
+//  * @returns Boolean
+//  */
+// function evaluateValue(vars, value) {
+//   return vars[value.name];
+// }
