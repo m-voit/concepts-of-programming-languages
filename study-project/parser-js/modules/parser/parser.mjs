@@ -1,3 +1,27 @@
+// @ts-nocheck
+
+/**
+ * The expression should have the following EBNF form:
+ * ---------------------------------------------------------
+ * <expression> ::= <term> { <or> <term> }
+ * <term> ::= <factor> { <and> <factor> }
+ * <factor> ::= <var> | <not> <factor> | (<expression>)
+ * <or>  ::= '|'
+ * <and> ::= '&'
+ * <not> ::= '!'
+ * <var> ::= '[a-zA-Z0-9]*'
+ * ---------------------------------------------------------
+ */
+
+/**
+ * Result is the result of a parse along with the Input that remains to
+ * be parsed.
+ */
+const Result = {
+  result,
+  remainingInput,
+};
+
 /**
  * Expect exactly one rune in the Input. If the Input
  * starts with this rune it will become the result.
@@ -6,20 +30,23 @@
  * @returns Result.
  */
 function expectCodePoint(expectedCodePoint) {
-  return expectedCodePoint;
+  return function(input) {
+    expectedCodePoint === input.currentCodePoint
+      ? Result(expectedCodePoint, input.remainingInput)
+      : Result(null, input);
+  };
 }
 
 /**
- * ExpectCodePoints expects exactly the code points from the slice
- * expectedCodePoints at the beginning of the Input in the given order.
- * If the Input begins with these code points then expectedCodePoints will
- * be the result of the parse.
+ * Fail is a failing parser.
  *
- * @param {any[]} expectedCodePoints
+ * @param {any} input
  * @returns Result.
  */
-function expectCodePoints(expectedCodePoints) {
-  return expectedCodePoints;
+function fail(input) {
+  Result.result = null;
+  Result.remainingInput = input;
+  return Result;
 }
 
 /**
@@ -34,13 +61,16 @@ function expectNotCodePoint(forbiddenCodePoints) {
 }
 
 /**
- * Fail is just a failing parser. No tricks.
+ * ExpectCodePoints expects exactly the code points from the slice
+ * expectedCodePoints at the beginning of the Input in the given order.
+ * If the Input begins with these code points then expectedCodePoints will
+ * be the result of the parse.
  *
- * @param {any} input
+ * @param {any[]} expectedCodePoints
  * @returns Result.
  */
-function fail(input) {
-  return input;
+function expectCodePoints(expectedCodePoints) {
+  return expectedCodePoints;
 }
 
 /**
