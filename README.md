@@ -41,6 +41,8 @@ Master of Informatics course at Rosenheim Technical University of Applied Scienc
 - Is npm as "build" tool ok?
 - High level overview over functional programming in go vs js.
 - Only use boolparser as skeleton for the paper.
+
 - Live Code/Beispiele in Präsentation?
 - Präsentation abgeben?
-- JS Klassen benutzen in Ordnung. Ähnlich wie structs in go fp parser.
+
+- JS Klassen benutzen in Ordnung? Ähnlich wie structs in go fp parser.
