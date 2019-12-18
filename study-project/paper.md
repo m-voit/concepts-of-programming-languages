@@ -14,12 +14,6 @@ As a practical example for the comparison of the two programming languages a boo
 <!-- Function literals -->
 <!-- Currying -->
 
-Parserkombinatoren in JS.
-Parser in JS nachbauen prinzipiell in Ordnung, aber möglichst funktional. Muss nicht perfekt funktional sein.
-Vergleich des TypSystem, wo bringt das im funktionalen Kontext Vor- oder Nachteile.
-In erster Linie funktionale Aspekte von JavaScript herausstellen und mit Go vergleichen.
-Was kann in JS funktional machen und wie funktioniert das.
-
 ## Type system
 
 <!--### Type system in Go
