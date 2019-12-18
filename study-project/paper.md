@@ -26,6 +26,8 @@ Was kann in JS funktional machen und wie funktioniert das.
 
 ### Type system in JavaScript-->
 
+## First class functions
+
 ## Functional Composition
 
 ## Clojures and Lambda Expressions
