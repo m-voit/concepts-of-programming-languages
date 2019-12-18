@@ -1,5 +1,37 @@
 // @ts-nocheck
 
+import { Or, And, Not, Value } from "./ast.js";
+
 test("ast", () => {
-  expect(true).toBe(true);
+  // AST for expression: "A AND B OR !C"
+  const ast = new Or(
+    new And(new Value("A"), new Value("B")),
+    new Not(new Value("C")),
+  );
+
+  // Table to test all combinations for A, B, C -> 2^3 = 8 combinations.
+  // Format of Table { Value for A, Value for B, Value for C, Expected Result }
+  const truthTable = [
+    [false, false, false, true],
+    [false, false, true, false],
+    [false, true, true, false],
+    [false, true, false, true],
+    [true, false, false, true],
+    [true, true, false, true],
+    [true, false, true, false],
+    [true, true, true, true],
+  ];
+
+  truthTable.forEach(entry => {
+    const vars = new Map();
+
+    vars.set("A", entry[0]);
+    vars.set("B", entry[1]);
+    vars.set("C", entry[2]);
+
+    const expected = entry[3];
+    const result = ast.evaluate(vars);
+
+    expect(result).toBe(expected);
+  });
 });
