@@ -136,3 +136,5 @@ class Value {
 // function evaluateValue(vars, value) {
 //   return vars[value.name];
 // }
+
+export { Or, And, Not, Value };
