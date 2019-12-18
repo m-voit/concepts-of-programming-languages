@@ -14,13 +14,22 @@
  */
 
 /**
+ *
+ */
+function Parser(input) {
+  return new Result();
+}
+
+/**
  * Result is the result of a parse along with the Input that remains to
  * be parsed.
  */
-const Result = {
-  result,
-  remainingInput,
-};
+class Result {
+  constructor(result, remainingInput) {
+    this.result = result;
+    this.remainingInput = remainingInput;
+  }
+}
 
 /**
  * Expect exactly one rune in the Input. If the Input
@@ -32,8 +41,8 @@ const Result = {
 function expectCodePoint(expectedCodePoint) {
   return function(input) {
     expectedCodePoint === input.currentCodePoint
-      ? Result(expectedCodePoint, input.remainingInput)
-      : Result(null, input);
+      ? new Result(expectedCodePoint, input.remainingInput)
+      : new Result(null, input);
   };
 }
 
@@ -43,11 +52,9 @@ function expectCodePoint(expectedCodePoint) {
  * @param {any} input
  * @returns Result.
  */
-function fail(input) {
-  Result.result = null;
-  Result.remainingInput = input;
-  return Result;
-}
+const fail = input => {
+  return new Result(null, input);
+};
 
 /**
  * Expect exactly one rune in the Input that does not
@@ -57,7 +64,15 @@ function fail(input) {
  * @returns Result.
  */
 function expectNotCodePoint(forbiddenCodePoints) {
-  return forbiddenCodePoints;
+  return function(input) {
+    for (forbiddenCodePoint in forbiddenCodePoints) {
+      if (input.currentCodePoint === forbiddenCodePoint) {
+        return new Result(null, input);
+      }
+    }
+
+    return new Result(input.currentCodePoint, input.remainingInput);
+  };
 }
 
 /**
@@ -70,7 +85,25 @@ function expectNotCodePoint(forbiddenCodePoints) {
  * @returns Result.
  */
 function expectCodePoints(expectedCodePoints) {
-  return expectedCodePoints;
+  return function(input) {
+    let remainingInput = input;
+
+    for (expectedCodePoint in expectedCodePoints) {
+      if (null === remainingInput) {
+        return new Result(null, input);
+      }
+
+      const result = expectCodePoint(expectedCodePoint);
+
+      if (result.result === null) {
+        return new Result(null, remainingInput);
+      }
+
+      remainingInput = result.remainingInput;
+    }
+
+    return new Result(expectCodePoints, remainingInput);
+  };
 }
 
 /**
