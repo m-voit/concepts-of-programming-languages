@@ -4,7 +4,7 @@ Master of Informatics course at Rosenheim Technical University of Applied Scienc
 
 ## Notes
 
-- To run a local go file use `ctrl + f5` or open the debug menu and use "Start Without Debugging"
+- To run a local go file use `Ctrl + F5` or open the debug menu and use "Start Without Debugging"
 
 ## Seminar paper
 
@@ -14,12 +14,20 @@ Master of Informatics course at Rosenheim Technical University of Applied Scienc
 - Compare functional programming in JavaScript with Go.
 - Use references and prove claims.
 - Answer the following question. How good is functional JavaScript suited to implement a parser.
-- Implement Boolparser and AST.
+- Implement a boolean expression parser and an AST.
 - Use functional language features of JavaScript.
 - Outline the differences between functional programming in JavaScript and Go.
 - Use the parser to outline the differences, not a simple Hello World example.
 - Code with unit tests in a GitHub Repository.
 - Submission at 09/01/2020.
+
+## Hinweise Weigend zu Paper
+
+- Parserkombinatoren in JS.
+- Parser in JS nachbauen prinzipiell in Ordnung, aber möglichst funktional. Muss nicht perfekt funktional sein.
+- Vergleich des TypSystem, wo bringt das im funktionalen Kontext Vor- oder Nachteile.
+- In erster Linie funktionale Aspekte von JavaScript herausstellen und mit Go vergleichen.
+- Was kann in JS funktional machen und wie funktioniert das.
 
 ## Presentation
 
@@ -35,3 +43,4 @@ Master of Informatics course at Rosenheim Technical University of Applied Scienc
 - Only use boolparser as skeleton for the paper.
 - Live Code/Beispiele in Präsentation?
 - Präsentation abgeben?
+- JS Klassen benutzen in Ordnung. Ähnlich wie structs in go fp parser.
