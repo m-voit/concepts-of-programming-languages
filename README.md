@@ -46,3 +46,5 @@ Master of Informatics course at Rosenheim Technical University of Applied Scienc
 - Präsentation abgeben?
 
 - JS Klassen benutzen in Ordnung? Ähnlich wie structs in go fp parser.
+- npm install, npm run und npm test ok? Darf installiertes nodejs vorrausgesetzt werden?
+- Wie soll Parser Eingaben entegegennehmen?
