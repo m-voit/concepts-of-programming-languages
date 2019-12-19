@@ -16,8 +16,8 @@
 /**
  * Or is the logical OR Operator in an AST.
  *
- * @param lhs An AST node.
- * @param rhs An AST node.
+ * @param lhs The AST node on the left hand side.
+ * @param rhs The AST node on the right hand side.
  */
 class Or {
   constructor(lhs, rhs) {
@@ -36,20 +36,11 @@ class Or {
   }
 }
 
-// /**
-//  * @param {Map<string, boolean>} vars
-//  * @param {Or} or
-//  * @returns Boolean
-//  */
-// function evaluateOr(vars, or) {
-//   return or.evaluateLhs(vars) || or.evaluateRhs(vars);
-// }
-
 /**
  * And is the logical AND Operator in an AST.
  *
- * @param lhs An AST node.
- * @param rhs An AST node.
+ * @param lhs The AST node on the left hand side.
+ * @param rhs The AST node on the right hand side.
  */
 class And {
   constructor(lhs, rhs) {
@@ -67,15 +58,6 @@ class And {
     return this.lhs.evaluate(vars) && this.rhs.evaluate(vars);
   }
 }
-
-// /**
-//  * @param {Map<string, boolean>} vars
-//  * @param {And} and
-//  * @returns Boolean
-//  */
-// function evaluateAnd(vars, and) {
-//   return and.lhs.evaluateAnd(vars) && and.rhs.evaluateAnd(vars);
-// }
 
 /**
  * Not is the NOT operator in the AST.
@@ -98,19 +80,10 @@ class Not {
   }
 }
 
-// /**
-//  * @param {Map<string, boolean>} vars
-//  * @param {Not} not
-//  * @returns Boolean
-//  */
-// function evaluateNot(vars, not) {
-//   return !not.evaluateNot(vars, not);
-// }
-
 /**
  * Value is a boolean variable in an AST.
  *
- * @param {string} name
+ * @param {string} name The name of the value.
  */
 class Value {
   constructor(name) {
@@ -128,13 +101,7 @@ class Value {
   }
 }
 
-// /**
-//  * @param {Map<string, boolean>} vars
-//  * @param {Value} value
-//  * @returns Boolean
-//  */
-// function evaluateValue(vars, value) {
-//   return vars[value.name];
-// }
-
+/**
+ * Export classes to be used in other modules.
+ */
 export { Or, And, Not, Value };

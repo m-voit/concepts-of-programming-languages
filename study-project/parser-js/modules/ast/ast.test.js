@@ -9,8 +9,10 @@ test("ast", () => {
     new Not(new Value("C")),
   );
 
-  // Table to test all combinations for A, B, C -> 2^3 = 8 combinations.
-  // Format of Table { Value for A, Value for B, Value for C, Expected Result }
+  /**
+   * Table to test all combinations for A, B, C -> 2^3 = 8 combinations.
+   * Format of Table { Value for A, Value for B, Value for C, Expected Result }
+   */
   const truthTable = [
     [false, false, false, true],
     [false, false, true, false],
