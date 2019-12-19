@@ -37,6 +37,8 @@ class Pair {
   }
 }
 
+class Nothing {};
+
 /**
  *
  * @param {Input} input
@@ -75,7 +77,7 @@ class Result {
  * @returns A new result.
  */
 const expectCodePoint = expectedCodePoint => input => {
-  expectedCodePoint === input.currentCodePoint()
+  return expectedCodePoint === input.currentCodePoint()
     ? new Result(expectedCodePoint, input.remainingInput())
     : new Result(null, input);
 };
@@ -86,9 +88,7 @@ const expectCodePoint = expectedCodePoint => input => {
  * @param {Input} input
  * @returns Result.
  */
-const fail = input => {
-  return new Result(null, input);
-};
+const fail = input => new Result(null, input);
 
 // function expectNotCodePoint(forbiddenCodePoints) {
 //   return function(input) {
@@ -178,9 +178,7 @@ const expectCodePoints = expectedCodePoints => input => {
  * @param {string} expectedString
  * @returns Result.
  */
-const expectString = expectedString => {
-  return expectCodePoints(expectedString);
-};
+const expectString = expectedString => expectCodePoints(expectedString);
 
 /**
  * Repeated applies a parser zero or more times and accumulates the results
@@ -215,7 +213,7 @@ const repeated = parser => input => {
 const onceOrMore = parser => input => {
   const result = repeated(parser);
 
-  result.result > 0 ? result : new Result(null, input);
+  return result.result > 0 ? result : new Result(null, input);
 };
 
 /**
@@ -253,12 +251,15 @@ const repeatAndFoldLeft = (parser, accumulator, combine) => input => {
  * to implement syntax annotations.
  *
  * @param {Parser} parser
- * @param {any} constructor
+ * @param {any} constructor A function.
  * @returns Result.
  */
-function bind(parser, constructor) {
-  return constructor;
-}
+const bind = (parser, constructor) => input => {
+  const firstResult = parser(input);
+  const secondParser = constructor(firstResult.result);
+
+  return secondParser(firstResult.remainingInput);
+};
 
 /**
  * OrElse uses the first parser to parse the Input. If this fails it will
@@ -269,33 +270,36 @@ function bind(parser, constructor) {
  * back-tracking. This is in contrast to most regex-libs where the longest
  * match wins. The first match wins here, please keep this in mind.
  *
- * @param {any} alternativeParser
+ * @param {Parser} parser
+ * @param {Parser} alternativeParser
  * @returns Result.
  */
-function orElse(alternativeParser) {
-  return alternativeParser;
-}
+const orElse = (parser, alternativeParser) => input => {
+  const firstResult = parser(input);
+
+  return firstResult.result !== null ? firstResult : alternativeParser(input);
+};
 
 /**
  * GetFirst extracts the first component of a pair or
  * returns the argument if it is not a pair.
  *
- * @param {any} argument
+ * @param {Pair} argument
  * @returns Result.
  */
 function getFirst(argument) {
-  return argument;
+  return argument instanceof Pair ? argument.first : argument;
 }
 
 /**
  * GetSecond extracts the second component of a pair or
  * returns the argument if it is not a pair.
  *
- * @param {any} argument
+ * @param {Pair} argument
  * @returns Result.
  */
 function getSecond(argument) {
-  return argument;
+  return argument instanceof Pair ? argument.second : argument;
 }
 
 /**
@@ -303,53 +307,89 @@ function getSecond(argument) {
  * secondParser. The result will be a Pair containing the results
  * of both parsers.
  *
- * @param {any} secondParser
+ * @param {Parser} parser
+ * @param {Parser} secondParser
  * @returns Result.
  */
-function andThen(secondParser) {
-  return secondParser;
-}
+const andThen = (parser, secondParser) => input => {
+  const firstResult = parser(input);
+
+  if (firstResult.result !== null) {
+    const secondResult = secondParser(firstResult.remainingInput);
+
+    if (secondResult !== null) {
+      return new Result(
+        new Pair(firstResult.result, secondResult.result),
+        secondResult.remainingInput,
+      );
+    }
+
+    return secondResult;
+  }
+
+  return firstResult;
+};
 
 /**
  * Convert applies the converter to the result of a successful parse.
  * If the parser fails then Convert won't do anything.
  *
+ * @param {Parser} parser
  * @param {any} converter
  * @returns Result.
  */
-function convert(converter) {
-  return converter;
-}
+const convert = (parser, converter) => input => {
+  const result = parser(input);
+
+  if (result.result !== null) {
+    result.result = converter(result.result);
+  }
+
+  return result;
+};
 
 /**
  * First extracts the first component of the result of a successful parse.
  * If the parser fails then First won't do anything.
  *
+ * @param {Parser} parser
  * @returns Result.
  */
-function first() {}
+const first = parser => parser.convert(getFirst());
 
 /**
  * Second extracts the second component of the result of a successful parse.
  * If the parser fails then Second won't do anything.
  *
+ * @param {Parser} parser
  * @returns Result.
  */
-function second() {}
+const first = parser => parser.convert(getSecond());
 
 /**
  * Optional applies the parser zero or one times to the Input.
  * If the parser itself would fail then the Optional parser can still
  * produce a successful parse with the result Nothing{}.
  *
+ * @param {Parser} parser
  * @returns Result.
  */
-function optional() {}
+const optional = parser => input => {
+  const result = parser(input);
+
+  if (result.result === null) {
+    result.result = new Nothing();
+    result.remainingInput = input;
+  }
+
+  return result;
+}
 
 /**
  * Allow and ignore space characters before applying the
  * parser from the argument.
  *
+ * @param {Parser} parser
  * @param {any} parser
  */
 function maybeSpacesBefore(parser) {
