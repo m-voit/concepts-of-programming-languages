@@ -16,6 +16,16 @@
 /**
  *
  */
+class Input {
+  currentCodePoint() {
+    //
+  }
+}
+
+/**
+ *
+ * @param {Input} input
+ */
 function Parser(input) {
   return new Result();
 }
@@ -23,6 +33,9 @@ function Parser(input) {
 /**
  * Result is the result of a parse along with the Input that remains to
  * be parsed.
+ *
+ * @param {any} result
+ * @param {Input} remainingInput
  */
 class Result {
   constructor(result, remainingInput) {
@@ -31,80 +44,116 @@ class Result {
   }
 }
 
+// function expectCodePoint(expectedCodePoint) {
+//   return function(input) {
+//     expectedCodePoint === input.currentCodePoint()
+//       ? new Result(expectedCodePoint, input.remainingInput())
+//       : new Result(null, input);
+//   };
+// }
+
 /**
- * Expect exactly one rune in the Input. If the Input
- * starts with this rune it will become the result.
+ * Expect exactly one character in the Input. If the Input
+ * starts with this character it will become the result.
  *
- * @param {any} expectedCodePoint
- * @returns Result.
+ * @param {string} expectedCodePoint
+ * @returns A new result.
  */
-function expectCodePoint(expectedCodePoint) {
-  return function(input) {
-    expectedCodePoint === input.currentCodePoint
-      ? new Result(expectedCodePoint, input.remainingInput)
-      : new Result(null, input);
-  };
-}
+const expectCodePoint = expectedCodePoint => input => {
+  expectedCodePoint === input.currentCodePoint()
+    ? new Result(expectedCodePoint, input.remainingInput())
+    : new Result(null, input);
+};
 
 /**
  * Fail is a failing parser.
  *
- * @param {any} input
+ * @param {Input} input
  * @returns Result.
  */
 const fail = input => {
   return new Result(null, input);
 };
 
+// function expectNotCodePoint(forbiddenCodePoints) {
+//   return function(input) {
+//     forbiddenCodePoints.forEach(forbiddenCodePoint => {
+//       if (input.currentCodePoint() === forbiddenCodePoint) {
+//         return new Result(null, input);
+//       }
+//     });
+
+//     return new Result(input.currentCodePoint, input.remainingInput);
+//   };
+// }
+
 /**
- * Expect exactly one rune in the Input that does not
+ * Expect exactly one character in the Input that does not
  * appear in the forbiddenCodePoints.
  *
- * @param {any[]} forbiddenCodePoints
+ * @param {string[]} forbiddenCodePoints
  * @returns Result.
  */
-function expectNotCodePoint(forbiddenCodePoints) {
-  return function(input) {
-    for (forbiddenCodePoint in forbiddenCodePoints) {
-      if (input.currentCodePoint === forbiddenCodePoint) {
-        return new Result(null, input);
-      }
+const expectNotCodePoint = forbiddenCodePoints => input => {
+  forbiddenCodePoints.forEach(forbiddenCodePoint => {
+    if (input.currentCodePoint() === forbiddenCodePoint) {
+      return new Result(null, input);
     }
+  });
 
-    return new Result(input.currentCodePoint, input.remainingInput);
-  };
-}
+  return new Result(input.currentCodePoint(), input.remainingInput());
+};
+
+// function expectCodePoints(expectedCodePoints) {
+//   return function(input) {
+//     let remainingInput = input;
+
+//     for (expectedCodePoint in expectedCodePoints) {
+//       if (null === remainingInput) {
+//         return new Result(null, input);
+//       }
+
+//       const result = expectCodePoint(expectedCodePoint);
+
+//       if (result.result === null) {
+//         return new Result(null, remainingInput);
+//       }
+
+//       remainingInput = result.remainingInput;
+//     }
+
+//     return new Result(expectCodePoints, remainingInput);
+//   };
+// }
 
 /**
- * ExpectCodePoints expects exactly the code points from the slice
+ * ExpectCodePoints expects exactly the code points from the array
  * expectedCodePoints at the beginning of the Input in the given order.
  * If the Input begins with these code points then expectedCodePoints will
  * be the result of the parse.
  *
- * @param {any[]} expectedCodePoints
+ * @param {string[]} expectedCodePoints
  * @returns Result.
  */
-function expectCodePoints(expectedCodePoints) {
-  return function(input) {
-    let remainingInput = input;
+const expectCodePoints = expectedCodePoints => input => {
+  let remainingInput = input;
 
-    for (expectedCodePoint in expectedCodePoints) {
-      if (null === remainingInput) {
-        return new Result(null, input);
-      }
-
-      const result = expectCodePoint(expectedCodePoint);
-
-      if (result.result === null) {
-        return new Result(null, remainingInput);
-      }
-
-      remainingInput = result.remainingInput;
+  expectedCodePoints.forEach(expectedCodePoint => {
+    if (null === remainingInput) {
+      return new Result(null, input);
     }
 
-    return new Result(expectCodePoints, remainingInput);
-  };
-}
+    const result = expectCodePoint(expectedCodePoint);
+
+    if (result.result === null) {
+      return new Result(null, remainingInput);
+    }
+
+    remainingInput = result.remainingInput;
+  });
+
+  return new Result(expectCodePoints, remainingInput);
+};
 
 /**
  * ExpectString expects the Input to begin with the code points from the
@@ -115,7 +164,7 @@ function expectCodePoints(expectedCodePoints) {
  * @returns Result.
  */
 function expectString(expectedString) {
-  return expectedString;
+  return function() {};
 }
 
 /**
