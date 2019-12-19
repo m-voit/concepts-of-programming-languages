@@ -23,6 +23,21 @@ class Input {
 }
 
 /**
+ * Pair is a simple pair. Please use it only as an intermediate data structure.
+ * If you know what you're parsing then convert your pairs into structs with
+ * more meaningful names.
+ *
+ * @param {any} first The first component of the pair.
+ * @param {any} second The second component of the pair.
+ */
+class Pair {
+  constructor(first, second) {
+    this.first = first;
+    this.second = second;
+  }
+}
+
+/**
  *
  * @param {Input} input
  */
@@ -156,16 +171,16 @@ const expectCodePoints = expectedCodePoints => input => {
 };
 
 /**
- * ExpectString expects the Input to begin with the code points from the
+ * Expect the Input to begin with the code points from the
  * expectedString in the given order. If the Input starts with these code
  * points then expectedString will be the result of the parse.
  *
  * @param {string} expectedString
  * @returns Result.
  */
-function expectString(expectedString) {
-  return function() {};
-}
+const expectString = expectedString => {
+  return expectCodePoints(expectedString);
+};
 
 /**
  * Repeated applies a parser zero or more times and accumulates the results
@@ -173,14 +188,18 @@ function expectString(expectedString) {
  *
  * @returns Result.
  */
-function repeated() {}
+const repeated = () => input => {
+  // TODO
+};
 
 /**
  * OnceOrMore is like Repeated except that it doesn't allow parsing zero times.
  *
  * @returns Result.
  */
-function onceOrMore() {}
+const onceOrMore = () => input => {
+  // TODO
+};
 
 /**
  * RepeatAndFoldLeft is like Repeat except that it doesn't produce a list.
@@ -306,9 +325,10 @@ function maybeSpacesBefore(parser) {
 }
 
 /**
- * Export functions.
+ * Export functions and classes to use in other modules.
  */
 export {
+  Pair,
   expectCodePoint,
   expectCodePoints,
   expectNotCodePoint,
