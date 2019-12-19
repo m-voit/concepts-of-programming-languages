@@ -186,19 +186,36 @@ const expectString = expectedString => {
  * Repeated applies a parser zero or more times and accumulates the results
  * of the parses in a list. This parse always produces a non-nil result.
  *
+ * @param {Parser} parser
  * @returns Result.
  */
-const repeated = () => input => {
-  // TODO
+const repeated = parser => input => {
+  const result = new Result([], input);
+
+  while (result.remainingInput !== null) {
+    const oneMoreResult = parser(result.remainingInput);
+
+    if (oneMoreResult.result === null) {
+      return result;
+    }
+
+    result.result.push(oneMoreResult.result);
+    result.remainingInput = oneMoreResult.remainingInput;
+  }
+
+  return result;
 };
 
 /**
  * OnceOrMore is like Repeated except that it doesn't allow parsing zero times.
  *
+ * @param {Parser} parser
  * @returns Result.
  */
-const onceOrMore = () => input => {
-  // TODO
+const onceOrMore = parser => input => {
+  const result = repeated(parser);
+
+  result.result > 0 ? result : new Result(null, input);
 };
 
 /**
@@ -209,22 +226,27 @@ const onceOrMore = () => input => {
  * accumulator using the combine function. See the calculator example for
  * an idiomatic use-case.
  *
- * @param {any} accumulator
+ * @param {Parser} parser
+ * @param {any} accumulator Function.
+ * @param {any} combine Function with two args.
  * @returns Result.
  */
-function repeatAndFoldLeft(accumulator) {
-  return accumulator;
-}
+const repeatAndFoldLeft = (parser, accumulator, combine) => input => {
+  const result = new Result(accumulator, input);
+
+  while (result.remainingInput !== null) {}
+};
 
 /**
  * Bind uses the result of a first parser to construct a second parser that
  * will parse the left-over Input from the first parser. You can use this
  * to implement syntax annotations.
  *
+ * @param {Parser} parser
  * @param {any} constructor
  * @returns Result.
  */
-function bind(constructor) {
+function bind(parser, constructor) {
   return constructor;
 }
 
