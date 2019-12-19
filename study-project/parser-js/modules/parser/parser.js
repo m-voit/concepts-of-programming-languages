@@ -234,7 +234,17 @@ const onceOrMore = parser => input => {
 const repeatAndFoldLeft = (parser, accumulator, combine) => input => {
   const result = new Result(accumulator, input);
 
-  while (result.remainingInput !== null) {}
+  while (result.remainingInput !== null) {
+    const oneMoreResult = parser(result.remainingInput);
+
+    if (oneMoreResult.result === null) {
+      return result;
+    }
+    result.result = combine(result.result, oneMoreResult.result);
+    result.remainingInput = oneMoreResult.remainingInput;
+  }
+
+  return result;
 };
 
 /**
