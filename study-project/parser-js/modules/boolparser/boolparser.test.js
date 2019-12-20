@@ -63,81 +63,121 @@ test("parseExclamationMarks", () => {
   expect(result.remainingInput).not.toBe(null);
 });
 
-test("parseExpression", () => {
-  let parse = text => parseExpression(stringToInput(text));
+describe("parseExpression", () => {
+  test("!a", () => {
+    const result = parseExclamationMarks(stringToInput("!a"));
+    const expected = new Not(new Value("a"));
 
-  let result = parse("!a");
-  let expected = new Not(new Value("a"));
+    expect(result.result).toBe(expected);
+    expect(result.remainingInput).not.toBe(null);
+  });
 
-  expect(result.result).toBe(expected);
-  expect(result.remainingInput).not.toBe(null);
+  test("a&b", () => {
+    const result = parseExpression(stringToInput("a&b"));
+    const expected = new And(new Value("a"), new Value("b"));
 
-  result = parse("a&b");
-  expected = new And(new Value("a"), new Value("b"));
+    expect(result.result).toBe(expected);
+    expect(result.remainingInput).not.toBe(null);
+  });
 
-  expect(result.result).toBe(expected);
-  expect(result.remainingInput).not.toBe(null);
+  test("a|b", () => {
+    const result = parseExclamationMarks(stringToInput("a|b"));
+    const expected = new Or(new Value("a"), new Value("b"));
 
-  result = parse("a|b");
-  expected = new Or(new Value("a"), new Value("b"));
+    expect(result.result).toBe(expected);
+    expect(result.remainingInput).not.toBe(null);
+  });
 
-  expect(result.result).toBe(expected);
-  expect(result.remainingInput).not.toBe(null);
+  test(" a &  b", () => {
+    const result = parseExclamationMarks(stringToInput(" a &  b"));
+    const expected = new And(new Value("a"), new Value("b"));
 
-  result = parse(" a &  b");
-  expected = new And(new Value("a"), new Value("b"));
+    expect(result.result).toBe(expected);
+    expect(result.remainingInput).not.toBe(null);
+  });
 
-  expect(result.result).toBe(expected);
-  expect(result.remainingInput).not.toBe(null);
+  test("a   ", () => {
+    const result = parseExclamationMarks(stringToInput("a   "));
+    const expected = new Value("a");
 
-  result = parse("a   ");
-  expected = new Value("a");
+    expect(result.result).toBe(expected);
+    expect(result.remainingInput).not.toBe(null);
+  });
 
-  expect(result.result).toBe(expected);
-  expect(result.remainingInput).not.toBe(null);
+  test("a&b&c", () => {
+    const result = parseExclamationMarks(stringToInput("a&b&c"));
+    const expected = new And(
+      new Value("a"),
+      new And(new Value("b"), new Value("c")),
+    );
 
-  result = parse("a&b&c");
-  expected = new And(new Value("a"), new And(new Value("b"), new Value("c")));
+    expect(result.result).toBe(expected);
+    expect(result.remainingInput).not.toBe(null);
+  });
 
-  expect(result.result).toBe(expected);
-  expect(result.remainingInput).not.toBe(null);
+  test("a&(b&c)", () => {
+    const result = parseExclamationMarks(stringToInput("a&(b&c)"));
+    const expected = new And(
+      new Value("a"),
+      new And(new Value("b"), new Value("c")),
+    );
 
-  result = parse("a&(b&c)");
-  expected = new And(new Value("a"), new And(new Value("b"), new Value("c")));
+    expect(result.result).toBe(expected);
+    expect(result.remainingInput).not.toBe(null);
+  });
 
-  expect(result.result).toBe(expected);
-  expect(result.remainingInput).not.toBe(null);
+  test("(a&b)&c", () => {
+    const result = parseExclamationMarks(stringToInput("(a&b)&c"));
+    const expected = new And(
+      new And(new Value("a"), new Value("b")),
+      new Value("c"),
+    );
 
-  result = parse("(a&b)&c");
-  expected = new And(new And(new Value("a"), new Value("b")), new Value("c"));
+    expect(result.result).toBe(expected);
+    expect(result.remainingInput).not.toBe(null);
+  });
 
-  expect(result.result).toBe(expected);
-  expect(result.remainingInput).not.toBe(null);
+  test("a|b|c", () => {
+    const result = parseExclamationMarks(stringToInput("a|b|c"));
+    const expected = new Or(
+      new Value("a"),
+      new Or(new Value("b"), new Value("c")),
+    );
 
-  result = parse("a|b|c");
-  expected = new Or(new Value("a"), new Or(new Value("b"), new Value("c")));
+    expect(result.result).toBe(expected);
+    expect(result.remainingInput).not.toBe(null);
+  });
 
-  expect(result.result).toBe(expected);
-  expect(result.remainingInput).not.toBe(null);
+  test("a|(b|c)", () => {
+    const result = parseExclamationMarks(stringToInput("a|(b|c)"));
+    const expected = new Or(
+      new Value("a"),
+      new Or(new Value("b"), new Value("c")),
+    );
 
-  result = parse("a|(b|c)");
-  expected = new Or(new Value("a"), new Or(new Value("b"), new Value("c")));
+    expect(result.result).toBe(expected);
+    expect(result.remainingInput).not.toBe(null);
+  });
 
-  expect(result.result).toBe(expected);
-  expect(result.remainingInput).not.toBe(null);
+  test("(a|b)|c", () => {
+    const result = parseExclamationMarks(stringToInput("(a|b)|c"));
+    const expected = new Or(
+      new Or(new Value("a"), new Value("b")),
+      new Value("c"),
+    );
 
-  result = parse("(a|b)|c");
-  expected = new Or(new Or(new Value("a"), new Value("b")), new Value("c"));
+    expect(result.result).toBe(expected);
+    expect(result.remainingInput).not.toBe(null);
+  });
 
-  expect(result.result).toBe(expected);
-  expect(result.remainingInput).not.toBe(null);
+  test("!a & b|c&!(d|e)", () => {
+    const result = parseExclamationMarks(stringToInput("!a & b|c&!(d|e)"));
+    const expected = new Or(
+      new And(new Not(new Value("a")), new Value("b")),
+      new And(new Value("c"), new Not(new Or(new Value("d"), new Value("e")))),
+    );
 
-  result = parse("!a & b|c&!(d|e)");
-  expected = new Or(
-    new And(new Not(new Value("a")), new Value("b")),
-    new And(new Value("c"), new Not(new Or(new Value("d"), new Value("e")))),
-  );
-
-  expect(result.result).toBe(expected);
-  expect(result.remainingInput).not.toBe(null);
+    expect(result.result).toBe(expected);
+    expect(result.remainingInput).not.toBe(null);
+  });
 });
