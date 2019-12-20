@@ -325,7 +325,7 @@ const convert = (parser, converter) => input => {
  * @param {any} parser The parser
  * @returns Result.
  */
-const first = parser => convert(parser, getFirst());
+const first = parser => convert(parser, getFirst);
 
 /**
  * Second extracts the second component of the result of a successful parse.
@@ -334,7 +334,7 @@ const first = parser => convert(parser, getFirst());
  * @param {any} parser The parser.
  * @returns Result.
  */
-const second = parser => convert(parser, getSecond());
+const second = parser => convert(parser, getSecond);
 
 /**
  * Optional applies the parser zero or one times to the Input.
