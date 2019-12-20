@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 /**
  * The expression should have the following EBNF form:
  * ---------------------------------------------------------
@@ -14,12 +12,13 @@
  */
 
 /**
- * Input class.
- *
- * @param {string} text
- * @param {int} currentPosition
+ * Input class is the input to be parsed.
  */
 class Input {
+  /**
+   * @param {string} text
+   * @param {number} currentPosition
+   */
   constructor(text, currentPosition) {
     this.text = text;
     this.currentPosition = currentPosition;
@@ -42,11 +41,12 @@ class Input {
  * Pair is a simple pair. Please use it only as an intermediate data structure.
  * If you know what you're parsing then convert your pairs into structs with
  * more meaningful names.
- *
- * @param {any} first The first component of the pair.
- * @param {any} second The second component of the pair.
  */
 class Pair {
+  /**
+   * @param {any} first The first component of the pair.
+   * @param {any} second The second component of the pair.
+   */
   constructor(first, second) {
     this.first = first;
     this.second = second;
@@ -59,34 +59,19 @@ class Pair {
 class Nothing {}
 
 /**
- *
- * @param {Input} input
- */
-function Parser(input) {
-  return new Result();
-}
-
-/**
  * Result is the result of a parse along with the Input that remains to
  * be parsed.
- *
- * @param {any} result
- * @param {Input} remainingInput
  */
 class Result {
+  /**
+   * @param {string | any | Pair} result
+   * @param {Input} remainingInput
+   */
   constructor(result, remainingInput) {
     this.result = result;
     this.remainingInput = remainingInput;
   }
 }
-
-// function expectCodePoint(expectedCodePoint) {
-//   return function(input) {
-//     expectedCodePoint === input.currentCodePoint()
-//       ? new Result(expectedCodePoint, input.remainingInput())
-//       : new Result(null, input);
-//   };
-// }
 
 /**
  * Expect exactly one character in the Input. If the Input
@@ -109,18 +94,6 @@ const expectCodePoint = expectedCodePoint => input => {
  */
 const fail = input => new Result(null, input);
 
-// function expectNotCodePoint(forbiddenCodePoints) {
-//   return function(input) {
-//     forbiddenCodePoints.forEach(forbiddenCodePoint => {
-//       if (input.currentCodePoint() === forbiddenCodePoint) {
-//         return new Result(null, input);
-//       }
-//     });
-
-//     return new Result(input.currentCodePoint, input.remainingInput);
-//   };
-// }
-
 /**
  * Expect exactly one character in the Input that does not
  * appear in the forbiddenCodePoints.
@@ -138,41 +111,19 @@ const expectNotCodePoint = forbiddenCodePoints => input => {
   return new Result(input.currentCodePoint(), input.remainingInput());
 };
 
-// function expectCodePoints(expectedCodePoints) {
-//   return function(input) {
-//     let remainingInput = input;
-
-//     for (expectedCodePoint in expectedCodePoints) {
-//       if (null === remainingInput) {
-//         return new Result(null, input);
-//       }
-
-//       const result = expectCodePoint(expectedCodePoint);
-
-//       if (result.result === null) {
-//         return new Result(null, remainingInput);
-//       }
-
-//       remainingInput = result.remainingInput;
-//     }
-
-//     return new Result(expectCodePoints, remainingInput);
-//   };
-// }
-
 /**
  * ExpectCodePoints expects exactly the code points from the array
  * expectedCodePoints at the beginning of the Input in the given order.
  * If the Input begins with these code points then expectedCodePoints will
  * be the result of the parse.
  *
- * @param {string[]} expectedCodePoints
- * @returns Result.
+ * @param {string} expectedCodePoints
+ * @returns A new Result.
  */
 const expectCodePoints = expectedCodePoints => input => {
   let remainingInput = input;
 
-  expectedCodePoints.forEach(expectedCodePoint => {
+  [...expectedCodePoints].forEach(expectedCodePoint => {
     if (null === remainingInput) {
       return new Result(null, input);
     }
@@ -195,7 +146,7 @@ const expectCodePoints = expectedCodePoints => input => {
  * points then expectedString will be the result of the parse.
  *
  * @param {string} expectedString
- * @returns Result.
+ * @returns A new Result.
  */
 const expectString = expectedString => expectCodePoints(expectedString);
 
@@ -203,8 +154,8 @@ const expectString = expectedString => expectCodePoints(expectedString);
  * Repeated applies a parser zero or more times and accumulates the results
  * of the parses in a list. This parse always produces a non-nil result.
  *
- * @param {Parser} parser
- * @returns Result.
+ * @param {any} parser
+ * @returns A new Result.
  */
 const repeated = parser => input => {
   const result = new Result([], input);
@@ -226,7 +177,7 @@ const repeated = parser => input => {
 /**
  * OnceOrMore is like Repeated except that it doesn't allow parsing zero times.
  *
- * @param {Parser} parser
+ * @param {any} parser The parser.
  * @returns Result.
  */
 const onceOrMore = parser => input => {
@@ -243,9 +194,9 @@ const onceOrMore = parser => input => {
  * accumulator using the combine function. See the calculator example for
  * an idiomatic use-case.
  *
- * @param {Parser} parser
- * @param {any} accumulator Function.
- * @param {any} combine Function with two args.
+ * @param {any} parser The parser.
+ * @param {any} accumulator A function.
+ * @param {any} combine A function with two args.
  * @returns Result.
  */
 const repeatAndFoldLeft = (parser, accumulator, combine) => input => {
@@ -269,7 +220,7 @@ const repeatAndFoldLeft = (parser, accumulator, combine) => input => {
  * will parse the left-over Input from the first parser. You can use this
  * to implement syntax annotations.
  *
- * @param {Parser} parser
+ * @param {any} parser The parser.
  * @param {any} constructor A function.
  * @returns Result.
  */
@@ -289,8 +240,8 @@ const bind = (parser, constructor) => input => {
  * back-tracking. This is in contrast to most regex-libs where the longest
  * match wins. The first match wins here, please keep this in mind.
  *
- * @param {Parser} parser
- * @param {Parser} alternativeParser
+ * @param {any} parser The parser.
+ * @param {any} alternativeParser An alternative parser to be used when first parser fails.
  * @returns Result.
  */
 const orElse = (parser, alternativeParser) => input => {
@@ -303,22 +254,22 @@ const orElse = (parser, alternativeParser) => input => {
  * GetFirst extracts the first component of a pair or
  * returns the argument if it is not a pair.
  *
- * @param {Pair} argument
+ * @param {Pair} pair A pair.
  * @returns Result.
  */
-function getFirst(argument) {
-  return argument instanceof Pair ? argument.first : argument;
+function getFirst(pair) {
+  return pair instanceof Pair ? pair.first : pair;
 }
 
 /**
  * GetSecond extracts the second component of a pair or
  * returns the argument if it is not a pair.
  *
- * @param {Pair} argument
+ * @param {Pair} pair A pair.
  * @returns Result.
  */
-function getSecond(argument) {
-  return argument instanceof Pair ? argument.second : argument;
+function getSecond(pair) {
+  return pair instanceof Pair ? pair.second : pair;
 }
 
 /**
@@ -326,8 +277,8 @@ function getSecond(argument) {
  * secondParser. The result will be a Pair containing the results
  * of both parsers.
  *
- * @param {Parser} parser
- * @param {Parser} secondParser
+ * @param {any} parser The parser to apply first.
+ * @param {any} secondParser The parser to apply second.
  * @returns Result.
  */
 const andThen = (parser, secondParser) => input => {
@@ -353,8 +304,8 @@ const andThen = (parser, secondParser) => input => {
  * Convert applies the converter to the result of a successful parse.
  * If the parser fails then Convert won't do anything.
  *
- * @param {Parser} parser
- * @param {any} converter
+ * @param {any} parser The parser
+ * @param {any} converter A function with two arguments.
  * @returns Result.
  */
 const convert = (parser, converter) => input => {
@@ -371,7 +322,7 @@ const convert = (parser, converter) => input => {
  * First extracts the first component of the result of a successful parse.
  * If the parser fails then First won't do anything.
  *
- * @param {Parser} parser
+ * @param {any} parser The parser
  * @returns Result.
  */
 const first = parser => convert(parser, getFirst());
@@ -380,7 +331,7 @@ const first = parser => convert(parser, getFirst());
  * Second extracts the second component of the result of a successful parse.
  * If the parser fails then Second won't do anything.
  *
- * @param {Parser} parser
+ * @param {any} parser The parser.
  * @returns Result.
  */
 const second = parser => convert(parser, getSecond());
@@ -390,7 +341,7 @@ const second = parser => convert(parser, getSecond());
  * If the parser itself would fail then the Optional parser can still
  * produce a successful parse with the result Nothing{}.
  *
- * @param {Parser} parser
+ * @param {any} parser The parser.
  * @returns Result.
  */
 const optional = parser => input => {
@@ -460,8 +411,8 @@ const expectSeveral = (isFirstChar, isLaterChar) => input => {
     return new Result(null, input);
   }
 
-  const builder = "";
-  const codePoint = firstCodePoint;
+  let builder = "";
+  let codePoint = firstCodePoint;
   let remainingInput = input;
 
   while (isLaterChar(codePoint)) {
@@ -489,19 +440,19 @@ const expectNumber = () => expectSeveral(isDigit, isDigit);
  * Allow and ignore space characters before applying the
  * parser from the argument.
  *
- * @param {Parser} parser
- * @param {any} parser
+ * @param {any} parser The parser.
  */
-const maybeSpacesBefore = parser =>
-  expectSpaces(parser)
-    .andThen(parser)
-    .second(parser);
+const maybeSpacesBefore = parser => second(andThen(expectSpaces(), parser));
 
 /**
- * Export functions and classes to use in other modules.
+ * Export classes to be used in other modules.
+ */
+export { Pair, Nothing };
+
+/**
+ * Export functions to be used in other modules.
  */
 export {
-  Pair,
   expectCodePoint,
   expectCodePoints,
   expectNotCodePoint,
