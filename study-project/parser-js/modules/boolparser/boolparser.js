@@ -1,5 +1,18 @@
 // @ts-nocheck
 
+import { Or, And, Not, Value } from "../ast/ast";
+
+import {
+  Pair,
+  first,
+  andThen,
+  optional,
+  expectSpaces,
+  convert,
+  repeated,
+  maybeSpacesBefore,
+} from "../parser/parser";
+
 /**
  * The expression should have the following EBNF form:
  * ---------------------------------------------------------
@@ -17,12 +30,10 @@
  * Parse the following grammar: Expression := Or Spaces*
  * The syntax tree is exactly the one returned by Or.
  *
- * @param {any} input
  * @returns Result.
  */
-function parseExpression(input) {
-  return input;
-}
+const parseExpression = () =>
+  first(andThen(parserOr(), optional(expectSpaces())));
 
 /**
  * Parse the following grammar: Or := And ^ ("|" ^ Or)?
@@ -31,12 +42,13 @@ function parseExpression(input) {
  * the sub-trees returned by the recursive calls. parseOr uses expect to parse
  * the symbol "|", i. e. it actually allows for Space* ^ "|".
  *
- * @param {any} input
  * @returns Result.
  */
-function parseOr(input) {
-  return input;
-}
+const parseOr = () =>
+  convert(
+    andThen(parseAnd(), Optional(Second(AndThen(expect("|"), parseOr())))),
+    makeOr(),
+  );
 
 /**
  * Parse the following grammar: And := Not ^ ("&" ^ And)?
@@ -45,12 +57,13 @@ function parseOr(input) {
  * the sub-trees returned by the recursive calls. parseAnd uses expect to parse
  * the symbol "&", i. e. it actually allows for Space* ^ "&".
  *
- * @param {any} input
  * @returns Result.
  */
-function parseAnd(input) {
-  return input;
-}
+const parseAnd = () =>
+  convert(
+    andThen(parseNot(), Optional(Second(AndThen(expect("&"), parseAnd())))),
+    makeAnd(),
+  );
 
 /**
  * Parse the following grammar: Not := "!"* ^ Atom
@@ -59,12 +72,13 @@ function parseAnd(input) {
  * the tree parsed by parseAtom. Otherwise parseNot will wrap the atom in as many
  * Not nodes as there are exclamation marks.
  *
- * @param {any} input
  * @returns Result.
  */
-function parseNot(input) {
-  return input;
-}
+const parseNot = () =>
+  convert(andThen(parseExclamationMarks(), parseAtom()), argument => {
+    const pair = new Pair(argument);
+    return makeNot(pair.first, pair.second);
+  });
 
 /**
  * Parse the following grammar: "!"*
@@ -72,12 +86,10 @@ function parseNot(input) {
  * parseExclamationMarks uses expect to parse the symbol "!", i. e. it actually
  * allows for Space* ^ "!".
  *
- * @param {any} input
  * @returns Result.
  */
-function parseExclamationMarks(input) {
-  return input;
-}
+const parseExclamationMarks = () =>
+  convert(repeated(expect("!")), argument => argument.length);
 
 /**
  * Parse the followiong grammar: Atom := Variable | "(" ^ Expression ^ ")"
@@ -85,12 +97,15 @@ function parseExclamationMarks(input) {
  * Parser.First() and Parser.Second() to extract the tree returned by
  * parseExpression.
  *
- * @param {any} input
  * @returns Result.
  */
-function parseAtom(input) {
-  return input;
-}
+const parseAtom = () =>
+  orElse(
+    parseVariable(),
+    second(
+      first(andThen(andThen(expect("("), parseExpression()), expect(")"))),
+    ),
+  );
 
 /**
  * Parse the following grammar: Variable := [a-zA-Z_][a-zA-Z_0-9]*
@@ -98,12 +113,13 @@ function parseAtom(input) {
  * combinators package and uses the Convert method on parsers to create the
  * ast.Val node.
  *
- * @param {any} input
  * @returns Result.
  */
-function parseVariable(input) {
-  return input;
-}
+const parseVariable = () =>
+  convert(
+    maybeSpacesBefore(expectIdentifier()),
+    argument => new Value(argument),
+  );
 
 /**
  * Wrap the node into num ast.Not nodes.
@@ -112,9 +128,9 @@ function parseVariable(input) {
  * @param {any} node
  * @returns Node.
  */
-function makeNot(num, node) {
-  return num + node;
-}
+const makeNot = (num, node) => {
+  return number <= 0 ? node : new Not(makeNot(num - 1, node));
+};
 
 /**
  * Take a Pair of ast.Node as an argument and return an
@@ -126,9 +142,13 @@ function makeNot(num, node) {
  * @param {any} argument
  * @returns Result.
  */
-function makeAnd(argument) {
-  return argument;
-}
+const makeAnd = argument => {
+  const pair = new Pair(argument);
+
+  return pair.second === new Nothing()
+    ? pair.first
+    : new And(pair.first, pair.second);
+};
 
 /**
  * Take a Pair of ast.Node as an argument and return an
@@ -140,9 +160,13 @@ function makeAnd(argument) {
  * @param {any} argument
  * @returns Result.
  */
-function makeOr(argument) {
-  return argument;
-}
+const makeOr = argument => {
+  const pair = new Pair(argument);
+
+  return pair.second === new Nothing()
+    ? pair.first
+    : new Or(pair.first, pair.second);
+};
 
 /**
  * Expect the parameter string at the beginning of the Input and ignore
@@ -150,9 +174,7 @@ function makeOr(argument) {
  *
  * @param {string} string
  */
-function expect(string) {
-  return string;
-}
+const expect = string => maybeSpacesBefore(expectString(string));
 
 /**
  * Export functions.
