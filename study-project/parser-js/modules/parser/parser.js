@@ -14,11 +14,27 @@
  */
 
 /**
+ * Input class.
  *
+ * @param {string} text
+ * @param {int} currentPosition
  */
 class Input {
+  constructor(text, currentPosition) {
+    this.text = text;
+    this.currentPosition = currentPosition;
+  }
+
+  remainingInput() {
+    return this.currentPosition + 1 >= this.text.length
+      ? null
+      : new Input(this.text, this.currentPosition + 1);
+  }
+
   currentCodePoint() {
-    //
+    return this.currentPosition >= this.text.length
+      ? "\x00"
+      : this.text.charAt(this.currentPosition);
   }
 }
 
@@ -355,7 +371,7 @@ const convert = (parser, converter) => input => {
  * @param {Parser} parser
  * @returns Result.
  */
-const first = parser => parser.convert(getFirst());
+const first = parser => convert(parser, getFirst());
 
 /**
  * Second extracts the second component of the result of a successful parse.
@@ -364,7 +380,7 @@ const first = parser => parser.convert(getFirst());
  * @param {Parser} parser
  * @returns Result.
  */
-const second = parser => parser.convert(getSecond());
+const second = parser => convert(parser, getSecond());
 
 /**
  * Optional applies the parser zero or one times to the Input.
@@ -386,6 +402,15 @@ const optional = parser => input => {
 };
 
 /**
+ * Convert a string to an in input class instance.
+ *
+ * @param {string} text
+ * @returns A new input class instance.
+ */
+const stringToInput = text => new Input(text, 0);
+
+/**
+ * Check if the provided first code point is the identifier start char.
  *
  * @param {string} firstCodePoint
  * @returns True or false.
@@ -492,6 +517,7 @@ export {
   first,
   second,
   optional,
+  stringToInput,
   isIdentifierStartChar,
   isDigit,
   isIdentifierChar,
