@@ -34,8 +34,8 @@ import {
  *
  * @returns Result.
  */
-const parseExpression = () =>
-  first(andThen(parseOr(), optional(expectSpaces())));
+const parseExpression = input =>
+  first(andThen(parseOr(input), optional(expectSpaces())));
 
 /**
  * Parse the following grammar: Or := And ^ ("|" ^ Or)?
@@ -46,9 +46,12 @@ const parseExpression = () =>
  *
  * @returns Result.
  */
-const parseOr = () =>
+const parseOr = input =>
   convert(
-    andThen(parseAnd(), optional(second(andThen(expect("|"), parseOr())))),
+    andThen(
+      parseAnd(input),
+      optional(second(andThen(expect("|"), parseOr))),
+    ),
     makeOr,
   );
 
@@ -61,9 +64,12 @@ const parseOr = () =>
  *
  * @returns Result.
  */
-const parseAnd = () =>
+const parseAnd = input =>
   convert(
-    andThen(parseNot(), optional(second(andThen(expect("&"), parseAnd())))),
+    andThen(
+      parseNot(input),
+      optional(second(andThen(expect("&"), parseAnd(input)))),
+    ),
     makeAnd,
   );
 
@@ -76,10 +82,13 @@ const parseAnd = () =>
  *
  * @returns Result.
  */
-const parseNot = () =>
-  convert(andThen(parseExclamationMarks(), parseAtom()), (first, second) => {
-    return makeNot(first, second);
-  });
+const parseNot = input =>
+  convert(
+    andThen(parseExclamationMarks(input), parseAtom(input)),
+    (first, second) => {
+      return makeNot(first, second);
+    },
+  );
 
 /**
  * Parse the following grammar: "!"*
@@ -89,7 +98,7 @@ const parseNot = () =>
  *
  * @returns Result.
  */
-const parseExclamationMarks = () =>
+const parseExclamationMarks = input =>
   convert(repeated(expect("!")), argument => argument.length);
 
 /**
@@ -100,11 +109,11 @@ const parseExclamationMarks = () =>
  *
  * @returns Result.
  */
-const parseAtom = () =>
+const parseAtom = input =>
   orElse(
-    parseVariable(),
+    parseVariable(input),
     second(
-      first(andThen(andThen(expect("("), parseExpression()), expect(")"))),
+      first(andThen(andThen(expect("("), parseExpression(input)), expect(")"))),
     ),
   );
 
@@ -116,11 +125,10 @@ const parseAtom = () =>
  *
  * @returns Result.
  */
-const parseVariable = () =>
-  convert(
-    maybeSpacesBefore(expectIdentifier()),
-    argument => new Value(argument),
-  );
+const parseVariable = input =>
+  convert(maybeSpacesBefore(expectIdentifier()), function() {
+    return new Value(input.text);
+  });
 
 /**
  * Wrap the node into num ast.Not nodes.
