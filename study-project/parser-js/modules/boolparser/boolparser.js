@@ -49,7 +49,7 @@ const parseExpression = () =>
 const parseOr = () =>
   convert(
     andThen(parseAnd(), optional(second(andThen(expect("|"), parseOr())))),
-    makeOr(),
+    makeOr,
   );
 
 /**
@@ -64,7 +64,7 @@ const parseOr = () =>
 const parseAnd = () =>
   convert(
     andThen(parseNot(), optional(second(andThen(expect("&"), parseAnd())))),
-    makeAnd(),
+    makeAnd,
   );
 
 /**
