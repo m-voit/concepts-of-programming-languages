@@ -37,7 +37,7 @@ class Pair {
   }
 }
 
-class Nothing {};
+class Nothing {}
 
 /**
  *
@@ -364,7 +364,7 @@ const first = parser => parser.convert(getFirst());
  * @param {Parser} parser
  * @returns Result.
  */
-const first = parser => parser.convert(getSecond());
+const second = parser => parser.convert(getSecond());
 
 /**
  * Optional applies the parser zero or one times to the Input.
@@ -383,7 +383,80 @@ const optional = parser => input => {
   }
 
   return result;
-}
+};
+
+/**
+ *
+ * @param {string} firstCodePoint
+ * @returns True or false.
+ */
+const isIdentifierStartChar = firstCodePoint =>
+  ("a" <= firstCodePoint && firstCodePoint <= "z") ||
+  ("A" <= firstCodePoint && firstCodePoint <= "Z") ||
+  "_" === firstCodePoint;
+
+/**
+ *
+ * @param {string} codePoint
+ * @returns True or false.
+ */
+const isDigit = codePoint => "0" <= codePoint && codePoint <= "9";
+
+/**
+ *
+ * @param {string} codePoint
+ * @returns True or false.
+ */
+const isIdentifierChar = codePoint =>
+  isIdentifierStartChar(codePoint) || isDigit(codePoint);
+
+/**
+ *
+ * @param {string} codePoint
+ * @returns True or false.
+ */
+const isSpaceChar = codePoint =>
+  codePoint == " " ||
+  codePoint == "\n" ||
+  codePoint == "\r" ||
+  codePoint == "\t";
+
+const expectSeveral = (isFirstChar, isLaterChar) => input => {
+  if (null === input) {
+    return new Result(null, input);
+  }
+
+  const firstCodePoint = input.currentCodePoint();
+
+  if (!isFirstChar(firstCodePoint)) {
+    return new Result(null, input);
+  }
+
+  const builder = "";
+  const codePoint = firstCodePoint;
+  let remainingInput = input;
+
+  while (isLaterChar(codePoint)) {
+    remainingInput = remainingInput.remainingInput();
+    builder += codePoint;
+
+    if (remainingInput === null) {
+      break;
+    } else {
+      codePoint = remainingInput.currentCodePoint();
+    }
+  }
+
+  return new Result(builder, remainingInput);
+};
+
+const expectIdentifier = () =>
+  expectSeveral(isIdentifierStartChar, isIdentifierChar);
+
+const expectSpaces = parser =>
+  expectSeveral(isSpaceChar, isSpaceChar).optional(parser);
+
+const expectNumber = () => expectSeveral(isDigit, isDigit);
 
 /**
  * Allow and ignore space characters before applying the
@@ -392,9 +465,10 @@ const optional = parser => input => {
  * @param {Parser} parser
  * @param {any} parser
  */
-function maybeSpacesBefore(parser) {
-  return parser;
-}
+const maybeSpacesBefore = parser =>
+  expectSpaces(parser)
+    .andThen(parser)
+    .second(parser);
 
 /**
  * Export functions and classes to use in other modules.
@@ -418,5 +492,10 @@ export {
   first,
   second,
   optional,
+  isIdentifierStartChar,
+  isDigit,
+  isIdentifierChar,
+  isSpaceChar,
+  expectSeveral,
   maybeSpacesBefore,
 };
