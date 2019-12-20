@@ -1,16 +1,18 @@
-// @ts-nocheck
-
 import { Or, And, Not, Value } from "../ast/ast";
-
 import {
   Pair,
+  Nothing,
   first,
+  second,
   andThen,
   optional,
+  expectIdentifier,
   expectSpaces,
+  expectString,
   convert,
   repeated,
   maybeSpacesBefore,
+  orElse,
 } from "../parser/parser";
 
 /**
@@ -33,7 +35,7 @@ import {
  * @returns Result.
  */
 const parseExpression = () =>
-  first(andThen(parserOr(), optional(expectSpaces())));
+  first(andThen(parseOr(), optional(expectSpaces())));
 
 /**
  * Parse the following grammar: Or := And ^ ("|" ^ Or)?
@@ -46,7 +48,7 @@ const parseExpression = () =>
  */
 const parseOr = () =>
   convert(
-    andThen(parseAnd(), Optional(Second(AndThen(expect("|"), parseOr())))),
+    andThen(parseAnd(), optional(second(andThen(expect("|"), parseOr())))),
     makeOr(),
   );
 
@@ -61,7 +63,7 @@ const parseOr = () =>
  */
 const parseAnd = () =>
   convert(
-    andThen(parseNot(), Optional(Second(AndThen(expect("&"), parseAnd())))),
+    andThen(parseNot(), optional(second(andThen(expect("&"), parseAnd())))),
     makeAnd(),
   );
 
@@ -75,9 +77,8 @@ const parseAnd = () =>
  * @returns Result.
  */
 const parseNot = () =>
-  convert(andThen(parseExclamationMarks(), parseAtom()), argument => {
-    const pair = new Pair(argument);
-    return makeNot(pair.first, pair.second);
+  convert(andThen(parseExclamationMarks(), parseAtom()), (first, second) => {
+    return makeNot(first, second);
   });
 
 /**
@@ -124,12 +125,12 @@ const parseVariable = () =>
 /**
  * Wrap the node into num ast.Not nodes.
  *
- * @param {number} num
+ * @param {number} number
  * @param {any} node
  * @returns Node.
  */
-const makeNot = (num, node) => {
-  return number <= 0 ? node : new Not(makeNot(num - 1, node));
+const makeNot = (number, node) => {
+  return number <= 0 ? node : new Not(makeNot(number - 1, node));
 };
 
 /**
@@ -139,13 +140,14 @@ const makeNot = (num, node) => {
  * then makeAnd will create an ast.And node containing the first and the second
  * component of the Pair as sub-nodes.
  *
- * @param {any} argument
+ * @param {any} first
+ * @param {any} second
  * @returns Result.
  */
-const makeAnd = argument => {
-  const pair = new Pair(argument);
+const makeAnd = (first, second) => {
+  const pair = new Pair(first, second);
 
-  return pair.second === new Nothing()
+  return pair.second instanceof Nothing
     ? pair.first
     : new And(pair.first, pair.second);
 };
@@ -157,13 +159,14 @@ const makeAnd = argument => {
  * then makeOr will create an ast.Or node containing the first and the second
  * component of the Pair as sub-nodes.
  *
- * @param {any} argument
+ * @param {any} first
+ * @param {any} second
  * @returns Result.
  */
-const makeOr = argument => {
-  const pair = new Pair(argument);
+const makeOr = (first, second) => {
+  const pair = new Pair(first, second);
 
-  return pair.second === new Nothing()
+  return pair.second instanceof Nothing
     ? pair.first
     : new Or(pair.first, pair.second);
 };
