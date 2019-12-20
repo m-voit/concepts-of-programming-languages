@@ -481,8 +481,7 @@ const expectSeveral = (isFirstChar, isLaterChar) => input => {
 const expectIdentifier = () =>
   expectSeveral(isIdentifierStartChar, isIdentifierChar);
 
-const expectSpaces = parser =>
-  expectSeveral(isSpaceChar, isSpaceChar).optional(parser);
+const expectSpaces = () => optional(expectSeveral(isSpaceChar, isSpaceChar));
 
 const expectNumber = () => expectSeveral(isDigit, isDigit);
 
@@ -526,5 +525,8 @@ export {
   isIdentifierChar,
   isSpaceChar,
   expectSeveral,
+  expectIdentifier,
+  expectSpaces,
+  expectNumber,
   maybeSpacesBefore,
 };
