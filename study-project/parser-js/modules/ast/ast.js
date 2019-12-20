@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 /**
  * The expression should have the following EBNF form:
  * ---------------------------------------------------------
@@ -15,11 +13,12 @@
 
 /**
  * Or is the logical OR Operator in an AST.
- *
- * @param lhs The AST node on the left hand side.
- * @param rhs The AST node on the right hand side.
  */
 class Or {
+  /**
+   * @param {Or | Value | And} lhs The AST node on the left hand side.
+   * @param {Or | Value | And} rhs The AST node on the right hand side.
+   */
   constructor(lhs, rhs) {
     this.lhs = lhs;
     this.rhs = rhs;
@@ -38,11 +37,12 @@ class Or {
 
 /**
  * And is the logical AND Operator in an AST.
- *
- * @param lhs The AST node on the left hand side.
- * @param rhs The AST node on the right hand side.
  */
 class And {
+  /**
+   * @param {And | Value | Not} lhs The AST node on the left hand side.
+   * @param {And | Value | Not} rhs The AST node on the right hand side.
+   */
   constructor(lhs, rhs) {
     this.lhs = lhs;
     this.rhs = rhs;
@@ -61,10 +61,11 @@ class And {
 
 /**
  * Not is the NOT operator in the AST.
- *
- * @param ex An AST node.
  */
 class Not {
+  /**
+   * @param {Value | Not | Or} ex An AST node.
+   */
   constructor(ex) {
     this.ex = ex;
   }
@@ -82,10 +83,11 @@ class Not {
 
 /**
  * Value is a boolean variable in an AST.
- *
- * @param {string} name The name of the value.
  */
 class Value {
+  /**
+   * @param {string} name The name of the value.
+   */
   constructor(name) {
     this.name = name;
   }
