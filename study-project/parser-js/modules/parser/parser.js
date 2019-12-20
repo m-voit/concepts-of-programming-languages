@@ -53,6 +53,9 @@ class Pair {
   }
 }
 
+/**
+ * Nothing class is simply nothing.
+ */
 class Nothing {}
 
 /**
