@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import { Or, And, Not, Value } from "../ast/ast";
-import { Pair, Nothing, stringToInput } from "../parser/parser";
+import { Nothing, stringToInput } from "../parser/parser";
 import {
   makeOr,
   makeAnd,
@@ -67,7 +67,7 @@ test("parseExclamationMarks", () => {
 
 describe("parseExpression", () => {
   test("!a", () => {
-    const result = parseExclamationMarks(stringToInput("!a"));
+    const result = parseExpression(stringToInput("!a"));
     const expected = new Not(new Value("a"));
 
     expect(result.result).toStrictEqual(expected);
@@ -83,7 +83,7 @@ describe("parseExpression", () => {
   });
 
   test("a|b", () => {
-    const result = parseExclamationMarks(stringToInput("a|b"));
+    const result = parseExpression(stringToInput("a|b"));
     const expected = new Or(new Value("a"), new Value("b"));
 
     expect(result.result).toStrictEqual(expected);
@@ -91,7 +91,7 @@ describe("parseExpression", () => {
   });
 
   test(" a &  b", () => {
-    const result = parseExclamationMarks(stringToInput(" a &  b"));
+    const result = parseExpression(stringToInput(" a &  b"));
     const expected = new And(new Value("a"), new Value("b"));
 
     expect(result.result).toStrictEqual(expected);
@@ -99,7 +99,7 @@ describe("parseExpression", () => {
   });
 
   test("a   ", () => {
-    const result = parseExclamationMarks(stringToInput("a   "));
+    const result = parseExpression(stringToInput("a   "));
     const expected = new Value("a");
 
     expect(result.result).toStrictEqual(expected);
@@ -107,7 +107,7 @@ describe("parseExpression", () => {
   });
 
   test("a&b&c", () => {
-    const result = parseExclamationMarks(stringToInput("a&b&c"));
+    const result = parseExpression(stringToInput("a&b&c"));
     const expected = new And(
       new Value("a"),
       new And(new Value("b"), new Value("c")),
@@ -118,7 +118,7 @@ describe("parseExpression", () => {
   });
 
   test("a&(b&c)", () => {
-    const result = parseExclamationMarks(stringToInput("a&(b&c)"));
+    const result = parseExpression(stringToInput("a&(b&c)"));
     const expected = new And(
       new Value("a"),
       new And(new Value("b"), new Value("c")),
@@ -129,7 +129,7 @@ describe("parseExpression", () => {
   });
 
   test("(a&b)&c", () => {
-    const result = parseExclamationMarks(stringToInput("(a&b)&c"));
+    const result = parseExpression(stringToInput("(a&b)&c"));
     const expected = new And(
       new And(new Value("a"), new Value("b")),
       new Value("c"),
@@ -140,7 +140,7 @@ describe("parseExpression", () => {
   });
 
   test("a|b|c", () => {
-    const result = parseExclamationMarks(stringToInput("a|b|c"));
+    const result = parseExpression(stringToInput("a|b|c"));
     const expected = new Or(
       new Value("a"),
       new Or(new Value("b"), new Value("c")),
@@ -151,7 +151,7 @@ describe("parseExpression", () => {
   });
 
   test("a|(b|c)", () => {
-    const result = parseExclamationMarks(stringToInput("a|(b|c)"));
+    const result = parseExpression(stringToInput("a|(b|c)"));
     const expected = new Or(
       new Value("a"),
       new Or(new Value("b"), new Value("c")),
@@ -162,7 +162,7 @@ describe("parseExpression", () => {
   });
 
   test("(a|b)|c", () => {
-    const result = parseExclamationMarks(stringToInput("(a|b)|c"));
+    const result = parseExpression(stringToInput("(a|b)|c"));
     const expected = new Or(
       new Or(new Value("a"), new Value("b")),
       new Value("c"),
@@ -173,7 +173,7 @@ describe("parseExpression", () => {
   });
 
   test("!a & b|c&!(d|e)", () => {
-    const result = parseExclamationMarks(stringToInput("!a & b|c&!(d|e)"));
+    const result = parseExpression(stringToInput("!a & b|c&!(d|e)"));
     const expected = new Or(
       new And(new Not(new Value("a")), new Value("b")),
       new And(new Value("c"), new Not(new Or(new Value("d"), new Value("e")))),
