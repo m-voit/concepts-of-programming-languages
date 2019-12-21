@@ -25,7 +25,7 @@ JavaScript is also event-driven and has good support for asynchronous programmin
 ### Type system
 
 JavaScript is a dynamic and weakly typed programming language, that also features duck-typing.
-Because the language is weakly typed, types are implicitly casted depending on the used operation.
+Because the language is weakly typed, types are implicitly cast depending on the used operation.
 Furthermore, the dynamic typing allows for types to change their type at runtime, when their assigned value changes.
 
 ```javascript
@@ -37,7 +37,17 @@ text = 5; // Type of text is now number.
 
 ### First class functions
 
+JavaScript has first class functions.
+A language with first class functions has to meet the following criteria:
 
+* Allow passing functions as parameters to other functions.
+* Allow functions to be return values of other functions, so that a function can return a function.
+* Allow functions to be assigned to variables.
+* Allow functions to be stored in data structures like arrays.
+
+The listed properties allow for concepts such as higher-order functions or functional composition, which both are described later.
+
+<!-- TODO Code example. -->
 
 ### Functional Composition
 
@@ -52,3 +62,5 @@ text = 5; // Type of text is now number.
 ## Summary
 
 ## References
+
+https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a (viewed 2019-12-21)
