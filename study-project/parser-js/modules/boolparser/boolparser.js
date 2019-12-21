@@ -35,7 +35,7 @@ import {
  * @returns Result.
  */
 const parseExpression = input =>
-  first(andThen(parseOr(input), optional(expectSpaces())));
+  first(andThen(parseOr(input), optional(expectSpaces)));
 
 /**
  * Parse the following grammar: Or := And ^ ("|" ^ Or)?
@@ -48,10 +48,7 @@ const parseExpression = input =>
  */
 const parseOr = input =>
   convert(
-    andThen(
-      parseAnd(input),
-      optional(second(andThen(expect("|"), parseOr))),
-    ),
+    andThen(parseAnd(input), optional(second(andThen(expect("|"), parseOr)))),
     makeOr,
   );
 
@@ -66,10 +63,7 @@ const parseOr = input =>
  */
 const parseAnd = input =>
   convert(
-    andThen(
-      parseNot(input),
-      optional(second(andThen(expect("&"), parseAnd(input)))),
-    ),
+    andThen(parseNot(input), optional(second(andThen(expect("&"), parseAnd)))),
     makeAnd,
   );
 
@@ -83,12 +77,9 @@ const parseAnd = input =>
  * @returns Result.
  */
 const parseNot = input =>
-  convert(
-    andThen(parseExclamationMarks(input), parseAtom(input)),
-    (first, second) => {
-      return makeNot(first, second);
-    },
-  );
+  convert(andThen(parseExclamationMarks, parseAtom(input)), (first, second) => {
+    return makeNot(first, second);
+  });
 
 /**
  * Parse the following grammar: "!"*
@@ -98,7 +89,7 @@ const parseNot = input =>
  *
  * @returns Result.
  */
-const parseExclamationMarks = input =>
+const parseExclamationMarks = () =>
   convert(repeated(expect("!")), argument => argument.length);
 
 /**
@@ -112,9 +103,7 @@ const parseExclamationMarks = input =>
 const parseAtom = input =>
   orElse(
     parseVariable(input),
-    second(
-      first(andThen(andThen(expect("("), parseExpression(input)), expect(")"))),
-    ),
+    second(first(andThen(andThen(expect("("), parseExpression), expect(")")))),
   );
 
 /**
@@ -126,7 +115,7 @@ const parseAtom = input =>
  * @returns Result.
  */
 const parseVariable = input =>
-  convert(maybeSpacesBefore(expectIdentifier()), function() {
+  convert(maybeSpacesBefore(expectIdentifier), () => {
     return new Value(input.text);
   });
 
