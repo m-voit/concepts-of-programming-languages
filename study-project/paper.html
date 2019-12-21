@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Compare functional programming in Go with JavaScript</title>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        
+    </head>
+    <body class="vscode-light">
+        <h1 id="compare-functional-programming-in-go-with-javascript">Compare functional programming in Go with JavaScript</h1>
+<p>This paper compares functional programming in Go with functional programming in JavaScript.
+It compares the type system, functions and functional programming in Go with JavaScript.
+Furthermore, an implementation of a parser for boolean expressions is used as a practical example to compare functional programming in the two programming languages.</p>
+<!-- Paper will answer the question what functional concepts are present in javascript and which possibilities there are. -->
+<h2 id="table-of-contents">Table of contents</h2>
+<!-- TODO -->
+<h2 id="javascript-overview">JavaScript Overview</h2>
+<p>JavaScript is a multi-paradigm programming language and a core technology of the internet.
+It is a general purpose programming language and runs in the browser as well as on the server.
+Despite often deceived as an object-oriented programming language, JavaScript also follows functional and imperative paradigms.
+JavaScript is also event-driven and has good support for asynchronous programming.</p>
+<!-- Functions -->
+<!-- Lambdas/closures -->
+<!-- Higher order functions -->
+<!-- Sum/product types -->
+<!-- Immutable types -->
+<!-- Pattern matching -->
+<!-- Monads -->
+<!-- Function literals -->
+<!-- Currying -->
+<h3 id="type-system">Type system</h3>
+<p>JavaScript is a dynamic and weakly typed programming language, that also features duck-typing.
+Because the language is weakly typed, types are implicitly cast depending on the used operation.
+Furthermore, the dynamic typing allows for types to change their type at runtime, when their assigned value changes.</p>
+<!-- TODO Code example. -->
+<pre><code class="language-javascript"><div>text = <span class="hljs-string">"Hello World!"</span>; <span class="hljs-comment">// Type of text is string.</span>
+text = <span class="hljs-number">5</span>; <span class="hljs-comment">// Type of text is now number.</span>
+</div></code></pre>
+<!-- TODO Describe why this helps with functional programming. Untyped lambda calculus. -->
+<h3 id="functions">Functions</h3>
+<h4 id="first-class-functions">First class functions</h4>
+<p>Functions in JavaScript are first class functions.
+A language with first class functions has to meet the following criteria:</p>
+<ul>
+<li>Allow passing functions as parameters to other functions.</li>
+<li>Allow functions to be return values of other functions, so that a function can return a function.</li>
+<li>Allow functions to be assigned to variables.</li>
+<li>Allow functions to be stored in data structures like arrays.</li>
+</ul>
+<p>The listed properties allow for concepts such as higher-order functions or functional composition, which both are described later.</p>
+<!-- TODO Code example. -->
+<pre><code class="language-javascript"><div><span class="hljs-comment">// Assign function to variable.</span>
+log = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">text</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(text);
+}
+
+<span class="hljs-comment">// Call variable as function with a parameter.</span>
+log(<span class="hljs-string">"Hello World!"</span>);
+</div></code></pre>
+<h4 id="higher-order-functions">Higher Order Functions</h4>
+<h4 id="functional-composition">Functional Composition</h4>
+<h4 id="pure-functions">Pure functions</h4>
+<h3 id="closures-and-lambda-expressions">Closures and Lambda Expressions</h3>
+<h2 id="parser-for-boolean-expressions">Parser for boolean expressions</h2>
+<h2 id="comparison-with-go">Comparison with Go</h2>
+<h2 id="summary">Summary</h2>
+<h2 id="references">References</h2>
+<p><a href="https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a">https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a</a> (viewed 2019-12-21)</p>
+
+    </body>
+    </html>
