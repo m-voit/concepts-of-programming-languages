@@ -5,6 +5,10 @@ It compares the type system, functions and functional programming in Go with Jav
 Furthermore, an implementation of a parser for boolean expressions is used as a practical example to compare functional programming in the two programming languages.
 <!-- Paper will answer the question what functional concepts are present in javascript and which possibilities there are. -->
 
+## Table of contents
+
+<!-- TODO -->
+
 ## JavaScript Overview
 
 JavaScript is a multi-paradigm programming language and a core technology of the internet.
@@ -28,32 +32,55 @@ JavaScript is a dynamic and weakly typed programming language, that also feature
 Because the language is weakly typed, types are implicitly cast depending on the used operation.
 Furthermore, the dynamic typing allows for types to change their type at runtime, when their assigned value changes.
 
+<!-- TODO Code example. -->
 ```javascript
 text = "Hello World!"; // Type of text is string.
 text = 5; // Type of text is now number.
 ```
 
-<!-- TODO Describe why this helps with functional programming. -->
+<!-- TODO Describe why this helps with functional programming. Untyped lambda calculus. -->
 
-### First class functions
+### Functions
 
-JavaScript has first class functions.
+#### First class functions
+
+Functions in JavaScript are first class functions.
 A language with first class functions has to meet the following criteria:
 
 * Allow passing functions as parameters to other functions.
-* Allow functions to be return values of other functions, so that a function can return a function.
+* Allow functions to be return values of other functions, so that functions can return functions.
 * Allow functions to be assigned to variables.
 * Allow functions to be stored in data structures like arrays.
 
 The listed properties allow for concepts such as higher-order functions or functional composition, which both are described later.
 
 <!-- TODO Code example. -->
+```javascript
+// Assign function to variable.
+log = function(text) {
+  console.log(text);
+}
 
-### Functional Composition
+// Call variable as function with a parameter.
+log("Hello World!");
+```
+
+#### Higher Order Functions
+
+JavaScript also supports higher order functions.
+Higher order functions are functions that accept functions as its arguments.
+
+#### Functional Composition
+
+#### Pure functions
+
+
 
 ### Closures and Lambda Expressions
 
-### Higher Order Functions
+### Immutability
+
+<!-- ES6 const keyword -->
 
 ## Parser for boolean expressions
 
