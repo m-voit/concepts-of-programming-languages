@@ -88,6 +88,7 @@ function(sum) {
 }
 ```
 
+
 #### Function composition
 
 Function composition
@@ -101,9 +102,13 @@ f(g());
 
 #### Pure functions
 
-Pure functions are functions with no side effects.
+Pure functions are functions that have no side effects.
+This means a function, given the same input, always produces the same output.
+To achieve this a pure function only uses its input and doesn't mutate internal state.
 
 ### Closures and Lambda Expressions
+
+Closures are needed.
 
 <!-- ES6 arrow functions -->
 
@@ -114,6 +119,10 @@ const sum = (arg1, arg2) => {
 ```
 
 ### Immutability
+
+Immutability as desired by functional programming can't be achieved in JavaScript.
+Although it's possible to create constructs that are sort of immutable, there is no true immutability like in Haskell or F#.
+ECMA Script 6 introduced the `const` keyword, that allows to define constant variables.
 
 <!-- ES6 const keyword -->
 
@@ -161,3 +170,4 @@ class Or {
 
 - <https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a> (viewed 2019-12-21)
 - <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures> (viewed 2019-12-23)
+- Mastering Javascript Functional Programming, Federico Kereki, Packt Publishing, 2017-12-29
