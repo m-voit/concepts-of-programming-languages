@@ -15,6 +15,7 @@ JavaScript is a multi-paradigm programming language and a core technology of the
 It is a general purpose programming language and runs in the browser as well as on the server.
 Despite often deceived as an object-oriented programming language, JavaScript also follows functional and imperative paradigms.
 JavaScript is also event-driven and has good support for asynchronous programming.
+However, to stay in the scope of this paper, we will concentrate on the functional aspects of JavaScript, which will be presented in the following paragraphs.
 
 <!-- Functions -->
 <!-- Lambdas/closures -->
@@ -38,13 +39,18 @@ text = "Hello World!"; // Type of text is string.
 text = 5; // Type of text is now number.
 ```
 
+In the context of functional programming, the dynamic and weakly typing of JavaScript allows writing reusable functions that can accept any input.
+
 <!-- TODO Describe why this helps with functional programming. Untyped lambda calculus. -->
 
 ### Functions
 
+An important part of functional programming are of course functions and their support in the programming language.
+As we are taking a look at JavaScript, we will see how JavaScript supports several important functional programming concepts.
+
 #### First class functions
 
-Functions in JavaScript are first class functions.
+First class functions are the foundation of supporting functional paradigms in a programming language.
 A language with first class functions has to meet the following criteria:
 
 * Allow passing functions as parameters to other functions.
@@ -52,7 +58,9 @@ A language with first class functions has to meet the following criteria:
 * Allow functions to be assigned to variables.
 * Allow functions to be stored in data structures like arrays.
 
-The listed properties allow for concepts such as higher-order functions or functional composition, which both are described later.
+The listed properties also allow for concepts such as higher-order functions or functional composition, which both are described later.
+In JavaScript, all the mentioned properties are supported.
+Therefore, functions in JavaScript are first class functions and are treated like first-class citizens in the programming language.
 
 <!-- TODO Code example. -->
 ```javascript
@@ -67,16 +75,20 @@ log("Hello World!");
 
 #### Higher Order Functions
 
-JavaScript also supports higher order functions.
-Higher order functions are functions that accept functions as its arguments.
+Higher order functions are functions that accept other functions arguments or return a function as result.
 
-#### Functional Composition
+
+#### Function composition
+
+Function composition
 
 #### Pure functions
 
 
 
 ### Closures and Lambda Expressions
+
+<!-- ES6 arrow functions -->
 
 ### Immutability
 
@@ -90,4 +102,4 @@ Higher order functions are functions that accept functions as its arguments.
 
 ## References
 
-https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a (viewed 2019-12-21)
+<https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a> (viewed 2019-12-21)
