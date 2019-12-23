@@ -3,12 +3,12 @@
 import { Or, And, Not, Value } from "../ast/ast";
 import { Nothing, stringToInput } from "../parser/parser";
 import {
-  makeOr,
-  makeAnd,
   makeNot,
-  parseVariable,
+  makeAnd,
+  makeOr,
   parseExpression,
   parseExclamationMarks,
+  parseVariable,
 } from "./boolparser";
 
 test("makeOr", () => {
