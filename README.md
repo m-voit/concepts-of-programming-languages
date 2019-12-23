@@ -47,4 +47,4 @@ Master of Informatics course at Rosenheim Technical University of Applied Scienc
 
 - JS Klassen benutzen in Ordnung? Ähnlich wie structs in go fp parser.
 
-- Keine Eingabemöglichkeit
+- Keine Eingabemöglichkeit nötig.
