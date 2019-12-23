@@ -87,32 +87,7 @@ const expectCodePoint = expectedCodePoint => input => {
 };
 
 /**
- * Fail is a failing parser.
- *
- * @param {Input} input
- * @returns Result.
- */
-const fail = input => new Result(null, input);
-
-/**
- * Expect exactly one character in the Input that does not
- * appear in the forbiddenCodePoints.
- *
- * @param {string[]} forbiddenCodePoints
- * @returns Result.
- */
-const expectNotCodePoint = forbiddenCodePoints => input => {
-  forbiddenCodePoints.forEach(forbiddenCodePoint => {
-    if (input.currentCodePoint() === forbiddenCodePoint) {
-      return new Result(null, input);
-    }
-  });
-
-  return new Result(input.currentCodePoint(), input.remainingInput());
-};
-
-/**
- * ExpectCodePoints expects exactly the code points from the array
+ * Expect exactly the code points from the array
  * expectedCodePoints at the beginning of the Input in the given order.
  * If the Input begins with these code points then expectedCodePoints will
  * be the result of the parse.
@@ -128,7 +103,7 @@ const expectCodePoints = expectedCodePoints => input => {
       return new Result(null, input);
     }
 
-    const result = expectCodePoint(expectedCodePoint);
+    const result = expectCodePoint(expectedCodePoint)(remainingInput);
 
     if (result.result === null) {
       return new Result(null, remainingInput);
@@ -148,7 +123,8 @@ const expectCodePoints = expectedCodePoints => input => {
  * @param {string} expectedString
  * @returns A new Result.
  */
-const expectString = expectedString => expectCodePoints(expectedString);
+const expectString = expectedString => input =>
+  expectCodePoints(expectedString)(input);
 
 /**
  * Repeated applies a parser zero or more times and accumulates the results
@@ -175,64 +151,6 @@ const repeated = parser => input => {
 };
 
 /**
- * OnceOrMore is like Repeated except that it doesn't allow parsing zero times.
- *
- * @param {any} parser The parser.
- * @returns Result.
- */
-const onceOrMore = parser => input => {
-  const result = repeated(parser);
-
-  return result.result > 0 ? result : new Result(null, input);
-};
-
-/**
- * RepeatAndFoldLeft is like Repeat except that it doesn't produce a list.
- * You can make RepeatAndFoldLeft implement Repeat by using the empty list as
- * the accumulator and PushBack as the combine function. The accumulator is
- * the initial value and every result of the parser will be added to the
- * accumulator using the combine function. See the calculator example for
- * an idiomatic use-case.
- *
- * @param {any} parser The parser.
- * @param {any} accumulator A function.
- * @param {any} combine A function with two args.
- * @returns Result.
- */
-const repeatAndFoldLeft = (parser, accumulator, combine) => input => {
-  const result = new Result(accumulator, input);
-
-  while (result.remainingInput !== null) {
-    const oneMoreResult = parser(result.remainingInput);
-
-    if (oneMoreResult.result === null) {
-      return result;
-    }
-
-    result.result = combine(result.result, oneMoreResult.result);
-    result.remainingInput = oneMoreResult.remainingInput;
-  }
-
-  return result;
-};
-
-/**
- * Bind uses the result of a first parser to construct a second parser that
- * will parse the left-over Input from the first parser. You can use this
- * to implement syntax annotations.
- *
- * @param {any} parser The parser.
- * @param {any} constructor A function.
- * @returns Result.
- */
-const bind = (parser, constructor) => input => {
-  const firstResult = parser(input);
-  const secondParser = constructor(firstResult.result);
-
-  return secondParser(firstResult.remainingInput);
-};
-
-/**
  * OrElse uses the first parser to parse the Input. If this fails it will
  * use the second parser to parse the same Input. Only use non-overlapping
  * parsers with this combinator! For the most part it's the usual alternative
@@ -255,7 +173,7 @@ const orElse = (parser, alternativeParser) => input => {
  * GetFirst extracts the first component of a pair or
  * returns the argument if it is not a pair.
  *
- * @param {Pair} pair A pair.
+ * @param {Pair | *} pair A pair.
  * @returns Result.
  */
 function getFirst(pair) {
@@ -266,7 +184,7 @@ function getFirst(pair) {
  * GetSecond extracts the second component of a pair or
  * returns the argument if it is not a pair.
  *
- * @param {Pair} pair A pair.
+ * @param {Pair | *} pair A pair.
  * @returns Result.
  */
 function getSecond(pair) {
@@ -340,7 +258,7 @@ const second = parser => convert(parser, getSecond);
 /**
  * Optional applies the parser zero or one times to the Input.
  * If the parser itself would fail then the Optional parser can still
- * produce a successful parse with the result Nothing{}.
+ * produce a successful parse with the result Nothing.
  *
  * @param {any} parser The parser.
  * @returns Result.
@@ -376,6 +294,7 @@ const isIdentifierStartChar = firstCodePoint =>
   "_" === firstCodePoint;
 
 /**
+ * Check if codepoint is a digit.
  *
  * @param {string} codePoint
  * @returns True or false.
@@ -391,6 +310,7 @@ const isIdentifierChar = codePoint =>
   isIdentifierStartChar(codePoint) || isDigit(codePoint);
 
 /**
+ * Check if codepoint is a space char.
  *
  * @param {string} codePoint
  * @returns True or false.
@@ -401,6 +321,10 @@ const isSpaceChar = codePoint =>
   codePoint == "\r" ||
   codePoint == "\t";
 
+/**
+ * @param {any} isFirstChar
+ * @param {any} isLaterChar
+ */
 const expectSeveral = (isFirstChar, isLaterChar) => input => {
   if (null === input) {
     return new Result(null, input);
@@ -435,15 +359,13 @@ const expectIdentifier = () =>
 
 const expectSpaces = () => optional(expectSeveral(isSpaceChar, isSpaceChar));
 
-const expectNumber = () => expectSeveral(isDigit, isDigit);
-
 /**
  * Allow and ignore space characters before applying the
  * parser from the argument.
  *
  * @param {any} parser The parser.
  */
-const maybeSpacesBefore = parser => second(andThen(expectSpaces(), parser));
+const maybeSpacesBefore = parser => second(andThen(expectSpaces, parser));
 
 /**
  * Export classes to be used in other modules.
@@ -467,3 +389,87 @@ export {
   orElse,
   stringToInput,
 };
+
+// const expectNumber = () => expectSeveral(isDigit, isDigit);
+/**
+ * OnceOrMore is like Repeated except that it doesn't allow parsing zero times.
+ *
+ * @param {any} parser The parser.
+ * @returns Result.
+ */
+/*const onceOrMore = parser => input => {
+  const result = repeated(parser);
+
+  return result.result > 0 ? result : new Result(null, input);
+};*/
+
+/**
+ * RepeatAndFoldLeft is like Repeat except that it doesn't produce a list.
+ * You can make RepeatAndFoldLeft implement Repeat by using the empty list as
+ * the accumulator and PushBack as the combine function. The accumulator is
+ * the initial value and every result of the parser will be added to the
+ * accumulator using the combine function. See the calculator example for
+ * an idiomatic use-case.
+ *
+ * @param {any} parser The parser.
+ * @param {any} accumulator A function.
+ * @param {any} combine A function with two args.
+ * @returns Result.
+ */
+/*const repeatAndFoldLeft = (parser, accumulator, combine) => input => {
+  const result = new Result(accumulator, input);
+
+  while (result.remainingInput !== null) {
+    const oneMoreResult = parser(result.remainingInput);
+
+    if (oneMoreResult.result === null) {
+      return result;
+    }
+
+    result.result = combine(result.result, oneMoreResult.result);
+    result.remainingInput = oneMoreResult.remainingInput;
+  }
+
+  return result;
+};*/
+
+/**
+ * Bind uses the result of a first parser to construct a second parser that
+ * will parse the left-over Input from the first parser. You can use this
+ * to implement syntax annotations.
+ *
+ * @param {any} parser The parser.
+ * @param {any} constructor A function.
+ * @returns Result.
+ */
+/*const bind = (parser, constructor) => input => {
+  const firstResult = parser(input);
+  const secondParser = constructor(firstResult.result);
+
+  return secondParser(firstResult.remainingInput);
+};*/
+
+/**
+ * Fail is a failing parser.
+ *
+ * @param {Input} input
+ * @returns Result.
+ */
+// const fail = input => new Result(null, input);
+
+/**
+ * Expect exactly one character in the Input that does not
+ * appear in the forbiddenCodePoints.
+ *
+ * @param {string[]} forbiddenCodePoints
+ * @returns Result.
+ */
+/*const expectNotCodePoint = forbiddenCodePoints => input => {
+  forbiddenCodePoints.forEach(forbiddenCodePoint => {
+    if (input.currentCodePoint() === forbiddenCodePoint) {
+      return new Result(null, input);
+    }
+  });
+
+  return new Result(input.currentCodePoint(), input.remainingInput());
+};*/
