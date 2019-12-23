@@ -3,6 +3,7 @@
 This paper compares functional programming in Go with functional programming in JavaScript.
 It compares the type system, functions and functional programming in Go with JavaScript.
 Furthermore, an implementation of a parser for boolean expressions is used as a practical example to compare functional programming in the two programming languages.
+The main goal of this paper is to show the possibilities and the support of functional programming concepts in JavaScript.
 
 <!-- Paper will answer the question what functional concepts are present in javascript and which possibilities there are. -->
 
@@ -15,7 +16,7 @@ Furthermore, an implementation of a parser for boolean expressions is used as a 
 JavaScript is a multi-paradigm programming language and a core technology of the internet.
 It is a general purpose programming language and runs in the browser as well as on the server.
 Despite often deceived as an object-oriented programming language, JavaScript also follows functional and imperative paradigms.
-JavaScript is also event-driven and has good support for asynchronous programming.
+JavaScript is also event-driven and has good support for asynchronous programming [wik01].
 However, to stay in the scope of this paper, we will concentrate on the functional aspects of JavaScript, which will be presented in the following paragraphs.
 
 <!-- Functions -->
@@ -41,13 +42,13 @@ text = "Hello World!"; // Type of text is string.
 text = 5; // Type of text is now number.
 ```
 
-In the context of functional programming, the dynamic and weakly typing of JavaScript allows writing reusable functions that can accept any input.
-
 <!-- TODO Describe why this helps with functional programming. Untyped lambda calculus. -->
+
+In the context of functional programming, the dynamic and weakly typing of JavaScript allows for writing reusable functions that can accept any input.
 
 ### Functions
 
-An important part of functional programming are of course functions and their support in the programming language.
+An important part of functional programming capabilities of a programming language are functions and how they are supported in a programming language.
 As we are taking a look at JavaScript, we will see how JavaScript supports several important functional programming concepts.
 
 #### First class functions
@@ -79,12 +80,46 @@ sum(1, 2); // Output 3.
 #### Higher Order Functions
 
 Higher order functions are functions that accept other functions arguments or return a function as result.
+The convert function of the boolean parser for example takes two arguments.
+A parser function to be executed and a converter function to convert the result of the parser function.
+This higher order function can now be used for any desired parser function and with an arbitrary converter function.
+The result is a highly flexible and easily reusable function.
 
 ```javascript
-// Take sum function as argument.
-function(sum) {
-  // Return sum function and use parameters 1 and 2.
-  return sum(1, 2);
+/**
+ * Apply the converter to the result of a successful parse.
+ * If the parser fails then do nothing.
+ *
+ * @param {any} parser The parser
+ * @param {any} converter A function to be applied to the parser result.
+ * @returns Result.
+ */
+const convert = (parser, converter) => input => {
+  const result = parser(input);
+
+  if (result.result !== null) {
+    result.result = converter(result.result);
+  }
+
+  return result;
+};
+```
+
+The same converter function in go, looks a lot like the JavaScript implementation.
+
+```go
+// Convert applies the converter to the result of a successful parse.
+// If the parser fails then Convert won't do anything.
+func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
+	return func(Input Input) Result {
+    var result = parser(Input)
+
+		if result.Result != nil {
+			result.Result = converter(result.Result)
+    }
+
+		return result
+	}
 }
 ```
 
@@ -105,6 +140,9 @@ f(g());
 Pure functions are functions that have no side effects.
 This means a function, given the same input, always produces the same output.
 To achieve this a pure function only uses its input and doesn't mutate internal state.
+JavaScript allows writing pure functions, but doesn't have special constructs to enforce side effect free programming.
+
+### Lazy Evaluation
 
 ### Closures and Lambda Expressions
 
@@ -168,6 +206,6 @@ class Or {
 
 ## References
 
-- <https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a> (viewed 2019-12-21)
-- <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures> (viewed 2019-12-23)
-- Mastering Javascript Functional Programming, Federico Kereki, Packt Publishing, 2017-12-29
+- [med01] <https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a> (viewed 2019-12-21)
+- [moz01] <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures> (viewed 2019-12-23)
+- [fed17] Mastering Javascript Functional Programming, Federico Kereki, Packt Publishing, 2017-12-29
