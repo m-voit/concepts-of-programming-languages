@@ -2,9 +2,9 @@
   "name": "parser",
   "version": "1.0.0",
   "description": "Boolean expression parser in functional JavaScript.",
-  "main": "main.mjs",
+  "main": "main.js",
   "scripts": {
-    "start": "node main.mjs",
+    "start": "node main.js",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
