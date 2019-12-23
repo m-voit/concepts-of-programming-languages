@@ -2,9 +2,22 @@
 
 Master of Informatics course at Rosenheim Technical University of Applied Sciences.
 
+## Setup and requirements
+
+- Install Node.js version 12 or newer.
+
+## Running tests
+
+Open a terminal in the directory `./study-project/parser-js`.
+Then run one of the following npm scripts.
+
+- `npm install` to install the dependencies required for running the tests.
+- `npm run test` to execute the tests.
+- `npm run test:coverage` to get a test coverage report.
+
 ## Notes
 
-- To run a local go file use `Ctrl + F5` or open the debug menu and use "Start Without Debugging"
+- To run a local go file in Visual Studio code, use `Ctrl + F5` or open the debug menu and use "Start Without Debugging".
 
 ## Seminar paper
 
@@ -41,10 +54,7 @@ Master of Informatics course at Rosenheim Technical University of Applied Scienc
 - Is npm as "build" tool ok?
 - High level overview over functional programming in go vs js.
 - Only use boolparser as skeleton for the paper.
-
 - Live Code/Beispiele in Präsentation?
 - Präsentation abgeben?
-
 - JS Klassen benutzen in Ordnung? Ähnlich wie structs in go fp parser.
-
 - Keine Eingabemöglichkeit nötig.
