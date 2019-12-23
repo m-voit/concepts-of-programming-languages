@@ -58,3 +58,5 @@ Then run one of the following npm scripts.
 - Präsentation abgeben?
 - JS Klassen benutzen in Ordnung? Ähnlich wie structs in go fp parser.
 - Keine Eingabemöglichkeit nötig.
+- npm install, npm run und npm test ok? Darf installiertes nodejs vorrausgesetzt werden?
+- Wie soll Parser Eingaben entegegennehmen?
