@@ -89,8 +89,8 @@ const parseNot = input =>
  *
  * @returns Result.
  */
-const parseExclamationMarks = () =>
-  convert(repeated(expect("!")), argument => argument.length);
+const parseExclamationMarks = input =>
+  convert(repeated(expect("!")), () => input.length);
 
 /**
  * Parse the followiong grammar: Atom := Variable | "(" ^ Expression ^ ")"
@@ -180,15 +180,10 @@ const expect = string => maybeSpacesBefore(expectString(string));
  * Export functions.
  */
 export {
-  parseExpression,
-  parseOr,
-  parseAnd,
-  parseNot,
-  parseExclamationMarks,
-  parseAtom,
-  parseVariable,
   makeNot,
   makeAnd,
   makeOr,
-  expect,
+  parseExpression,
+  parseExclamationMarks,
+  parseVariable,
 };
