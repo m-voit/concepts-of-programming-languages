@@ -35,7 +35,7 @@ import {
  * @returns Result.
  */
 const parseExpression = input =>
-  first(andThen(parseOr(input), optional(expectSpaces)));
+  first(andThen(parseOr, optional(expectSpaces)))(input);
 
 /**
  * Parse the following grammar: Or := And ^ ("|" ^ Or)?
@@ -48,9 +48,9 @@ const parseExpression = input =>
  */
 const parseOr = input =>
   convert(
-    andThen(parseAnd(input), optional(second(andThen(expect("|"), parseOr)))),
+    andThen(parseAnd, optional(second(andThen(expect("|"), parseOr)))),
     makeOr,
-  );
+  )(input);
 
 /**
  * Parse the following grammar: And := Not ^ ("&" ^ And)?
@@ -63,9 +63,9 @@ const parseOr = input =>
  */
 const parseAnd = input =>
   convert(
-    andThen(parseNot(input), optional(second(andThen(expect("&"), parseAnd)))),
+    andThen(parseNot, optional(second(andThen(expect("&"), parseAnd)))),
     makeAnd,
-  );
+  )(input);
 
 /**
  * Parse the following grammar: Not := "!"* ^ Atom
@@ -77,9 +77,9 @@ const parseAnd = input =>
  * @returns Result.
  */
 const parseNot = input =>
-  convert(andThen(parseExclamationMarks, parseAtom(input)), (first, second) => {
+  convert(andThen(parseExclamationMarks, parseAtom), (first, second) => {
     return makeNot(first, second);
-  });
+  })(input);
 
 /**
  * Parse the following grammar: "!"*
@@ -90,7 +90,7 @@ const parseNot = input =>
  * @returns Result.
  */
 const parseExclamationMarks = input =>
-  convert(repeated(expect("!")), () => input.length);
+  convert(repeated(expect("!")), arg => arg.length)(input);
 
 /**
  * Parse the followiong grammar: Atom := Variable | "(" ^ Expression ^ ")"
@@ -102,9 +102,9 @@ const parseExclamationMarks = input =>
  */
 const parseAtom = input =>
   orElse(
-    parseVariable(input),
+    parseVariable,
     second(first(andThen(andThen(expect("("), parseExpression), expect(")")))),
-  );
+  )(input);
 
 /**
  * Parse the following grammar: Variable := [a-zA-Z_][a-zA-Z_0-9]*
@@ -117,10 +117,10 @@ const parseAtom = input =>
 const parseVariable = input =>
   convert(maybeSpacesBefore(expectIdentifier), () => {
     return new Value(input.text);
-  });
+  })(input);
 
 /**
- * Wrap the node into num ast.Not nodes.
+ * Wrap the node into Not nodes.
  *
  * @param {number} number
  * @param {any} node
@@ -131,10 +131,10 @@ const makeNot = (number, node) => {
 };
 
 /**
- * Take a Pair of ast.Node as an argument and return an
- * ast.Node. If the second component of the pair is equal to Nothing{} then it
- * returns the first component of the Pair. If the second component is a Node
- * then makeAnd will create an ast.And node containing the first and the second
+ * Take a Pair of Nodes as an argument and return Node.
+ * If the second component of the pair is equal to Nothing then return
+ * the first component of the Pair. If the second component is a Node
+ * then create an And node containing the first and the second
  * component of the Pair as sub-nodes.
  *
  * @param {any} first
@@ -150,10 +150,10 @@ const makeAnd = (first, second) => {
 };
 
 /**
- * Take a Pair of ast.Node as an argument and return an
- * ast.Node. If the second component of the pair is equal to Nothing{} then it
- * returns the first component of the Pair. If the second component is a Node
- * then makeOr will create an ast.Or node containing the first and the second
+ * Take a Pair of Nodes as an argument and return a Node.
+ * If the second component of the pair is equal to Nothing{} then return
+ * the first component of the Pair. If the second component is a Node
+ * then create an Or node containing the first and the second
  * component of the Pair as sub-nodes.
  *
  * @param {any} first
