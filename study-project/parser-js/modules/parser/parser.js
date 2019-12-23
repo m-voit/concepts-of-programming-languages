@@ -208,6 +208,7 @@ const repeatAndFoldLeft = (parser, accumulator, combine) => input => {
     if (oneMoreResult.result === null) {
       return result;
     }
+
     result.result = combine(result.result, oneMoreResult.result);
     result.remainingInput = oneMoreResult.remainingInput;
   }
@@ -453,31 +454,16 @@ export { Pair, Nothing };
  * Export functions to be used in other modules.
  */
 export {
-  expectCodePoint,
-  expectCodePoints,
-  expectNotCodePoint,
-  fail,
-  expectString,
-  repeated,
-  onceOrMore,
-  repeatAndFoldLeft,
-  bind,
-  orElse,
-  getFirst,
-  getSecond,
-  andThen,
-  convert,
   first,
   second,
+  andThen,
   optional,
-  stringToInput,
-  isIdentifierStartChar,
-  isDigit,
-  isIdentifierChar,
-  isSpaceChar,
-  expectSeveral,
   expectIdentifier,
   expectSpaces,
-  expectNumber,
+  expectString,
+  convert,
+  repeated,
   maybeSpacesBefore,
+  orElse,
+  stringToInput,
 };
