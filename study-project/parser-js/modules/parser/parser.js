@@ -302,11 +302,11 @@ const andThen = (parser, secondParser) => input => {
 };
 
 /**
- * Convert applies the converter to the result of a successful parse.
- * If the parser fails then Convert won't do anything.
+ * Apply the converter to the result of a successful parse.
+ * If the parser fails then do nothing.
  *
  * @param {any} parser The parser
- * @param {any} converter A function with two arguments.
+ * @param {any} converter A function to be applied to the parser result.
  * @returns Result.
  */
 const convert = (parser, converter) => input => {
