@@ -1,4 +1,4 @@
-name: Node CI
+name: node-ci
 
 on: [push]
 
@@ -15,6 +15,7 @@ jobs:
         node-version: 12.x
     - name: npm install and test
       run: |
+        cd ./study-project/parser-js
         npm ci
         npm test
       env:
