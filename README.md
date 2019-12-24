@@ -1,5 +1,7 @@
 # Concepts of programming languages
 
+![](https://github.com/m-voit/concepts-of-programming-languages/workflows/node-ci/badge.svg)
+
 Master of Informatics course at Rosenheim Technical University of Applied Sciences.
 
 ## Setup and requirements
