@@ -127,10 +127,10 @@ const expectString = expectedString => input =>
   expectCodePoints(expectedString)(input);
 
 /**
- * Repeated applies a parser zero or more times and accumulates the results
- * of the parses in a list. This parse always produces a non-nil result.
+ * Apply the parser zero or more times and accumulate the results
+ * of the parses in a list. This parse always produces a non-null result.
  *
- * @param {any} parser
+ * @param {any} parser The parser.
  * @returns A new Result.
  */
 const repeated = parser => input => {
@@ -151,8 +151,8 @@ const repeated = parser => input => {
 };
 
 /**
- * OrElse uses the first parser to parse the Input. If this fails it will
- * use the second parser to parse the same Input. Only use non-overlapping
+ * Use the first parser to parse the Input. If this fails use the second
+ * parser to parse the same Input. Only use non-overlapping
  * parsers with this combinator! For the most part it's the usual alternative
  * except that it's first-come, first-served: if the first parser succeeds,
  * then it will not attempt to use the second parser and there's no
@@ -170,35 +170,49 @@ const orElse = (parser, alternativeParser) => input => {
 };
 
 /**
- * GetFirst extracts the first component of a pair or
- * returns the argument if it is not a pair.
+ * Extract the first component of a pair or
+ * return the argument if it is not a pair.
  *
- * @param {Pair | *} pair A pair.
- * @returns Result.
+ * @param {Pair | any} pair A pair.
+ * @returns An new Result.
  */
-function getFirst(pair) {
-  return pair instanceof Pair ? pair.first : pair;
-}
+const getFirst = pair => (pair instanceof Pair ? pair.first : pair);
 
 /**
- * GetSecond extracts the second component of a pair or
- * returns the argument if it is not a pair.
+ * Extract the second component of a pair or
+ * return the argument if it is not a pair.
  *
- * @param {Pair | *} pair A pair.
- * @returns Result.
+ * @param {Pair | any} pair A pair.
+ * @returns An new Result.
  */
-function getSecond(pair) {
-  return pair instanceof Pair ? pair.second : pair;
-}
+const getSecond = pair => (pair instanceof Pair ? pair.second : pair);
 
 /**
- * AndThen applies the firstParser to the Input and then the
+ * Extract the first component of the result of a successful parse.
+ * If the parser fails then do nothing.
+ *
+ * @param {any} parser The parser
+ * @returns A new Result.
+ */
+const first = parser => convert(parser, getFirst);
+
+/**
+ * Extract the second component of the result of a successful parse.
+ * If the parser fails then do nothing.
+ *
+ * @param {any} parser The parser.
+ * @returns A new Result.
+ */
+const second = parser => convert(parser, getSecond);
+
+/**
+ * Apply the firstParser to the Input and then the
  * secondParser. The result will be a Pair containing the results
  * of both parsers.
  *
  * @param {any} parser The parser to apply first.
  * @param {any} secondParser The parser to apply second.
- * @returns Result.
+ * @returns A new Result.
  */
 const andThen = (parser, secondParser) => input => {
   const firstResult = parser(input);
@@ -223,9 +237,9 @@ const andThen = (parser, secondParser) => input => {
  * Apply the converter to the result of a successful parse.
  * If the parser fails then do nothing.
  *
- * @param {any} parser The parser
+ * @param {any} parser The parser.
  * @param {any} converter A function to be applied to the parser result.
- * @returns Result.
+ * @returns A new Result.
  */
 const convert = (parser, converter) => input => {
   const result = parser(input);
@@ -238,30 +252,12 @@ const convert = (parser, converter) => input => {
 };
 
 /**
- * First extracts the first component of the result of a successful parse.
- * If the parser fails then First won't do anything.
- *
- * @param {any} parser The parser
- * @returns Result.
- */
-const first = parser => convert(parser, getFirst);
-
-/**
- * Second extracts the second component of the result of a successful parse.
- * If the parser fails then Second won't do anything.
- *
- * @param {any} parser The parser.
- * @returns Result.
- */
-const second = parser => convert(parser, getSecond);
-
-/**
- * Optional applies the parser zero or one times to the Input.
+ * Apply the parser zero or one times to the Input.
  * If the parser itself would fail then the Optional parser can still
  * produce a successful parse with the result Nothing.
  *
  * @param {any} parser The parser.
- * @returns Result.
+ * @returns A new Result.
  */
 const optional = parser => input => {
   const result = parser(input);
@@ -275,7 +271,7 @@ const optional = parser => input => {
 };
 
 /**
- * Convert a string to an in input class instance.
+ * Convert a string to an input class instance.
  *
  * @param {string} text
  * @returns A new input class instance.
@@ -283,7 +279,7 @@ const optional = parser => input => {
 const stringToInput = text => new Input(text, 0);
 
 /**
- * Check if the provided first code point is the identifier start char.
+ * Check if firstCodePoint is the identifierStartChar.
  *
  * @param {string} firstCodePoint
  * @returns True or false.
@@ -323,10 +319,10 @@ const isSpaceChar = codePoint =>
 
 /**
  * Accept the first code point from the Input if isFirstChar
- * returns true. After reading the first character, it takes all following code
- * points as long as they satisfy isLaterChar. It stops parsing the Input at the
- * first code point that doesn't satisfy isLaterChar. ExpectSeveral will only
- * fail if the first character from the Input doesn't satisfy isFirstChar!
+ * returns true. After reading the first character, take all following code
+ * points as long as they satisfy isLaterChar. Stop parsing the Input at the
+ * first code point that doesn't satisfy isLaterChar. Only fails if the first
+ * character from the Input doesn't satisfy isFirstChar!
  *
  * @param {any} isFirstChar A function.
  * @param {any} isLaterChar A function.
