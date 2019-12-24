@@ -3,7 +3,7 @@
 This paper compares functional programming in Go with functional programming in JavaScript.
 It compares the type system, functions and functional programming in Go with JavaScript.
 Furthermore, an implementation of a parser for boolean expressions is used as a practical example to compare functional programming in the two programming languages.
-The main goal of this paper is to show the possibilities and the support of functional programming concepts in JavaScript.
+The main goal of this paper is to show the possibilities and support of functional programming concepts in JavaScript.
 
 ## Table of contents
 
@@ -22,7 +22,10 @@ However, to stay in the scope of this paper, we will concentrate on the function
 
 ## Parser for boolean expressions
 
-The parser parses boolean expressions with the following EBNF form.
+The parser for boolean expressions is a practical example to compare functional programming in Go and JavaScript.
+It is implemented using functional programming concepts and will be used to provide code examples for various functional programming aspects discussed later.
+Generally speaking the parser is built using parser combinators.
+The parser parses boolean expressions with the following EBNF grammar.
 
 ```
 <expression> ::= <term> { <or> <term> }
@@ -34,8 +37,8 @@ The parser parses boolean expressions with the following EBNF form.
 <var> ::= '[a-zA-Z0-9]*'
 ```
 
-A valid expression would be `A & B | !C` which means A and B or not C.
-Consists of an ast, parser and boolean parser.
+A valid expression would be `A & B | !C`.
+Depending on the values of A, B and C, which can be true or false, the parser determines the result of the expression.
 
 ## Functional programming concepts
 
@@ -57,8 +60,8 @@ text = 5; // Type of text is now number.
 ```
 
 In go the type system doesn't have generic types, so we have to use an empty interface to simulate an `any` type.
-This makes the code more verbose and less readable.
-So this is no part where the language shines.
+This makes the code more verbose and less readable than JavaScript code.
+So this is no part where Go shines.
 However, by using empty interfaces in go, it's possible to write flexible and reusable functions.
 
 ```go
@@ -121,7 +124,7 @@ const convert = (parser, converter) => input => {
 
 In Go, the converter function looks similar to the JavaScript implementation.
 This is the case, because Go has similar support for higher-order functions as JavaScript.
-The main differences between the Go and the JavaScript implementation are the empty interfaces to satisfy the Go compiler and the higher verbosity of the Go code.
+The main differences between the Go and the JavaScript implementation are the empty interfaces to satisfy the Go type system and the higher verbosity of the Go code.
 
 ```go
 // Convert applies the converter to the result of a successful parse.
@@ -163,6 +166,9 @@ JavaScript allows writing pure functions, but doesn't have special constructs to
 ### Lazy evaluation
 
 Lazy evaluation is a
+
+No lazy evaluation in javascript.
+No lazy evaluation in go.
 
 ### Closures and Lambda Expressions
 
