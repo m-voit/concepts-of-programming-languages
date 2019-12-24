@@ -4,7 +4,7 @@ Master of Informatics course at Rosenheim Technical University of Applied Scienc
 
 ## Setup and requirements
 
-- Install Node.js version 12 or newer. Older versions may work, but were not tested.
+- Install Node.js 12 or newer. Older versions may work, but were not tested.
 
 ## Usage
 
