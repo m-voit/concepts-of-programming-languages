@@ -97,6 +97,8 @@ var ExpectSpaces Parser = ExpectSeveral(isSpaceChar, isSpaceChar).Optional()
 ### Higher-order functions
 
 Higher-order functions are functions that accept other functions arguments or return a function as result.
+As discussed, JavaScript has first class functions, which allows using higher-order functions.
+
 The convert function of the boolean parser for example takes two arguments.
 A parser function to be executed and a converter function to convert the result of the parser function.
 This higher order function can now be used for any desired parser function and with an arbitrary converter function.
@@ -158,21 +160,28 @@ In Go, it requires you to use empty interfaces.
 
 ### Pure functions
 
-Pure functions are functions that have no side effects.
-This means a function, given the same input, always produces the same output.
-To achieve this a pure function only uses its input and doesn't mutate internal state.
+Pure functions are functions that have no side effects and no hidden inner state.
+This means, a function, given the same input, always produces the same output.
+To achieve this a pure function only uses its input and doesn't use or mutate internal state.
 JavaScript allows writing pure functions, but doesn't have special constructs to enforce side effect free programming.
+
+The same holds true for Go.
+Like in JavaScript, it's possible writing pure and side effect free functions in Go, but there are no special constructs to enforce this.
+
+Therefore, pure functions are possible in both languages, but it's in the hand of the programmer writing them.
 
 ### Lazy evaluation
 
-Lazy evaluation is a
+There are two ways to evaluate functions, eager and lazy evaluation.
+Programming languages that use eager evaluation, evaluate a function as soon as it's assigned or defined.
+Lazy evaluation, on the other hand, means that functions are evaluated when they are executed, which may happen much later than the assignment.
 
-No lazy evaluation in javascript.
-No lazy evaluation in go.
+Both, Go and JavaScript, use eager evaluation for functions.
+<!-- TODO Why is this relevant for functional programming -->
 
 ### Closures and Lambda Expressions
 
-Closures are needed.
+Closures and lambda expression, alternatively anonymous functions,
 
 <!-- ES6 arrow functions -->
 
@@ -184,15 +193,20 @@ const sum = (arg1, arg2) => {
 
 ### Immutability
 
-Immutability as desired by functional programming can't be achieved in JavaScript.
-Although it's possible to create constructs that are sort of immutable, there is no true immutability like in true function programming languages.
+True immutability as desired by functional programming can't be achieved in JavaScript.
+Although it's possible to create constructs that are sort of immutable, there is no true immutability like in functional only programming languages.
 In JavaScript there are some ways to achieve immutability like the `const` keyword, introduced with ES6, that allows to define constant variables.
+While `const` allows defining constant primitive types as strings, objects created with the `const` keyword are still mutable.
+This is possible, because properties of constant objects, can still be reassigned after creation.
 
-<!-- ES6 const keyword -->
+<!-- Object deep freeze. -->
 
 ```javascript
 const a = "Hello";
-a = "World"; // Throws an error.
+a = "World"; // Not possible.
+
+const a = {name: "Hello"};
+a.name = "World"; // Still possible.
 ```
 
 ### Pattern matching
