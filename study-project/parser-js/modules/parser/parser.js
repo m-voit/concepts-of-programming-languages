@@ -322,8 +322,14 @@ const isSpaceChar = codePoint =>
   codePoint == "\t";
 
 /**
- * @param {any} isFirstChar
- * @param {any} isLaterChar
+ * Accept the first code point from the Input if isFirstChar
+ * returns true. After reading the first character, it takes all following code
+ * points as long as they satisfy isLaterChar. It stops parsing the Input at the
+ * first code point that doesn't satisfy isLaterChar. ExpectSeveral will only
+ * fail if the first character from the Input doesn't satisfy isFirstChar!
+ *
+ * @param {any} isFirstChar A function.
+ * @param {any} isLaterChar A function.
  */
 const expectSeveral = (isFirstChar, isLaterChar) => input => {
   if (null === input) {
@@ -354,9 +360,15 @@ const expectSeveral = (isFirstChar, isLaterChar) => input => {
   return new Result(builder, remainingInput);
 };
 
+/**
+ * Parse [a-zA-Z_][a-zA-Z0-9_]* from the Input.
+ */
 const expectIdentifier = () =>
   expectSeveral(isIdentifierStartChar, isIdentifierChar);
 
+/**
+ * Parse [ \t\n\r]* from the Input.
+ */
 const expectSpaces = () => optional(expectSeveral(isSpaceChar, isSpaceChar));
 
 /**
