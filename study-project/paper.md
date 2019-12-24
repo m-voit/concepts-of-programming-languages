@@ -37,6 +37,11 @@ The parser parses boolean expressions with the following EBNF form.
 A valid expression would be `A & B | !C` which means A and B or not C.
 Consists of an ast, parser and boolean parser.
 
+## Functional programming concepts
+
+An important part of functional programming capabilities of a programming language are functions and how they are supported in a programming language.
+As we are taking a look at JavaScript, we will see how JavaScript supports several important functional programming concepts.
+
 ### Type system
 
 JavaScript is a dynamic and weakly typed programming language, that also features duck-typing.
@@ -51,12 +56,16 @@ text = "Hello World!"; // Type of text is string.
 text = 5; // Type of text is now number.
 ```
 
-### Functional programming concepts
+In go the type system doesn't have generic types, so we have to use an empty interface to simulate an `any` type.
+This makes the code more verbose and less readable.
+So this is no part where the language shines.
+However, by using empty interfaces in go, it's possible to write flexible and reusable functions.
 
-An important part of functional programming capabilities of a programming language are functions and how they are supported in a programming language.
-As we are taking a look at JavaScript, we will see how JavaScript supports several important functional programming concepts.
+```go
+TODO
+```
 
-#### First class functions
+### First class functions
 
 First class functions are the foundation of supporting functional paradigms in a programming language.
 A language with first class functions has to meet the following criteria:
@@ -82,7 +91,7 @@ const expectSpaces = () => optional(expectSeveral(isSpaceChar, isSpaceChar));
 var ExpectSpaces Parser = ExpectSeveral(isSpaceChar, isSpaceChar).Optional()
 ```
 
-#### Higher-order functions
+### Higher-order functions
 
 Higher-order functions are functions that accept other functions arguments or return a function as result.
 The convert function of the boolean parser for example takes two arguments.
@@ -130,7 +139,7 @@ func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
 }
 ```
 
-#### Function composition
+### Function composition
 
 Function composition is a concept that allows to build complex functions out of one or more simple functions.
 Working in JS because of the type system.
@@ -144,7 +153,7 @@ f(g());
 
 In Go, it requires you to use empty interfaces.
 
-#### Pure functions
+### Pure functions
 
 Pure functions are functions that have no side effects.
 This means a function, given the same input, always produces the same output.
