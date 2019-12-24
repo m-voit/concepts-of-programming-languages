@@ -4,9 +4,9 @@ Master of Informatics course at Rosenheim Technical University of Applied Scienc
 
 ## Setup and requirements
 
-- Install Node.js version 12 or newer.
+- Install Node.js version 12 or newer. Older versions may work, but were not tested.
 
-## Running tests
+## Usage
 
 Open a terminal in the directory `./study-project/parser-js`.
 Then run one of the following npm scripts.
@@ -15,9 +15,9 @@ Then run one of the following npm scripts.
 - `npm run test` to execute the tests.
 - `npm run test:coverage` to get a test coverage report.
 
-## Notes
+## Go
 
-- To run a local go file in Visual Studio code, use `Ctrl + F5` or open the debug menu and use "Start Without Debugging".
+- To run a local go files in Visual Studio code, use `Ctrl + F5` or open the debug menu and use `Start Without Debugging`.
 
 ## Seminar paper
 
@@ -41,6 +41,8 @@ Then run one of the following npm scripts.
 - Vergleich des TypSystem, wo bringt das im funktionalen Kontext Vor- oder Nachteile.
 - In erster Linie funktionale Aspekte von JavaScript herausstellen und mit Go vergleichen.
 - Was kann in JS funktional machen und wie funktioniert das.
+- Keine Eingabemöglichkeit nötig.
+- Node.js bzw. npm darf vorrausgesetzt werden.
 
 ## Presentation
 
@@ -51,12 +53,6 @@ Then run one of the following npm scripts.
 
 ## Questions
 
-- Is npm as "build" tool ok?
 - High level overview over functional programming in go vs js.
 - Only use boolparser as skeleton for the paper.
 - Live Code/Beispiele in Präsentation?
-- Präsentation abgeben?
-- JS Klassen benutzen in Ordnung? Ähnlich wie structs in go fp parser.
-- Keine Eingabemöglichkeit nötig.
-- npm install, npm run und npm test ok? Darf installiertes nodejs vorrausgesetzt werden?
-- Wie soll Parser Eingaben entegegennehmen?
