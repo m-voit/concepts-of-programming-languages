@@ -3,7 +3,8 @@
 This paper compares functional programming in Go with functional programming in JavaScript.
 It compares the type system, functions and functional programming in Go with JavaScript.
 Furthermore, an implementation of a parser for boolean expressions is used as a practical example to compare functional programming in the two programming languages.
-The main goal of this paper is to show the possibilities and support of functional programming concepts in JavaScript.
+At the end of the paper there will be an evaluation and summary on how suitable JavaScript is to implement a functional parser.
+However, the main goal of this paper is to show the possibilities and support of functional programming concepts in JavaScript.
 
 ## Table of contents
 
@@ -18,13 +19,13 @@ It is a general purpose programming language and runs in the browser as well as 
 Despite often deceived as an object-oriented programming language, JavaScript also follows functional and imperative paradigms.
 JavaScript is also event-driven and has good support for asynchronous programming [wik01].
 <!-- TODO Maybe take a look at the history of js. Scheme etc. -->
-However, to stay in the scope of this paper, we will concentrate on the functional aspects of JavaScript, which will be presented in the following paragraphs.
+However, to stay within the scope of this paper, we focus on the functional aspects of JavaScript, which will be presented in the following sections.
 
 ## Parser for boolean expressions
 
 The parser for boolean expressions is a practical example to compare functional programming in Go and JavaScript.
 It is implemented using functional programming concepts and will be used to provide code examples for various functional programming aspects discussed later.
-Generally speaking the parser is built using parser combinators.
+Generally speaking the parser is built using parser combinators, which are a suited for functional programming.
 The parser parses boolean expressions with the following EBNF grammar.
 
 ```
@@ -147,7 +148,6 @@ func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
 ### Function composition
 
 Function composition is a concept that allows to build complex functions out of one or more simple functions.
-Working in JS because of the type system.
 
 ```javascript
 f(args) {}
@@ -156,7 +156,15 @@ g() {}
 f(g());
 ```
 
-In Go, it requires you to use empty interfaces.
+Function composition works good with JavaScript, especially because of the permissive type system, discussed earlier.
+It's easy in straight forward to use various functions to build complex functions with them.
+
+```go
+TODO
+```
+
+In Go, function composition requires the programmer to use empty interfaces.
+This is required, because of the Go type system as discussed earlier.
 
 ### Pure functions
 
@@ -181,9 +189,9 @@ Both, Go and JavaScript, use eager evaluation for functions.
 
 ### Closures and Lambda Expressions
 
-Closures and lambda expression, alternatively anonymous functions,
-
-<!-- ES6 arrow functions -->
+Closures and lambda expression, also called anonymous functions, are unnamed functions, often returned from another function.
+To be precise, a closure is the reference to the local state of the function, returning an anonymous function.
+Closures are found in all programming languages with first class functions.
 
 ```javascript
 const sum = (arg1, arg2) => {
@@ -191,15 +199,19 @@ const sum = (arg1, arg2) => {
 };
 ```
 
+In JavaScript lambda expressions can be written very concise with the arrow functions syntax, introduced in ES6.
+
+```go
+TODO
+```
+
+In Go lambda expressions are a bit more verbose, especially because the type system requires explicit types.
+Otherwise lambda expessions in Go are equal to lambda expressions in JavaScript.
+
 ### Immutability
 
 True immutability as desired by functional programming can't be achieved in JavaScript.
 Although it's possible to create constructs that are sort of immutable, there is no true immutability like in functional only programming languages.
-In JavaScript there are some ways to achieve immutability like the `const` keyword, introduced with ES6, that allows to define constant variables.
-While `const` allows defining constant primitive types as strings, objects created with the `const` keyword are still mutable.
-This is possible, because properties of constant objects, can still be reassigned after creation.
-
-<!-- Object deep freeze. -->
 
 ```javascript
 const a = "Hello";
@@ -208,6 +220,21 @@ a = "World"; // Not possible.
 const a = {name: "Hello"};
 a.name = "World"; // Still possible.
 ```
+
+In JavaScript there are some ways to achieve immutability like the `const` keyword, introduced with ES6, that allows to define constant variables.
+While `const` allows defining constant primitive types as strings, objects created with the `const` keyword are still mutable.
+This is possible, because properties of constant objects, can still be reassigned after creation.
+<!-- Object deep freeze. -->
+
+```go
+TODO
+```
+
+In Go immutability is quite similar to JavaScript.
+Except strings, data types in Go are by default mutable and only primitive data types like `bool` and `int` can declared to be constant.
+Immutability of composite data types like Go's `structs` is the responsibility of the developer.
+
+To sum it up, there is some support for immutability in JavaScript in Go, but not enough to satisfy the functional paradigm.
 
 ### Pattern matching
 
