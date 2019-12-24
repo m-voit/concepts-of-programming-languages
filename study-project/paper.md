@@ -192,7 +192,7 @@ No support in Go.
 
 ## Summary
 
-<!-- TODO -->
+<!-- How good is functional JavaScript suited to implement a parser? -->
 
 ## References
 
