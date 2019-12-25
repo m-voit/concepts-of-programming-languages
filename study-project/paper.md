@@ -10,15 +10,13 @@ However, the main goal of this paper is to show the possibilities and support of
 
 <!-- TODO -->
 <!-- Monads -->
-<!-- Currying -->
 
 ## JavaScript Overview
 
 JavaScript is a multi-paradigm programming language and a core technology of the internet.
 It is a general purpose programming language and runs in the browser as well as on the server.
 Despite often deceived as an object-oriented programming language, JavaScript also follows functional and imperative paradigms.
-JavaScript is also event-driven and has good support for asynchronous programming [wik01].
-
+JavaScript is also event-driven and has good support for asynchronous programming [moz01][ant16].
 <!-- TODO Maybe take a look at the history of js. Scheme etc. -->
 
 However, to stay within the scope of this paper, we focus on the functional aspects of JavaScript, which will be presented in the following sections.
@@ -71,6 +69,35 @@ However, by using empty interfaces in go, it's possible to write flexible and re
 TODO
 ```
 
+### Immutability
+
+True immutability as desired by functional programming can't be achieved in JavaScript.
+Although it's possible to create constructs that are sort of immutable, there is no true immutability like in functional only programming languages.
+
+```javascript
+const a = "Hello";
+a = "World"; // Not possible.
+
+const a = { name: "Hello" };
+a.name = "World"; // Still possible.
+```
+
+In JavaScript there are some ways to achieve immutability like the `const` keyword, introduced with ES6, that allows to define constant variables.
+While `const` allows defining constant primitive types as strings, objects created with the `const` keyword are still mutable.
+This is the case, because properties of constant objects, can still be reassigned after creation.
+
+<!-- Object deep freeze. -->
+
+```go
+TODO
+```
+
+In Go immutability is quite similar to JavaScript.
+Except strings, data types in Go are by default mutable and only primitive data types like `bool` and `int` can declared to be constant.
+Immutability of composite data types like Go's `structs` is the responsibility of the developer.
+
+To sum it up, there is some support for immutability in JavaScript in Go, but not enough to satisfy the functional paradigm.
+
 ### First class functions
 
 First class functions are the foundation of supporting functional paradigms in a programming language.
@@ -96,6 +123,27 @@ const expectSpaces = () => optional(expectSeveral(isSpaceChar, isSpaceChar));
 // ExpectSpaces parses a [ \t\n\r]* from the Input.
 var ExpectSpaces Parser = ExpectSeveral(isSpaceChar, isSpaceChar).Optional()
 ```
+
+### Closures and lambda expressions
+
+Closures and lambda expression, also called anonymous functions, are unnamed functions, often returned from another function.
+To be precise, a closure is the reference to the local state of the function, returning an anonymous function.
+Closures are found in all programming languages with first class functions [moz01].
+
+```javascript
+const sum = (arg1, arg2) => {
+  return arg1 + arg2;
+};
+```
+
+In JavaScript lambda expressions can be written very concise with the arrow functions syntax, introduced in ES6 [moz03].
+
+```go
+TODO
+```
+
+In Go lambda expressions are a bit more verbose, especially because the type system requires explicit types.
+Otherwise lambda expessions in Go are equal to lambda expressions in JavaScript.
 
 ### Higher-order functions and function composition
 
@@ -148,6 +196,7 @@ func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
 ```
 
 Function composition is a concept that allows to build complex functions out of one or more simple functions.
+<!-- Currying -->
 
 Function composition works good with JavaScript, especially because of the permissive type system, discussed earlier.
 It's easy in straight forward to use various functions to build complex functions with them.
@@ -174,67 +223,16 @@ Programming languages that use eager evaluation, evaluate a function as soon as 
 Lazy evaluation, on the other hand, means that functions are evaluated when they are executed, which may happen much later than the assignment.
 
 Both, Go and JavaScript, use eager evaluation for functions.
-
 <!-- TODO Why is this relevant for functional programming -->
-
-### Closures and lambda expressions
-
-Closures and lambda expression, also called anonymous functions, are unnamed functions, often returned from another function.
-To be precise, a closure is the reference to the local state of the function, returning an anonymous function.
-Closures are found in all programming languages with first class functions.
-
-```javascript
-const sum = (arg1, arg2) => {
-  return arg1 + arg2;
-};
-```
-
-In JavaScript lambda expressions can be written very concise with the arrow functions syntax, introduced in ES6.
-
-```go
-TODO
-```
-
-In Go lambda expressions are a bit more verbose, especially because the type system requires explicit types.
-Otherwise lambda expessions in Go are equal to lambda expressions in JavaScript.
-
-### Immutability
-
-True immutability as desired by functional programming can't be achieved in JavaScript.
-Although it's possible to create constructs that are sort of immutable, there is no true immutability like in functional only programming languages.
-
-```javascript
-const a = "Hello";
-a = "World"; // Not possible.
-
-const a = { name: "Hello" };
-a.name = "World"; // Still possible.
-```
-
-In JavaScript there are some ways to achieve immutability like the `const` keyword, introduced with ES6, that allows to define constant variables.
-While `const` allows defining constant primitive types as strings, objects created with the `const` keyword are still mutable.
-This is the case, because properties of constant objects, can still be reassigned after creation.
-
-<!-- Object deep freeze. -->
-
-```go
-TODO
-```
-
-In Go immutability is quite similar to JavaScript.
-Except strings, data types in Go are by default mutable and only primitive data types like `bool` and `int` can declared to be constant.
-Immutability of composite data types like Go's `structs` is the responsibility of the developer.
-
-To sum it up, there is some support for immutability in JavaScript in Go, but not enough to satisfy the functional paradigm.
 
 ### Pattern matching
 
 JavaScript might get it with Proposal XY.
 No support in Go.
 
-### Sum/product types
-
-JS not know yet.
+### Algebraic data types
+<!-- Sum/Product types, discriminate unions -->
+Not possible with javascript, but with typescript a javascript superset.
 No support in Go.
 
 ## Summary
