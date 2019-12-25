@@ -28,7 +28,7 @@ It is implemented using functional programming concepts and will be used to prov
 Generally speaking the parser is built using parser combinators, which are a suited for functional programming.
 The parser parses boolean expressions with the following EBNF grammar.
 
-```
+```ebnf
 <expression> ::= <term> { <or> <term> }
 <term> ::= <factor> { <and> <factor> }
 <factor> ::= <var> | <not> <factor> | (<expression>)
@@ -57,7 +57,7 @@ This is especially useful for higher order functions and function composition, b
 
 ```javascript
 text = "Hello World!"; // Type of text is string.
-text = 5; // Type of text is now number.
+text = 5; // Type of text now is number.
 ```
 
 In go the type system doesn't have generic types, so we have to use an empty interface to simulate an `any` type.
@@ -95,7 +95,7 @@ const expectSpaces = () => optional(expectSeveral(isSpaceChar, isSpaceChar));
 var ExpectSpaces Parser = ExpectSeveral(isSpaceChar, isSpaceChar).Optional()
 ```
 
-### Higher-order functions
+### Higher-order functions and function composition
 
 Higher-order functions are functions that accept other functions arguments or return a function as result.
 As discussed, JavaScript has first class functions, which allows using higher-order functions.
@@ -133,35 +133,22 @@ The main differences between the Go and the JavaScript implementation are the em
 // Convert applies the converter to the result of a successful parse.
 // If the parser fails then Convert won't do anything.
 func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
-	return func(Input Input) Result {
+  return func(Input Input) Result {
     var result = parser(Input)
 
-		if result.Result != nil {
-			result.Result = converter(result.Result)
+    if result.Result != nil {
+      result.Result = converter(result.Result)
     }
 
-		return result
-	}
+    return result
+  }
 }
 ```
 
-### Function composition
-
 Function composition is a concept that allows to build complex functions out of one or more simple functions.
-
-```javascript
-f(args) {}
-g() {}
-
-f(g());
-```
 
 Function composition works good with JavaScript, especially because of the permissive type system, discussed earlier.
 It's easy in straight forward to use various functions to build complex functions with them.
-
-```go
-TODO
-```
 
 In Go, function composition requires the programmer to use empty interfaces.
 This is required, because of the Go type system as discussed earlier.
@@ -187,7 +174,7 @@ Lazy evaluation, on the other hand, means that functions are evaluated when they
 Both, Go and JavaScript, use eager evaluation for functions.
 <!-- TODO Why is this relevant for functional programming -->
 
-### Closures and Lambda Expressions
+### Closures and lambda expressions
 
 Closures and lambda expression, also called anonymous functions, are unnamed functions, often returned from another function.
 To be precise, a closure is the reference to the local state of the function, returning an anonymous function.
@@ -223,7 +210,7 @@ a.name = "World"; // Still possible.
 
 In JavaScript there are some ways to achieve immutability like the `const` keyword, introduced with ES6, that allows to define constant variables.
 While `const` allows defining constant primitive types as strings, objects created with the `const` keyword are still mutable.
-This is possible, because properties of constant objects, can still be reassigned after creation.
+This is the case, because properties of constant objects, can still be reassigned after creation.
 <!-- Object deep freeze. -->
 
 ```go
