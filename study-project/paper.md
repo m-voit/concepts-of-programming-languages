@@ -128,7 +128,7 @@ var ExpectSpaces Parser = ExpectSeveral(isSpaceChar, isSpaceChar).Optional()
 
 Closures and lambda expression, also called anonymous functions, are unnamed functions, often returned from another function.
 To be precise, a closure is the reference to the local state of the function, returning an anonymous function.
-Closures are found in all programming languages with first class functions [moz01].
+Closures are found in all programming languages with first class functions [moz02].
 
 ```javascript
 const sum = (arg1, arg2) => {
@@ -136,7 +136,7 @@ const sum = (arg1, arg2) => {
 };
 ```
 
-In JavaScript lambda expressions can be written very concise with the arrow functions syntax, introduced in ES6 [moz03].
+In JavaScript lambda expressions can be written very concise with the arrow functions syntax, introduced in ES6 [moz04].
 
 ```go
 TODO
@@ -244,10 +244,10 @@ No support in Go.
 - [ant16] JavaScript: Functional Programming for JavaScript Developers,Ved Antani; Simon Timms; Dan Mantyla, Packt Publishing, 2016-08-31
 - [fog13] Functional JavaScript, Michael Fogus, O'Reilly Media, Inc., 2013-06-10
 - [ker17] Mastering Javascript Functional Programming, Federico Kereki, Packt Publishing, 2017-12-29
-- [med01] <https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a> (viewed 2019-12-21)
-- [moz01] <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures> (viewed 2019-12-23)
-- [moz02] <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions> (viewed 2019-12-25)
-- [moz03] <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions> (viewed 2019-12-25)
-- [moz04] <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures> (viewed 2019-12-25)
-- [moz05] <https://developer.mozilla.org/en-US/docs/Web/JavaScript> (viewed 2019-12-25)
+- [med01] Introduction to Functional JavaScript, <https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a> (viewed 2019-12-21)
+- [moz01] MDN JavaScript, <https://developer.mozilla.org/en-US/docs/Web/JavaScript> (viewed 2019-12-25)
+- [moz02] MDN Closures, <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures> (viewed 2019-12-23)
+- [moz03] MDN Functions, <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions> (viewed 2019-12-25)
+- [moz04] MDN Arrow function expressions, <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions> (viewed 2019-12-25)
+- [moz05] MDN JavaScript data types and data structures, <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures> (viewed 2019-12-25)
 - [she17] Learning Functional Programming in Go, Lex Sheehan, Packt Publishing, 2017-11-24
