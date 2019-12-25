@@ -250,4 +250,5 @@ No support in Go.
 - [moz03] MDN Functions, <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions> (viewed 2019-12-25)
 - [moz04] MDN Arrow function expressions, <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions> (viewed 2019-12-25)
 - [moz05] MDN JavaScript data types and data structures, <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures> (viewed 2019-12-25)
+- [moz06] MDN First-class Function <https://developer.mozilla.org/en-US/docs/Glossary/First-class_Function> (viewed 2019-12-25)
 - [she17] Learning Functional Programming in Go, Lex Sheehan, Packt Publishing, 2017-11-24
