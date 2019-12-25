@@ -18,7 +18,9 @@ JavaScript is a multi-paradigm programming language and a core technology of the
 It is a general purpose programming language and runs in the browser as well as on the server.
 Despite often deceived as an object-oriented programming language, JavaScript also follows functional and imperative paradigms.
 JavaScript is also event-driven and has good support for asynchronous programming [wik01].
+
 <!-- TODO Maybe take a look at the history of js. Scheme etc. -->
+
 However, to stay within the scope of this paper, we focus on the functional aspects of JavaScript, which will be presented in the following sections.
 
 ## Parser for boolean expressions
@@ -172,6 +174,7 @@ Programming languages that use eager evaluation, evaluate a function as soon as 
 Lazy evaluation, on the other hand, means that functions are evaluated when they are executed, which may happen much later than the assignment.
 
 Both, Go and JavaScript, use eager evaluation for functions.
+
 <!-- TODO Why is this relevant for functional programming -->
 
 ### Closures and lambda expressions
@@ -204,13 +207,14 @@ Although it's possible to create constructs that are sort of immutable, there is
 const a = "Hello";
 a = "World"; // Not possible.
 
-const a = {name: "Hello"};
+const a = { name: "Hello" };
 a.name = "World"; // Still possible.
 ```
 
 In JavaScript there are some ways to achieve immutability like the `const` keyword, introduced with ES6, that allows to define constant variables.
 While `const` allows defining constant primitive types as strings, objects created with the `const` keyword are still mutable.
 This is the case, because properties of constant objects, can still be reassigned after creation.
+
 <!-- Object deep freeze. -->
 
 ```go
@@ -239,6 +243,13 @@ No support in Go.
 
 ## References
 
+- [ant16] JavaScript: Functional Programming for JavaScript Developers,Ved Antani; Simon Timms; Dan Mantyla, Packt Publishing, 2016-08-31
+- [fog13] Functional JavaScript, Michael Fogus, O'Reilly Media, Inc., 2013-06-10
+- [ker17] Mastering Javascript Functional Programming, Federico Kereki, Packt Publishing, 2017-12-29
 - [med01] <https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a> (viewed 2019-12-21)
 - [moz01] <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures> (viewed 2019-12-23)
-- [fed17] Mastering Javascript Functional Programming, Federico Kereki, Packt Publishing, 2017-12-29
+- [moz02] <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions> (viewed 2019-12-25)
+- [moz03] <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions> (viewed 2019-12-25)
+- [moz04] <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures> (viewed 2019-12-25)
+- [moz05] <https://developer.mozilla.org/en-US/docs/Web/JavaScript> (viewed 2019-12-25)
+- [she17] Learning Functional Programming in Go, Lex Sheehan, Packt Publishing, 2017-11-24
