@@ -67,8 +67,12 @@ text = 5; // Type of text now is number.
 
 In go the type system doesn't have generic types, so we have to use an empty interface to simulate an `any` type.
 This makes the code more verbose and less readable than JavaScript code, while providing no benefit to the developer.
-Generally speaking, the Go type system is not tailored to functional programming and is more or less a hurdle to developer.
-However, by using empty interfaces, it's possible to write flexible and reusable functions in Go.
+Generally speaking, the Go type system is not tailored to functional programming and is more or less a hurdle to the developer.
+
+A problem of using empty interfaces to simulate generic types is a hit on performance, when doing many type conversions.
+This is no problem in the small parser example, but might become one at a larger scale and should therefore be mentioned [she17].
+
+However, by using empty interfaces, it's still possible to write flexible and reusable functions in Go.
 
 ```go
 TODO
@@ -125,8 +129,10 @@ A language with first class functions has to meet the following criteria:
 - Allow functions to be stored in data structures like arrays.
 
 The listed properties also allow for concepts such as higher-order functions and functional composition, which both are described later.
+
 In JavaScript, all the mentioned properties are supported.
 Therefore, functions in JavaScript are first class functions and are treated like first-class citizens in the programming language [moz06].
+This allows it to assign the `optional()` and the `expectSeveral()` function to the `expectSpaces` variable.
 
 ```javascript
 /**
@@ -135,7 +141,9 @@ Therefore, functions in JavaScript are first class functions and are treated lik
 const expectSpaces = () => optional(expectSeveral(isSpaceChar, isSpaceChar));
 ```
 
-The same holds true for Go, that supports first class functions as well as JavaScript.
+The same holds true for Go, that supports first class functions as well as JavaScript [she17].
+Like in JavaScript it's possible to assign the `ExpectSeveral()` and the `Optional()` function to the `ExpectSpaces` variable.
+The only difference is the chaining of the function calls instead of nesting them and the explicit `Parser` type of the variable.
 
 ```go
 // ExpectSpaces parses a [ \t\n\r]* from the Input.
@@ -150,7 +158,7 @@ However, both terms are often used interchangeably, because both concepts belong
 
 Support for closures is found in all programming languages with first class functions.
 This is the case, because closures are needed for anonymous functions to work.
-Without closures and therefore no references to the _outer_ function, that is returning the _inner_ function, the _inner_ function would stop working when being called directly [moz02].
+Without closures and therefore no references to the _outer_ function, that is returning the _inner_ function, the _inner_ function would stop working when being called directly [moz02][fog13].
 
 ```javascript
 const sum = (arg1, arg2) => {
@@ -170,7 +178,7 @@ Otherwise, lambda expessions in Go are equal to lambda expressions in JavaScript
 ### Higher-order functions and function composition
 
 Higher-order functions are functions that accept other functions as arguments or return a function as their result.
-As discussed, JavaScript has first class functions, which allows using higher-order functions.
+As discussed in the first class functions section, JavaScript has first class functions and therefore allows writing and using higher-order functions.
 
 The convert function of the boolean parser for example takes two arguments.
 A parser function to be executed and a converter function to convert the result of the parser function.
@@ -200,7 +208,7 @@ const convert = (parser, converter) => input => {
 In Go, the converter function looks similar to the JavaScript implementation.
 This is the case, because Go has similar support for higher-order functions as JavaScript.
 The main differences between the Go and the JavaScript implementation are the empty interfaces to satisfy the Go type system and the higher verbosity of the Go code.
-Again the reason for this is the different type system of JavaScript and Go as discussed earlier [med02].
+Again the reason for this is the different type system of JavaScript and Go as discussed earlier [med02][she17].
 
 ```go
 // Convert applies the converter to the result of a successful parse.
@@ -232,10 +240,10 @@ This is required, because of the Go type system as discussed earlier.
 Pure functions are functions that have no side effects and no hidden inner state.
 This means, a function, given the same input, always produces the same output.
 To achieve this a pure function only uses its input and doesn't use or mutate internal state.
-JavaScript allows writing pure functions, but doesn't have special constructs to enforce side effect free programming.
+JavaScript allows writing pure functions, but doesn't have special constructs to enforce side effect free and pure functions.
 
 The same holds true for Go.
-Like in JavaScript, it's possible writing pure and side effect free functions in Go, but there are no special constructs to enforce this.
+Like in JavaScript, it's possible writing pure and side effect free functions in Go, but there are no special constructs to enforce these concepts.
 
 Therefore, pure functions are possible in both languages, but it's in the hand of the programmer writing them.
 <!-- Referential transparency -->
@@ -253,7 +261,7 @@ Both, Go and JavaScript, use eager evaluation for functions.
 
 Implemented in Js.
 
-Not implemented in Go. [med02]
+Not implemented in Go, possible workarounds, but out of the scope of this paper. [med02][she17]
 
 ### Pattern matching
 
