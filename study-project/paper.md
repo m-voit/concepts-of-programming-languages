@@ -2,7 +2,7 @@
 
 This paper compares functional programming in Go with functional programming in JavaScript.
 It compares the type system, functions and functional programming in Go with JavaScript.
-Furthermore, an implementation of a parser for boolean expressions is used as a practical example to compare functional programming in the two programming languages.
+Furthermore, an implementation of a parser for Boolean expressions is used as a practical example to compare functional programming in the two programming languages.
 At the end of the paper there will be an evaluation and summary on how suitable JavaScript is to implement a functional parser.
 However, the main goal of this paper is to show the possibilities and support of functional programming concepts in JavaScript.
 
@@ -25,12 +25,12 @@ While being a new language, JavaScript has taken functional concepts of Scheme a
 
 However, to stay within the scope of this paper, the focus will be on the functional aspects of JavaScript. These will be presented in the following sections.
 
-## Parser for boolean expressions
+## Parser for Boolean expressions
 
-The parser for boolean expressions is a practical example to compare functional programming in Go and JavaScript.
+The parser for Boolean expressions is a practical example to compare functional programming in Go and JavaScript.
 It is implemented using functional programming concepts and will be used to provide code examples for various functional programming aspects discussed later.
 Generally speaking the parser is built using parser combinators, which are suited to be implemented with functional programming.
-The parser parses boolean expressions with the following EBNF grammar.
+The parser parses Boolean expressions with the following EBNF grammar.
 
 ```ebnf
 <expression> ::= <term> { <or> <term> }
@@ -173,14 +173,14 @@ TODO
 ```
 
 In Go lambda expressions are a bit more verbose, especially because the type system requires explicit types as mentioned in the type system section earlier.
-Otherwise, lambda expessions in Go are equal to lambda expressions in JavaScript [she17].
+Otherwise, lambda expressions in Go are equal to lambda expressions in JavaScript [she17].
 
 ### Higher-order functions and function composition
 
 Higher-order functions are functions that accept other functions as arguments or return a function as their result.
 As discussed in the first class functions section, JavaScript has first class functions and therefore allows writing and using higher-order functions.
 
-The convert function of the boolean parser for example takes two arguments.
+The convert function of the Boolean parser for example takes two arguments.
 A parser function to be executed and a converter function to convert the result of the parser function.
 This higher order function can now be used for any desired parser function and with an arbitrary converter function.
 The result is a highly flexible and easily reusable function.
@@ -264,7 +264,7 @@ Unfortunately both, Go and JavaScript, use eager evaluation for functions with n
 
 ### Recursion and tail-call optimization
 
-Implemented in Js.
+Implemented in JavaScript.
 
 Not implemented in Go, possible workarounds, but out of the scope of this paper.
 Impact on performance. [med02][she17]
@@ -276,7 +276,7 @@ No support in Go.
 
 ### Algebraic data types
 <!-- Sum/Product types, discriminate unions -->
-Not possible with javascript, but with typescript a javascript superset.
+Not possible with JavaScript, but with typescript a JavaScript superset.
 No support in Go.
 
 ## Summary
