@@ -55,10 +55,10 @@ To see how well JavaScript and Go are suited for functional programming, we will
 
 JavaScript is a dynamic and weakly typed programming language, that also features duck-typing.
 Because the language is weakly typed, types are implicitly cast depending on the used operation.
-Furthermore, the dynamic typing allows for types to change their type at runtime, when their assigned value changes.
+Furthermore, the dynamic typing allows for types to change their type at runtime, when their assigned value changes [moz05].
 
 In the context of functional programming, the dynamic and weakly typing of JavaScript allows for writing easily reusable functions.
-This is especially useful for higher order functions and function composition, because there is no need to do type casts or simulating `any` types.
+This is especially useful for higher order functions and function composition, because there is no need to do frequent type casts or using `any` types.
 
 ```javascript
 text = "Hello World!"; // Type of text is string.
@@ -66,9 +66,9 @@ text = 5; // Type of text now is number.
 ```
 
 In go the type system doesn't have generic types, so we have to use an empty interface to simulate an `any` type.
-This makes the code more verbose and less readable than JavaScript code.
-So this is no part where Go shines.
-However, by using empty interfaces in go, it's possible to write flexible and reusable functions.
+This makes the code more verbose and less readable than JavaScript code, while providing no benefit to the developer.
+Generally speaking, the Go type system is not tailored to functional programming and is more or less a hurdle to developer.
+However, by using empty interfaces, it's possible to write flexible and reusable functions in Go.
 
 ```go
 TODO
@@ -76,8 +76,11 @@ TODO
 
 ### Immutability
 
-True immutability as desired by functional programming can't be achieved in JavaScript.
-Although it's possible to create constructs that are sort of immutable, there is no true immutability like in functional only programming languages.
+Immutability is a desired property, especially in functional programming, because it reduces unintended side effects.
+
+
+Unfortunately, true immutability as desired by functional programming, can't be achieved in JavaScript.
+Although it's possible to create constructs that are sort of immutable, there is no immutability like in pure functional programming languages.
 
 ```javascript
 const a = "Hello";
@@ -91,17 +94,22 @@ In JavaScript there are some ways to achieve immutability like the `const` keywo
 While `const` allows defining constant primitive types as strings, objects created with the `const` keyword are still mutable.
 This is the case, because properties of constant objects, can still be reassigned after creation.
 
-<!-- Object deep freeze. -->
+It's also possible to _freeze_ an object after creation.
+This makes the object immutable, but still has the caveat, that it doesn't effect nested objects.
+Therefore, it's necessary to call freeze recursively on an object that should be immutable.
+
+But this is more like a workaround than true immutability provided by the language.
+Furthermore, it's error prone and may not play nicely with libraries, that expect mutable objects.
 
 ```go
 TODO
 ```
 
-In Go immutability is quite similar to JavaScript.
+In Go immutability is quite similar to JavaScript and can't be easily achieved.
 Except strings, data types in Go are by default mutable and only primitive data types like `bool` and `int` can declared to be constant.
 Immutability of composite data types like Go's `structs` is the responsibility of the developer.
 
-To sum it up, there is some support for immutability in JavaScript in Go, but not enough to satisfy the functional paradigm.
+To sum it up, there is some support for immutability in JavaScript in Go, but not by default and not easily usable.
 
 ### First class functions
 
@@ -113,7 +121,7 @@ A language with first class functions has to meet the following criteria:
 - Allow functions to be assigned to variables.
 - Allow functions to be stored in data structures like arrays.
 
-The listed properties also allow for concepts as higher-order functions and functional composition, which both are described later.
+The listed properties also allow for concepts such as higher-order functions and functional composition, which both are described later.
 In JavaScript, all the mentioned properties are supported.
 Therefore, functions in JavaScript are first class functions and are treated like first-class citizens in the programming language.
 
@@ -123,6 +131,8 @@ Therefore, functions in JavaScript are first class functions and are treated lik
  */
 const expectSpaces = () => optional(expectSeveral(isSpaceChar, isSpaceChar));
 ```
+
+The same holds true for Go, supporting first class functions as well as JavaScript.
 
 ```go
 // ExpectSpaces parses a [ \t\n\r]* from the Input.
