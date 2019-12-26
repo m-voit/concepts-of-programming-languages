@@ -44,7 +44,7 @@ The parser parses boolean expressions with the following EBNF grammar.
 
 A valid expression to be parsed by the parser would be `A & B | !C`.
 Depending on the values of A, B and C, which can be true or false, the parser determines the result of the expression.
-The expression is parsed by building an abstract syntax tree (AST), consisting of `Or`, `And`, `Not` and `Value` nodes, that mimic the EBNF grammar.
+The expression is parsed by building an abstract syntax tree (AST), consisting of `Or`, `And`, `Not` and `Value` nodes, mimicking the EBNF grammar.
 
 ## Functional programming concepts
 
@@ -92,14 +92,14 @@ a.name = "World"; // Still possible.
 
 In JavaScript there are some ways to achieve immutability like the `const` keyword, introduced with ES6, that allows to define constant variables.
 While `const` allows defining constant primitive types as strings, objects created with the `const` keyword are still mutable.
-This is the case, because properties of constant objects, can still be reassigned after creation.
+This is the case, because properties of constant objects, can still be reassigned after creation [moz07].
 
 It's also possible to _freeze_ an object after creation.
 This makes the object immutable, but still has the caveat, that it doesn't effect nested objects.
-Therefore, it's necessary to call freeze recursively on an object that should be immutable.
+Therefore, it's necessary to call freeze recursively on an object that should be immutable [moz08].
 
 But this is more like a workaround than true immutability provided by the language.
-Furthermore, it's error prone and may not play nicely with libraries, that expect mutable objects.
+Furthermore, it's error prone to developer mistakes and may not play nicely with libraries, that expect mutable objects.
 
 ```go
 TODO
@@ -132,7 +132,7 @@ Therefore, functions in JavaScript are first class functions and are treated lik
 const expectSpaces = () => optional(expectSeveral(isSpaceChar, isSpaceChar));
 ```
 
-The same holds true for Go, supporting first class functions as well as JavaScript.
+The same holds true for Go, that supports first class functions as well as JavaScript.
 
 ```go
 // ExpectSpaces parses a [ \t\n\r]* from the Input.
@@ -271,4 +271,6 @@ No support in Go.
 - [moz04] MDN Arrow function expressions, <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions> (viewed 2019-12-25)
 - [moz05] MDN JavaScript data types and data structures, <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures> (viewed 2019-12-25)
 - [moz06] MDN First-class Function <https://developer.mozilla.org/en-US/docs/Glossary/First-class_Function> (viewed 2019-12-25)
+- [moz07] MDN const <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const> (viewed 2019-12-26)
+- [moz08] MDN Object.freeze() <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze> (viewed 2019-12-26)
 - [she17] Learning Functional Programming in Go, Lex Sheehan, Packt Publishing, 2017-11-24
