@@ -17,15 +17,19 @@ JavaScript is a multi-paradigm programming language and a core technology of the
 It is a general purpose programming language and runs in the browser as well as on the server.
 Despite often deceived as an object-oriented programming language, JavaScript also follows functional and imperative paradigms.
 JavaScript is also event-driven and has good support for asynchronous programming [moz01][ant16].
-<!-- TODO Maybe take a look at the history of js. Scheme etc. -->
 
-However, to stay within the scope of this paper, we focus on the functional aspects of JavaScript, which will be presented in the following sections.
+Interestingly, the original plan of Netscape was to integrate Scheme, a Lisp dialect with functional paradigm, into their browser.
+But because of marketing reasons, it was decided, to create a new language with syntax similar to Java.
+Later the newly created language was called JavaScript and integrated into the Netscape browser.
+While being a new language, JavaScript has taken the functional concepts of Scheme and integrated them, beside the other supported paradigms.
+
+However, to stay within the scope of this paper, the focus will be on the functional aspects of JavaScript, which will be presented in the following sections.
 
 ## Parser for boolean expressions
 
 The parser for boolean expressions is a practical example to compare functional programming in Go and JavaScript.
 It is implemented using functional programming concepts and will be used to provide code examples for various functional programming aspects discussed later.
-Generally speaking the parser is built using parser combinators, which are a suited for functional programming.
+Generally speaking the parser is built using parser combinators, which are suited to be implemented with functional programming.
 The parser parses boolean expressions with the following EBNF grammar.
 
 ```ebnf
@@ -38,13 +42,14 @@ The parser parses boolean expressions with the following EBNF grammar.
 <var> ::= '[a-zA-Z0-9]*'
 ```
 
-A valid expression would be `A & B | !C`.
+A valid expression to be parsed by the parser would be `A & B | !C`.
 Depending on the values of A, B and C, which can be true or false, the parser determines the result of the expression.
+The expression is parsed by building an abstract syntax tree (AST), consisting of `Or`, `And`, `Not` and `Value` nodes, that mimic the EBNF grammar.
 
 ## Functional programming concepts
 
-An important part of functional programming capabilities of a programming language are functions and how they are supported in a programming language.
-As we are taking a look at JavaScript, we will see how JavaScript supports several important functional programming concepts.
+Functional programming and the functional programming paradigm, consist of various concepts.
+To see how well JavaScript and Go are suited for functional programming, we will take a look on these concepts and their support in both languages.
 
 ### Type system
 
