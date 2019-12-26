@@ -1,9 +1,8 @@
 package parser
 
 import (
-	"container/list"
-
-	"github.com/m-voit/concepts-of-programming-languages/study-project/parser-go/ast"
+  "container/list"
+  "github.com/m-voit/concepts-of-programming-languages/study-project/parser-go/ast"
 )
 
 /** parseExpression parses the following grammar:
@@ -11,7 +10,7 @@ import (
   The syntax tree is exactly the one returned by Or.
 */
 func parseExpression(Input Input) Result {
-	return Parser(parseOr).AndThen(ExpectSpaces.Optional()).First()(Input)
+  return Parser(parseOr).AndThen(ExpectSpaces.Optional()).First()(Input)
 }
 
 /** parseOr parses the following grammar:
@@ -22,7 +21,7 @@ func parseExpression(Input Input) Result {
   the symbol "|", i. e. it actually allows for Space* ^ "|".
 */
 func parseOr(Input Input) Result {
-	return Parser(parseAnd).AndThen(expect("|").AndThen(parseOr).Second().Optional()).Convert(makeOr)(Input)
+  return Parser(parseAnd).AndThen(expect("|").AndThen(parseOr).Second().Optional()).Convert(makeOr)(Input)
 }
 
 /** parseAnd parses the following grammar:
@@ -33,7 +32,7 @@ func parseOr(Input Input) Result {
   the symbol "&", i. e. it actually allows for Space* ^ "&".
 */
 func parseAnd(Input Input) Result {
-	return Parser(parseNot).AndThen(expect("&").AndThen(parseAnd).Second().Optional()).Convert(makeAnd)(Input)
+  return Parser(parseNot).AndThen(expect("&").AndThen(parseAnd).Second().Optional()).Convert(makeAnd)(Input)
 }
 
 /** parseNot parses the following grammar:
@@ -44,10 +43,10 @@ func parseAnd(Input Input) Result {
   Not nodes as there are exclamation marks.
 */
 func parseNot(Input Input) Result {
-	return parseExclamationMarks.AndThen(parseAtom).Convert(func(arg interface{}) interface{} {
-		var pair = arg.(Pair)
-		return makeNot(pair.First.(int), pair.Second.(ast.Node))
-	})(Input)
+  return parseExclamationMarks.AndThen(parseAtom).Convert(func(arg interface{}) interface{} {
+    var pair = arg.(Pair)
+    return makeNot(pair.First.(int), pair.Second.(ast.Node))
+  })(Input)
 }
 
 /** parseExclamationMarks parses the following grammar:
@@ -57,10 +56,10 @@ func parseNot(Input Input) Result {
   allows for Space* ^ "!".
 */
 var parseExclamationMarks Parser = func(Input Input) Result {
-	return expect("!").Repeated().Convert(func(arg interface{}) interface{} {
-		var list = arg.(*list.List)
-		return list.Len()
-	})(Input)
+  return expect("!").Repeated().Convert(func(arg interface{}) interface{} {
+    var list = arg.(*list.List)
+    return list.Len()
+  })(Input)
 }
 
 /** parseAtom parses the followiong grammar:
@@ -71,7 +70,7 @@ var parseExclamationMarks Parser = func(Input Input) Result {
   parseExpression.
 */
 func parseAtom(Input Input) Result {
-	return parseVariable.OrElse(expect("(").AndThen(parseExpression).AndThen(expect(")")).First().Second())(Input)
+  return parseVariable.OrElse(expect("(").AndThen(parseExpression).AndThen(expect(")")).First().Second())(Input)
 }
 
 /** parseVariable parses the following grammar:
@@ -81,19 +80,19 @@ func parseAtom(Input Input) Result {
   ast.Val node.
 */
 var parseVariable Parser = func(Input Input) Result {
-	return MaybeSpacesBefore(ExpectIdentifier).Convert(func(arg interface{}) interface{} {
-		var name = arg.(string)
-		return ast.Val{Name: name}
-	})(Input)
+  return MaybeSpacesBefore(ExpectIdentifier).Convert(func(arg interface{}) interface{} {
+    var name = arg.(string)
+    return ast.Val{Name: name}
+  })(Input)
 }
 
 /** makeNot wraps the node into num ast.Not nodes.
  */
 func makeNot(num int, node ast.Node) ast.Node {
-	if num <= 0 {
-		return node
-	}
-	return ast.Not{Ex: makeNot(num-1, node)}
+  if num <= 0 {
+    return node
+  }
+  return ast.Not{Ex: makeNot(num-1, node)}
 }
 
 /** makeAnd takes a Pair of ast.Node as an argument and returns an
@@ -103,13 +102,13 @@ func makeNot(num int, node ast.Node) ast.Node {
   component of the Pair as sub-nodes.
 */
 func makeAnd(argument interface{}) interface{} {
-	var pair = argument.(Pair)
-	if pair.Second == (Nothing{}) {
-		return pair.First
-	}
-	var firstNode = pair.First.(ast.Node)
-	var secondNode = pair.Second.(ast.Node)
-	return ast.And{LHS: firstNode, RHS: secondNode}
+  var pair = argument.(Pair)
+  if pair.Second == (Nothing{}) {
+    return pair.First
+  }
+  var firstNode = pair.First.(ast.Node)
+  var secondNode = pair.Second.(ast.Node)
+  return ast.And{LHS: firstNode, RHS: secondNode}
 
 }
 
@@ -120,17 +119,17 @@ func makeAnd(argument interface{}) interface{} {
   component of the Pair as sub-nodes.
 */
 func makeOr(argument interface{}) interface{} {
-	var pair = argument.(Pair)
-	if pair.Second == (Nothing{}) {
-		return pair.First
-	}
-	var firstNode = pair.First.(ast.Node)
-	var secondNode = pair.Second.(ast.Node)
-	return ast.Or{LHS: firstNode, RHS: secondNode}
+  var pair = argument.(Pair)
+  if pair.Second == (Nothing{}) {
+    return pair.First
+  }
+  var firstNode = pair.First.(ast.Node)
+  var secondNode = pair.Second.(ast.Node)
+  return ast.Or{LHS: firstNode, RHS: secondNode}
 }
 
 /** expect expects the string s at the beginning of the Input and ignores
   leading spaces. */
 func expect(s string) Parser {
-	return MaybeSpacesBefore(ExpectString(s))
+  return MaybeSpacesBefore(ExpectString(s))
 }
