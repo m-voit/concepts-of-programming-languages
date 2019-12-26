@@ -109,7 +109,10 @@ In Go immutability is quite similar to JavaScript and can't be easily achieved.
 Except strings, data types in Go are by default mutable and only primitive data types like `bool` and `int` can declared to be constant.
 Immutability of composite data types like Go's `structs` is the responsibility of the developer.
 
-To sum it up, there is some support for immutability in JavaScript in Go, but not by default and not easily usable.
+For Go Version 2, there is a proposal to introduce immutable data types to Go.
+So the state of immutability in Go might change in the future, when Go Version 2 is released [git01].
+
+To sum it up, today there is some support for immutability in JavaScript in Go, but not by default and not easily usable.
 
 ### First class functions
 
@@ -197,7 +200,7 @@ const convert = (parser, converter) => input => {
 In Go, the converter function looks similar to the JavaScript implementation.
 This is the case, because Go has similar support for higher-order functions as JavaScript.
 The main differences between the Go and the JavaScript implementation are the empty interfaces to satisfy the Go type system and the higher verbosity of the Go code.
-Again the reason for this is the different type system of JavaScript and Go as discussed earlier.
+Again the reason for this is the different type system of JavaScript and Go as discussed earlier [med02].
 
 ```go
 // Convert applies the converter to the result of a successful parse.
@@ -235,6 +238,7 @@ The same holds true for Go.
 Like in JavaScript, it's possible writing pure and side effect free functions in Go, but there are no special constructs to enforce this.
 
 Therefore, pure functions are possible in both languages, but it's in the hand of the programmer writing them.
+<!-- Referential transparency -->
 
 ### Lazy evaluation
 
@@ -244,6 +248,12 @@ Lazy evaluation, on the other hand, means that functions are evaluated when they
 
 Both, Go and JavaScript, use eager evaluation for functions.
 <!-- TODO Why is this relevant for functional programming -->
+
+### Recursion and tail-call optimization
+
+Implemented in Js.
+
+Not implemented in Go. [med02]
 
 ### Pattern matching
 
@@ -263,8 +273,10 @@ No support in Go.
 
 - [ant16] JavaScript: Functional Programming for JavaScript Developers,Ved Antani; Simon Timms; Dan Mantyla, Packt Publishing, 2016-08-31
 - [fog13] Functional JavaScript, Michael Fogus, O'Reilly Media, Inc., 2013-06-10
+- [git01] proposal: Go 2: immutable type qualifier <https://github.com/golang/go/issues/27975> (viewed 2019-12-26)
 - [ker17] Mastering Javascript Functional Programming, Federico Kereki, Packt Publishing, 2017-12-29
 - [med01] Introduction to Functional JavaScript, <https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a> (viewed 2019-12-21)
+- [med02] Functional Go <https://medium.com/@geisonfgfg/functional-go-bc116f4c96a4> (viewed 2019-12-26)
 - [moz01] MDN JavaScript, <https://developer.mozilla.org/en-US/docs/Web/JavaScript> (viewed 2019-12-25)
 - [moz02] MDN Closures, <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures> (viewed 2019-12-23)
 - [moz03] MDN Functions, <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions> (viewed 2019-12-25)
