@@ -123,7 +123,7 @@ A language with first class functions has to meet the following criteria:
 
 The listed properties also allow for concepts such as higher-order functions and functional composition, which both are described later.
 In JavaScript, all the mentioned properties are supported.
-Therefore, functions in JavaScript are first class functions and are treated like first-class citizens in the programming language.
+Therefore, functions in JavaScript are first class functions and are treated like first-class citizens in the programming language [moz06].
 
 ```javascript
 /**
