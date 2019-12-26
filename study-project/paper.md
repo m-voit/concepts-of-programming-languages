@@ -240,13 +240,16 @@ This is required, because of the Go type system as discussed earlier.
 Pure functions are functions that have no side effects and no hidden inner state.
 This means, a function, given the same input, always produces the same output.
 To achieve this a pure function only uses its input and doesn't use or mutate internal state.
+<!-- Referential transparency -->
+
 JavaScript allows writing pure functions, but doesn't have special constructs to enforce side effect free and pure functions [fog13].
 
 The same holds true for Go.
 Like in JavaScript, it's possible writing pure and side effect free functions in Go, but there are no special constructs to enforce these concepts.
+Furthermore, because Go doesn't support tail-call optimization, which is discussed later, there are performance impacts, when using pure functions excessively.
+So as long as there is no tail-call optimization in Go, pure functions should be used with precautions [she17].
 
 Therefore, pure functions are possible in both languages, but it's in the hand of the programmer writing them.
-<!-- Referential transparency -->
 
 ### Lazy evaluation
 
