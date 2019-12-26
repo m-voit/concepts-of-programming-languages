@@ -16,14 +16,14 @@ However, the main goal of this paper is to show the possibilities and support of
 JavaScript is a multi-paradigm programming language and a core technology of the internet.
 It is a general purpose programming language and runs in the browser as well as on the server.
 Despite often deceived as an object-oriented programming language, JavaScript also follows functional and imperative paradigms.
-JavaScript is also event-driven and has good support for asynchronous programming [moz01][ant16].
+JavaScript is also event-driven and has good support for asynchronous programming [moz01].
 
 Interestingly, the original plan of Netscape was to integrate Scheme, a Lisp dialect with functional paradigm, into their browser.
 But because of marketing reasons, it was decided, to create a new language with syntax similar to Java.
 Later the newly created language was called JavaScript and integrated into the Netscape browser.
-While being a new language, JavaScript has taken the functional concepts of Scheme and integrated them, beside the other supported paradigms.
+While being a new language, JavaScript has taken functional concepts of Scheme and integrated them in to the language, besides the imperative and object-oriented paradigms [ant16].
 
-However, to stay within the scope of this paper, the focus will be on the functional aspects of JavaScript, which will be presented in the following sections.
+However, to stay within the scope of this paper, the focus will be on the functional aspects of JavaScript. These will be presented in the following sections.
 
 ## Parser for boolean expressions
 
@@ -131,7 +131,7 @@ A language with first class functions has to meet the following criteria:
 The listed properties also allow for concepts such as higher-order functions and functional composition, which both are described later.
 
 In JavaScript, all the mentioned properties are supported.
-Therefore, functions in JavaScript are first class functions and are treated like first-class citizens in the programming language [moz06].
+Therefore, functions in JavaScript are first class functions and are treated like first-class citizens in the programming language [moz06][fog13].
 This allows it to assign the `optional()` and the `expectSeveral()` function to the `expectSpaces` variable.
 
 ```javascript
@@ -141,7 +141,7 @@ This allows it to assign the `optional()` and the `expectSeveral()` function to 
 const expectSpaces = () => optional(expectSeveral(isSpaceChar, isSpaceChar));
 ```
 
-The same holds true for Go, that supports first class functions as well as JavaScript [she17].
+The same holds true for Go, that supports first class functions as well as JavaScript [she17][gol01].
 Like in JavaScript it's possible to assign the `ExpectSeveral()` and the `Optional()` function to the `ExpectSpaces` variable.
 The only difference is the chaining of the function calls instead of nesting them and the explicit `Parser` type of the variable.
 
@@ -154,7 +154,7 @@ var ExpectSpaces Parser = ExpectSeveral(isSpaceChar, isSpaceChar).Optional()
 
 Closures and lambda expression, also called anonymous functions, are unnamed functions, often returned from another function.
 To be precise, a closure is the reference to the local state of the function, that returns an anonymous function.
-However, both terms are often used interchangeably, because both concepts belong to the concept of anonymous functions returned by an outer function.
+However, both terms are often used interchangeably, because both concepts belong to the concept of anonymous functions returned by an outer function [fog13].
 
 Support for closures is found in all programming languages with first class functions.
 This is the case, because closures are needed for anonymous functions to work.
@@ -173,7 +173,7 @@ TODO
 ```
 
 In Go lambda expressions are a bit more verbose, especially because the type system requires explicit types as mentioned in the type system section earlier.
-Otherwise, lambda expessions in Go are equal to lambda expressions in JavaScript.
+Otherwise, lambda expessions in Go are equal to lambda expressions in JavaScript [she17].
 
 ### Higher-order functions and function composition
 
@@ -240,7 +240,7 @@ This is required, because of the Go type system as discussed earlier.
 Pure functions are functions that have no side effects and no hidden inner state.
 This means, a function, given the same input, always produces the same output.
 To achieve this a pure function only uses its input and doesn't use or mutate internal state.
-JavaScript allows writing pure functions, but doesn't have special constructs to enforce side effect free and pure functions.
+JavaScript allows writing pure functions, but doesn't have special constructs to enforce side effect free and pure functions [fog13].
 
 The same holds true for Go.
 Like in JavaScript, it's possible writing pure and side effect free functions in Go, but there are no special constructs to enforce these concepts.
@@ -279,9 +279,10 @@ No support in Go.
 
 ## References
 
-- [ant16] JavaScript: Functional Programming for JavaScript Developers,Ved Antani; Simon Timms; Dan Mantyla, Packt Publishing, 2016-08-31
+- [ant16] JavaScript: Functional Programming for JavaScript Developers, Ved Antani; Simon Timms; Dan Mantyla, Packt Publishing, 2016-08-31
 - [fog13] Functional JavaScript, Michael Fogus, O'Reilly Media, Inc., 2013-06-10
 - [git01] proposal: Go 2: immutable type qualifier <https://github.com/golang/go/issues/27975> (viewed 2019-12-26)
+- [gol01] Codewalk: First-Class Functions in Go <https://golang.org/doc/codewalk/functions/> (viewed 2019-12-26)
 - [ker17] Mastering Javascript Functional Programming, Federico Kereki, Packt Publishing, 2017-12-29
 - [med01] Introduction to Functional JavaScript, <https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a> (viewed 2019-12-21)
 - [med02] Functional Go <https://medium.com/@geisonfgfg/functional-go-bc116f4c96a4> (viewed 2019-12-26)
