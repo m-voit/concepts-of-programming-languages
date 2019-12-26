@@ -1,3 +1,10 @@
 {
   "ltex.language": "en-GB",
+  "spellright.language": [
+    "en"
+  ],
+  "spellright.documentTypes": [
+    "plaintext",
+    "markdown"
+  ],
 }
