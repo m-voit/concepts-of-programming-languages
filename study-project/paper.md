@@ -142,8 +142,12 @@ var ExpectSpaces Parser = ExpectSeveral(isSpaceChar, isSpaceChar).Optional()
 ### Closures and lambda expressions
 
 Closures and lambda expression, also called anonymous functions, are unnamed functions, often returned from another function.
-To be precise, a closure is the reference to the local state of the function, returning an anonymous function.
-Closures are found in all programming languages with first class functions [moz02].
+To be precise, a closure is the reference to the local state of the function, that returns an anonymous function.
+However, both terms are often used interchangeably, because both concepts belong to the concept of anonymous functions returned by an outer function.
+
+Support for closures is found in all programming languages with first class functions.
+This is the case, because closures are needed for anonymous functions to work.
+Without closures and therefore no references to the _outer_ function, that is returning the _inner_ function, the _inner_ function would stop working when being called directly [moz02].
 
 ```javascript
 const sum = (arg1, arg2) => {
@@ -151,18 +155,18 @@ const sum = (arg1, arg2) => {
 };
 ```
 
-In JavaScript lambda expressions can be written very concise with the arrow functions syntax, introduced in ES6 [moz04].
+In JavaScript lambda expressions can be written very concisely with the arrow functions syntax, introduced with ECMAScript 6 [moz04].
 
 ```go
 TODO
 ```
 
-In Go lambda expressions are a bit more verbose, especially because the type system requires explicit types.
-Otherwise lambda expessions in Go are equal to lambda expressions in JavaScript.
+In Go lambda expressions are a bit more verbose, especially because the type system requires explicit types as mentioned in the type system section earlier.
+Otherwise, lambda expessions in Go are equal to lambda expressions in JavaScript.
 
 ### Higher-order functions and function composition
 
-Higher-order functions are functions that accept other functions arguments or return a function as result.
+Higher-order functions are functions that accept other functions as arguments or return a function as their result.
 As discussed, JavaScript has first class functions, which allows using higher-order functions.
 
 The convert function of the boolean parser for example takes two arguments.
@@ -193,6 +197,7 @@ const convert = (parser, converter) => input => {
 In Go, the converter function looks similar to the JavaScript implementation.
 This is the case, because Go has similar support for higher-order functions as JavaScript.
 The main differences between the Go and the JavaScript implementation are the empty interfaces to satisfy the Go type system and the higher verbosity of the Go code.
+Again the reason for this is the different type system of JavaScript and Go as discussed earlier.
 
 ```go
 // Convert applies the converter to the result of a successful parse.
