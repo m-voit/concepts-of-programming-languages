@@ -257,14 +257,17 @@ There are two ways to evaluate functions, eager and lazy evaluation.
 Programming languages that use eager evaluation, evaluate a function as soon as it's assigned or defined.
 Lazy evaluation, on the other hand, means that functions are evaluated when they are executed, which may happen much later than the assignment.
 
-Both, Go and JavaScript, use eager evaluation for functions.
-<!-- TODO Why is this relevant for functional programming -->
+In the context of functional programming, lazy evaluation is useful for performance optimization.
+This is possible, because functions are only evaluated, when they are actually used and therefore no unnecessary calculations are done.
+
+Unfortunately both, Go and JavaScript, use eager evaluation for functions with no support for lazy evaluation.
 
 ### Recursion and tail-call optimization
 
 Implemented in Js.
 
-Not implemented in Go, possible workarounds, but out of the scope of this paper. [med02][she17]
+Not implemented in Go, possible workarounds, but out of the scope of this paper.
+Impact on performance. [med02][she17]
 
 ### Pattern matching
 
