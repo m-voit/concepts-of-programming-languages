@@ -81,7 +81,7 @@ TODO
 ### Immutability
 
 Immutability is a desired property, especially in functional programming, because it reduces unintended side effects.
-
+<!-- Add explanation. -->
 
 Unfortunately, true immutability as desired by functional programming, can't be achieved in JavaScript.
 Although it's possible to create constructs that are sort of immutable, there is no immutability like in pure functional programming languages.
@@ -116,7 +116,7 @@ Immutability of composite data types like Go's `structs` is the responsibility o
 For Go Version 2, there is a proposal to introduce immutable data types to Go.
 So the state of immutability in Go might change in the future, when Go Version 2 is released [git01].
 
-To sum it up, today there is some support for immutability in JavaScript in Go, but not by default and not easily usable.
+To sum it up, as of today there is some support for immutability in JavaScript in Go, but not by default and not easily usable.
 
 ### First class functions
 
@@ -230,10 +230,10 @@ Function composition is a concept that allows to build complex functions out of 
 <!-- Currying -->
 
 Function composition works good with JavaScript, especially because of the permissive type system, discussed earlier.
-It's easy in straight forward to use various functions to build complex functions with them.
+It's easy and straight forward to use various functions to build complex functions.
 
 In Go, function composition requires the programmer to use empty interfaces.
-This is required, because of the Go type system as discussed earlier.
+This is required by Go type system as discussed earlier.
 
 ### Pure functions
 
@@ -260,7 +260,7 @@ Lazy evaluation, on the other hand, means that functions are evaluated when they
 In the context of functional programming, lazy evaluation is useful for performance optimization.
 This is possible, because functions are only evaluated, when they are actually used and therefore no unnecessary calculations are done.
 
-Unfortunately both, Go and JavaScript, use eager evaluation for functions with no support for lazy evaluation.
+Unfortunately both, Go and JavaScript, use eager evaluation for functions with no built-in support for lazy evaluation.
 
 ### Recursion and tail-call optimization
 
