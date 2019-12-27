@@ -81,6 +81,7 @@ TODO
 ### Immutability
 
 Immutability is a desired property, especially in functional programming, because it reduces unintended side effects.
+
 <!-- Add explanation. -->
 
 Unfortunately, true immutability as desired by functional programming, can't be achieved in JavaScript.
@@ -227,6 +228,7 @@ func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
 ```
 
 Function composition is a concept that allows to build complex functions out of one or more simple functions.
+
 <!-- Currying -->
 
 Function composition works good with JavaScript, especially because of the permissive type system, discussed earlier.
@@ -240,6 +242,7 @@ This is required by Go type system as discussed earlier.
 Pure functions are functions that have no side effects and no hidden inner state.
 This means, a function, given the same input, always produces the same output.
 To achieve this a pure function only uses its input and doesn't use or mutate internal state.
+
 <!-- Referential transparency -->
 
 JavaScript allows writing pure functions, but doesn't have special constructs to enforce side effect free and pure functions [fog13].
@@ -271,11 +274,13 @@ Impact on performance. [med02][she17]
 
 ### Pattern matching
 
-JavaScript might get it with Proposal XY.
+JavaScript might get it. There is a stage 1 proposal.
 No support in Go.
 
 ### Algebraic data types
+
 <!-- Sum/Product types, discriminate unions -->
+
 Not possible with JavaScript, but with typescript a JavaScript superset.
 No support in Go.
 
@@ -288,6 +293,7 @@ No support in Go.
 - [ant16] JavaScript: Functional Programming for JavaScript Developers, Ved Antani; Simon Timms; Dan Mantyla, Packt Publishing, 2016-08-31
 - [fog13] Functional JavaScript, Michael Fogus, O'Reilly Media, Inc., 2013-06-10
 - [git01] proposal: Go 2: immutable type qualifier <https://github.com/golang/go/issues/27975> (viewed 2019-12-26)
+- [git02] ECMAScript Pattern Matching <https://github.com/tc39/proposal-pattern-matching> (viewed 2019-12-27)
 - [gol01] Codewalk: First-Class Functions in Go <https://golang.org/doc/codewalk/functions/> (viewed 2019-12-26)
 - [ker17] Mastering Javascript Functional Programming, Federico Kereki, Packt Publishing, 2017-12-29
 - [med01] Introduction to Functional JavaScript, <https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a> (viewed 2019-12-21)
