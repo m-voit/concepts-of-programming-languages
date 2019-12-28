@@ -264,13 +264,25 @@ In the context of functional programming, lazy evaluation is useful for performa
 This is possible, because functions are only evaluated, when they are actually used and therefore no unnecessary calculations are done.
 
 Unfortunately both, Go and JavaScript, use eager evaluation for functions with no built-in support for lazy evaluation.
+However, it's possible to simulate lazy evaluation in both languages, but it's no fundamental part of the two programming languages.
 
 ### Recursion and tail-call optimization
 
-Implemented in JavaScript.
+To avoid mutating state functional programming uses recursion.
+This happens when a function calls itself with new parameters to compute something instead of mutating state inside the function.
+Unfortunately recursion is less efficient than iteration, especially when used excessively.
 
-Not implemented in Go, possible workarounds, but out of the scope of this paper.
-Impact on performance. [med02][she17]
+A technique to remedy the performance issues of recursion is called tail-call optimization.
+Without tail-call optimization each recursive call to a function adds a new stack frame to the call stack.
+This lets the call stack grow with each function call and causes large memory usage on deeply nested recursion calls.
+Tail-call optimization prevents this and is therefore an important to allow efficient functional programming.
+
+Tail-call optimization is part of JavaScript since ECMAScript 6, which was introduced in 2015.
+This allows efficient functional programming in JavaScript.
+
+Go has no support for tail-call implementation.
+This means that heavy using of recursion and functional programming will have an impact on performance.x
+There are some possible workarounds for this issue, but these are out of the scope of this paper.[med02][she17]
 
 ### Pattern matching
 
