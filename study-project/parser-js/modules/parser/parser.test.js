@@ -1,6 +1,9 @@
 // @ts-nocheck
 
 import {
+  Input,
+  Result,
+  expectSeveral,
   isIdentifierStartChar,
   isDigit,
   isIdentifierChar,
@@ -52,6 +55,26 @@ describe("Test parser.js", () => {
 
     result = isIdentifierStartChar("ä");
     expected = false;
+
+    expect(result).toStrictEqual(expected);
+  });
+
+  test("expectSeveral", () => {
+    let input = new Input("a&b", 0);
+    let result = expectSeveral(isIdentifierStartChar, isIdentifierChar)(input);
+    let expected  = new Result("a", new Input("a&b", 1));
+
+    expect(result).toStrictEqual(expected);
+
+    input = new Input("H&z", 0);
+    result = expectSeveral(isIdentifierStartChar, isIdentifierChar)(input);
+    expected = new Result("H", new Input("H&z", 1));
+
+    expect(result).toStrictEqual(expected);
+
+    input = new Input("!a", 0);
+    result = expectSeveral(isIdentifierStartChar, isIdentifierChar)(input);
+    expected = new Result(null, new Input("!a", 0));
 
     expect(result).toStrictEqual(expected);
   });
