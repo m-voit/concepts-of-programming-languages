@@ -11,12 +11,20 @@ import {
   optional,
   Nothing,
   stringToInput,
+  expectCodePoint,
 } from "./parser";
 
 describe("Test parser.js", () => {
   test("expectCodePoint", () => {
-    let result = "";
-    let expected = "";
+    let input = new Input("a&b", 0);
+    let result = expectCodePoint("a")(input);
+    let expected = new Result("a", input.remainingInput());
+
+    expect(result).toStrictEqual(expected);
+
+    input = new Input("!a", 0);
+    result = expectCodePoint("a")(input);
+    expected = new Result(null, input);
 
     expect(result).toStrictEqual(expected);
   });
