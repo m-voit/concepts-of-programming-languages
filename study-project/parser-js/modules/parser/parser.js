@@ -287,7 +287,7 @@ const stringToInput = text => new Input(text, 0);
 const isIdentifierStartChar = firstCodePoint =>
   ("a" <= firstCodePoint && firstCodePoint <= "z") ||
   ("A" <= firstCodePoint && firstCodePoint <= "Z") ||
-  "_" === firstCodePoint;
+  "_" == firstCodePoint;
 
 /**
  * Check if codepoint is a digit.
@@ -344,7 +344,7 @@ const expectSeveral = (isFirstChar, isLaterChar) => input => {
 
   while (isLaterChar(codePoint)) {
     remainingInput = remainingInput.remainingInput();
-    builder += codePoint;
+    builder = builder + codePoint;
 
     if (remainingInput === null) {
       break;
@@ -359,13 +359,12 @@ const expectSeveral = (isFirstChar, isLaterChar) => input => {
 /**
  * Parse [a-zA-Z_][a-zA-Z0-9_]* from the Input.
  */
-const expectIdentifier = () =>
-  expectSeveral(isIdentifierStartChar, isIdentifierChar);
+const expectIdentifier = expectSeveral(isIdentifierStartChar, isIdentifierChar);
 
 /**
  * Parse [ \t\n\r]* from the Input.
  */
-const expectSpaces = () => optional(expectSeveral(isSpaceChar, isSpaceChar));
+const expectSpaces = optional(expectSeveral(isSpaceChar, isSpaceChar));
 
 /**
  * Allow and ignore space characters before applying the
@@ -384,11 +383,14 @@ export { Pair, Nothing };
  * Export functions to be used in other modules.
  */
 export {
+  Input,
+  Result,
   first,
   second,
   andThen,
   optional,
   expectIdentifier,
+  expectSeveral,
   expectSpaces,
   expectString,
   convert,
@@ -402,7 +404,7 @@ export {
   isSpaceChar,
 };
 
-// const expectNumber = () => expectSeveral(isDigit, isDigit);
+
 /**
  * OnceOrMore is like Repeated except that it doesn't allow parsing zero times.
  *
