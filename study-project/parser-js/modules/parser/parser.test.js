@@ -42,6 +42,12 @@ describe("Test parser.js", () => {
     expected = new Result(null, input);
 
     expect(result).toStrictEqual(expected);
+
+    input = new Input("a&b", 0);
+    result = expectCodePoints("a&b|c")(input);
+    expected = new Result("a&b|c", input);
+
+    expect(result).toStrictEqual(expected);
   });
 
   test("expectString", () => {
