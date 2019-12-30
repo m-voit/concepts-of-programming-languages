@@ -3,15 +3,16 @@
 import {
   Input,
   Result,
+  Nothing,
+  expectCodePoint,
+  expectCodePoints,
   expectSeveral,
   isIdentifierStartChar,
   isDigit,
   isIdentifierChar,
   isSpaceChar,
   optional,
-  Nothing,
   stringToInput,
-  expectCodePoint,
 } from "./parser";
 
 describe("Test parser.js", () => {
@@ -30,8 +31,15 @@ describe("Test parser.js", () => {
   });
 
   test("expectCodePoints", () => {
-    let result = "";
-    let expected = "";
+    let input = null;
+    let result = expectCodePoints("a&b|c")(input);
+    let expected = new Result(null, input);
+
+    expect(result).toStrictEqual(expected);
+
+    input = new Input("!a&b", 0);
+    result = expectCodePoints("a&b|c")(input);
+    expected = new Result(null, input);
 
     expect(result).toStrictEqual(expected);
   });

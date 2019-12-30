@@ -98,8 +98,8 @@ export const expectCodePoint = expectedCodePoint => input => {
 export const expectCodePoints = expectedCodePoints => input => {
   let remainingInput = input;
 
-  [...expectedCodePoints].forEach(expectedCodePoint => {
-    if (null === remainingInput) {
+  for (let expectedCodePoint of expectedCodePoints) {
+    if (remainingInput === null) {
       return new Result(null, input);
     }
 
@@ -110,9 +110,9 @@ export const expectCodePoints = expectedCodePoints => input => {
     }
 
     remainingInput = result.remainingInput;
-  });
+  }
 
-  return new Result(expectCodePoints, remainingInput);
+  return new Result(expectedCodePoints, remainingInput);
 };
 
 /**
