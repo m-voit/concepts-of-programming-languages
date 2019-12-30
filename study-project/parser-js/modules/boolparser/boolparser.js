@@ -77,8 +77,8 @@ const parseAnd = input =>
  * @returns Result.
  */
 const parseNot = input =>
-  convert(andThen(parseExclamationMarks, parseAtom), (first, second) => {
-    return makeNot(first, second);
+  convert(andThen(parseExclamationMarks, parseAtom), pair => {
+    return makeNot(pair.first, pair.second);
   })(input);
 
 /**
@@ -115,9 +115,7 @@ const parseAtom = input =>
  * @returns Result.
  */
 const parseVariable = input =>
-  convert(maybeSpacesBefore(expectIdentifier), () => {
-    return new Value(input.text);
-  })(input);
+  convert(maybeSpacesBefore(expectIdentifier), arg => new Value(arg))(input);
 
 /**
  * Wrap the node into Not nodes.
