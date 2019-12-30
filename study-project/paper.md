@@ -228,11 +228,13 @@ func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
 ```
 
 Function composition is a concept that allows to build complex functions out of one or more simple functions.
+Generally speaking, function composition is an application of higher-order functions.
 
 <!-- Currying -->
 
-Function composition works good with JavaScript, especially because of the permissive type system, discussed earlier.
+Function composition works good in JavaScript, especially because of the permissive type system, discussed earlier.
 It's easy and straight forward to use various functions to build complex functions.
+This can be seen in the `converter` function example above.
 
 In Go, function composition requires the programmer to use empty interfaces.
 This is required by Go type system as discussed earlier.
@@ -242,8 +244,8 @@ This is required by Go type system as discussed earlier.
 Pure functions are functions that have no side effects and no hidden inner state.
 This means, a function, given the same input, always produces the same output.
 To achieve this a pure function only uses its input and doesn't use or mutate internal state.
-
-<!-- Referential transparency -->
+This property of pure functions gives us referential transparency.
+That means it's possible to replace a function with its result without changing the behaviour of a program.
 
 JavaScript allows writing pure functions, but doesn't have special constructs to enforce side effect free and pure functions [fog13].
 
@@ -270,19 +272,22 @@ However, it's possible to simulate lazy evaluation in both languages, but it's n
 
 To avoid mutating state functional programming uses recursion.
 This happens when a function calls itself with new parameters to compute something instead of mutating state inside the function.
-Unfortunately recursion is less efficient than iteration, especially when used excessively.
+Unfortunately recursion is less efficient than iteration, especially when used frequently like in functional programming.
 
 A technique to remedy the performance issues of recursion is called tail-call optimization.
 Without tail-call optimization each recursive call to a function adds a new stack frame to the call stack.
-This lets the call stack grow with each function call and causes large memory usage on deeply nested recursion calls.
-Tail-call optimization prevents this and is therefore an important to allow efficient functional programming.
+Therefore, the call stack grows with each function call and causes large memory usage on deeply nested recursion functions.
+Tail-call optimization prevents this by overwriting the unneeded stack frames of the previous function calls.
+So tail-call optimization is needed for efficient functional programming.
 
 Tail-call optimization is part of JavaScript since ECMAScript 6, which was introduced in 2015.
 This allows efficient functional programming in JavaScript.
 
-Go has no support for tail-call implementation.
-This means that heavy using of recursion and functional programming will have an impact on performance.x
-There are some possible workarounds for this issue, but these are out of the scope of this paper.[med02][she17]
+Go on the other side has no support for tail-call optimization.
+This means that heavy using of recursion and functional programming in Go will have an impact on performance.
+There are some workarounds for this issue, but they are out of the scope of this paper.[med02][she17]
+
+Summarized, the support for efficient programming of recursion heavy functions is better in JavaScript than it is in Go.
 
 ### Pattern matching
 
