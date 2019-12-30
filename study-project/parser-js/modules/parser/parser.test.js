@@ -8,6 +8,8 @@ import {
   isDigit,
   isIdentifierChar,
   isSpaceChar,
+  optional,
+  Nothing,
 } from "./parser";
 
 describe("Test parser.js", () => {
@@ -29,7 +31,7 @@ describe("Test parser.js", () => {
 
     expect(result).toStrictEqual(expected);
 
-    result = isIdentifierStartChar("ä");
+    result = isDigit("ä");
     expected = false;
 
     expect(result).toStrictEqual(expected);
@@ -41,7 +43,7 @@ describe("Test parser.js", () => {
 
     expect(result).toStrictEqual(expected);
 
-    result = isIdentifierStartChar("ä");
+    result = isIdentifierChar("ä");
     expected = false;
 
     expect(result).toStrictEqual(expected);
@@ -53,8 +55,13 @@ describe("Test parser.js", () => {
 
     expect(result).toStrictEqual(expected);
 
-    result = isIdentifierStartChar("ä");
+    result = isSpaceChar("ä");
     expected = false;
+
+    expect(result).toStrictEqual(expected);
+
+    result = isSpaceChar("\r");
+    expected = true;
 
     expect(result).toStrictEqual(expected);
   });
@@ -85,5 +92,17 @@ describe("Test parser.js", () => {
     expect(result).toStrictEqual(expected);
   });
 
-  test("expectSpaces && optional", () => {});
+  test("expectSpaces && optional", () => {
+    let input = new Input("A", 0);
+    let expected = new Result(new Nothing(), input);
+    let result = optional(expectSeveral(isSpaceChar, isSpaceChar))(input);
+
+    expect(result).toStrictEqual(expected);
+
+    input = new Input(" A", 0);
+    expected = new Result(" ", new Input(" A", 1));
+    result = optional(expectSeveral(isSpaceChar, isSpaceChar))(input);
+
+    expect(result).toStrictEqual(expected);
+  });
 });
