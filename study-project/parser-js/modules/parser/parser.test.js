@@ -66,6 +66,12 @@ describe("Test parser.js", () => {
 
     expect(result).toStrictEqual(expected);
 
+    input = new Input("aa&b", 0);
+    result = expectSeveral(isIdentifierStartChar, isIdentifierChar)(input);
+    expected = new Result("aa", new Input("aa&b", 2));
+
+    expect(result).toStrictEqual(expected);
+
     input = new Input("H&z", 0);
     result = expectSeveral(isIdentifierStartChar, isIdentifierChar)(input);
     expected = new Result("H", new Input("H&z", 1));
