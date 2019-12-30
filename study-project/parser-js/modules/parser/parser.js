@@ -298,9 +298,11 @@ export const isIdentifierStartChar = firstCodePoint =>
 export const isDigit = codePoint => "0" <= codePoint && codePoint <= "9";
 
 /**
+ * Check if codepoint is either an identifierStartChar or a digit.
  *
  * @param {string} codePoint
- * @returns True or false.
+ * @returns True when it's either an identifierStartChar or a digit,
+ * otherwise return false.
  */
 export const isIdentifierChar = codePoint =>
   isIdentifierStartChar(codePoint) || isDigit(codePoint);
