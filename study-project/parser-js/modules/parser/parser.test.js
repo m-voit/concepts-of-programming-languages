@@ -10,6 +10,7 @@ import {
   isSpaceChar,
   optional,
   Nothing,
+  stringToInput,
 } from "./parser";
 
 describe("Test parser.js", () => {
@@ -105,4 +106,13 @@ describe("Test parser.js", () => {
 
     expect(result).toStrictEqual(expected);
   });
+
+  test("stringToInput", () => {
+    let result = stringToInput("a");
+    let expected = new Input("a", 0);
+
+    expect(result).toStrictEqual(expected);
+  });
+
+  
 });
