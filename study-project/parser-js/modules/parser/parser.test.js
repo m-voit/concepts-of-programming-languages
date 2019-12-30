@@ -59,10 +59,10 @@ describe("Test parser.js", () => {
     expect(result).toStrictEqual(expected);
   });
 
-  test("expectSeveral", () => {
+  test("expectIdentifier && expectSeveral", () => {
     let input = new Input("a&b", 0);
     let result = expectSeveral(isIdentifierStartChar, isIdentifierChar)(input);
-    let expected  = new Result("a", new Input("a&b", 1));
+    let expected = new Result("a", new Input("a&b", 1));
 
     expect(result).toStrictEqual(expected);
 
@@ -84,4 +84,6 @@ describe("Test parser.js", () => {
 
     expect(result).toStrictEqual(expected);
   });
+
+  test("expectSpaces && optional", () => {});
 });

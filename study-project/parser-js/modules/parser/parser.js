@@ -14,7 +14,7 @@
 /**
  * Input class is the input to be parsed.
  */
-class Input {
+export class Input {
   /**
    * @param {string} text
    * @param {number} currentPosition
@@ -42,7 +42,7 @@ class Input {
  * If you know what you're parsing then convert your pairs into structs with
  * more meaningful names.
  */
-class Pair {
+export class Pair {
   /**
    * @param {any} first The first component of the pair.
    * @param {any} second The second component of the pair.
@@ -56,13 +56,13 @@ class Pair {
 /**
  * Nothing class is simply nothing.
  */
-class Nothing {}
+export class Nothing {}
 
 /**
  * Result is the result of a parse along with the Input that remains to
  * be parsed.
  */
-class Result {
+export class Result {
   /**
    * @param {string | any | Pair} result
    * @param {Input} remainingInput
@@ -80,7 +80,7 @@ class Result {
  * @param {string} expectedCodePoint
  * @returns A new result.
  */
-const expectCodePoint = expectedCodePoint => input => {
+export const expectCodePoint = expectedCodePoint => input => {
   return expectedCodePoint === input.currentCodePoint()
     ? new Result(expectedCodePoint, input.remainingInput())
     : new Result(null, input);
@@ -95,7 +95,7 @@ const expectCodePoint = expectedCodePoint => input => {
  * @param {string} expectedCodePoints
  * @returns A new Result.
  */
-const expectCodePoints = expectedCodePoints => input => {
+export const expectCodePoints = expectedCodePoints => input => {
   let remainingInput = input;
 
   [...expectedCodePoints].forEach(expectedCodePoint => {
@@ -123,7 +123,7 @@ const expectCodePoints = expectedCodePoints => input => {
  * @param {string} expectedString
  * @returns A new Result.
  */
-const expectString = expectedString => input =>
+export const expectString = expectedString => input =>
   expectCodePoints(expectedString)(input);
 
 /**
@@ -133,7 +133,7 @@ const expectString = expectedString => input =>
  * @param {any} parser The parser.
  * @returns A new Result.
  */
-const repeated = parser => input => {
+export const repeated = parser => input => {
   const result = new Result([], input);
 
   while (result.remainingInput !== null) {
@@ -163,7 +163,7 @@ const repeated = parser => input => {
  * @param {any} alternativeParser An alternative parser to be used when first parser fails.
  * @returns Result.
  */
-const orElse = (parser, alternativeParser) => input => {
+export const orElse = (parser, alternativeParser) => input => {
   const firstResult = parser(input);
 
   return firstResult.result !== null ? firstResult : alternativeParser(input);
@@ -176,7 +176,7 @@ const orElse = (parser, alternativeParser) => input => {
  * @param {Pair | any} pair A pair.
  * @returns An new Result.
  */
-const getFirst = pair => (pair instanceof Pair ? pair.first : pair);
+export const getFirst = pair => (pair instanceof Pair ? pair.first : pair);
 
 /**
  * Extract the second component of a pair or
@@ -185,7 +185,7 @@ const getFirst = pair => (pair instanceof Pair ? pair.first : pair);
  * @param {Pair | any} pair A pair.
  * @returns An new Result.
  */
-const getSecond = pair => (pair instanceof Pair ? pair.second : pair);
+export const getSecond = pair => (pair instanceof Pair ? pair.second : pair);
 
 /**
  * Extract the first component of the result of a successful parse.
@@ -194,7 +194,7 @@ const getSecond = pair => (pair instanceof Pair ? pair.second : pair);
  * @param {any} parser The parser
  * @returns A new Result.
  */
-const first = parser => convert(parser, getFirst);
+export const first = parser => convert(parser, getFirst);
 
 /**
  * Extract the second component of the result of a successful parse.
@@ -203,7 +203,7 @@ const first = parser => convert(parser, getFirst);
  * @param {any} parser The parser.
  * @returns A new Result.
  */
-const second = parser => convert(parser, getSecond);
+export const second = parser => convert(parser, getSecond);
 
 /**
  * Apply the firstParser to the Input and then the
@@ -214,7 +214,7 @@ const second = parser => convert(parser, getSecond);
  * @param {any} secondParser The parser to apply second.
  * @returns A new Result.
  */
-const andThen = (parser, secondParser) => input => {
+export const andThen = (parser, secondParser) => input => {
   const firstResult = parser(input);
 
   if (firstResult.result !== null) {
@@ -241,7 +241,7 @@ const andThen = (parser, secondParser) => input => {
  * @param {any} converter A function to be applied to the parser result.
  * @returns A new Result.
  */
-const convert = (parser, converter) => input => {
+export const convert = (parser, converter) => input => {
   const result = parser(input);
 
   if (result.result !== null) {
@@ -259,7 +259,7 @@ const convert = (parser, converter) => input => {
  * @param {any} parser The parser.
  * @returns A new Result.
  */
-const optional = parser => input => {
+export const optional = parser => input => {
   const result = parser(input);
 
   if (result.result === null) {
@@ -276,7 +276,7 @@ const optional = parser => input => {
  * @param {string} text
  * @returns A new input class instance.
  */
-const stringToInput = text => new Input(text, 0);
+export const stringToInput = text => new Input(text, 0);
 
 /**
  * Check if firstCodePoint is the identifierStartChar.
@@ -284,7 +284,7 @@ const stringToInput = text => new Input(text, 0);
  * @param {string} firstCodePoint
  * @returns True or false.
  */
-const isIdentifierStartChar = firstCodePoint =>
+export const isIdentifierStartChar = firstCodePoint =>
   ("a" <= firstCodePoint && firstCodePoint <= "z") ||
   ("A" <= firstCodePoint && firstCodePoint <= "Z") ||
   "_" == firstCodePoint;
@@ -295,14 +295,14 @@ const isIdentifierStartChar = firstCodePoint =>
  * @param {string} codePoint
  * @returns True or false.
  */
-const isDigit = codePoint => "0" <= codePoint && codePoint <= "9";
+export const isDigit = codePoint => "0" <= codePoint && codePoint <= "9";
 
 /**
  *
  * @param {string} codePoint
  * @returns True or false.
  */
-const isIdentifierChar = codePoint =>
+export const isIdentifierChar = codePoint =>
   isIdentifierStartChar(codePoint) || isDigit(codePoint);
 
 /**
@@ -311,7 +311,7 @@ const isIdentifierChar = codePoint =>
  * @param {string} codePoint
  * @returns True or false.
  */
-const isSpaceChar = codePoint =>
+export const isSpaceChar = codePoint =>
   codePoint == " " ||
   codePoint == "\n" ||
   codePoint == "\r" ||
@@ -327,7 +327,7 @@ const isSpaceChar = codePoint =>
  * @param {any} isFirstChar A function.
  * @param {any} isLaterChar A function.
  */
-const expectSeveral = (isFirstChar, isLaterChar) => input => {
+export const expectSeveral = (isFirstChar, isLaterChar) => input => {
   if (null === input) {
     return new Result(null, input);
   }
@@ -359,12 +359,15 @@ const expectSeveral = (isFirstChar, isLaterChar) => input => {
 /**
  * Parse [a-zA-Z_][a-zA-Z0-9_]* from the Input.
  */
-const expectIdentifier = expectSeveral(isIdentifierStartChar, isIdentifierChar);
+export const expectIdentifier = expectSeveral(
+  isIdentifierStartChar,
+  isIdentifierChar,
+);
 
 /**
  * Parse [ \t\n\r]* from the Input.
  */
-const expectSpaces = optional(expectSeveral(isSpaceChar, isSpaceChar));
+export const expectSpaces = optional(expectSeveral(isSpaceChar, isSpaceChar));
 
 /**
  * Allow and ignore space characters before applying the
@@ -372,38 +375,8 @@ const expectSpaces = optional(expectSeveral(isSpaceChar, isSpaceChar));
  *
  * @param {any} parser The parser.
  */
-const maybeSpacesBefore = parser => second(andThen(expectSpaces, parser));
-
-/**
- * Export classes to be used in other modules.
- */
-export { Pair, Nothing };
-
-/**
- * Export functions to be used in other modules.
- */
-export {
-  Input,
-  Result,
-  first,
-  second,
-  andThen,
-  optional,
-  expectIdentifier,
-  expectSeveral,
-  expectSpaces,
-  expectString,
-  convert,
-  repeated,
-  maybeSpacesBefore,
-  orElse,
-  stringToInput,
-  isIdentifierStartChar,
-  isDigit,
-  isIdentifierChar,
-  isSpaceChar,
-};
-
+export const maybeSpacesBefore = parser =>
+  second(andThen(expectSpaces, parser));
 
 /**
  * OnceOrMore is like Repeated except that it doesn't allow parsing zero times.
