@@ -14,6 +14,104 @@ import {
 } from "./parser";
 
 describe("Test parser.js", () => {
+  test("expectCodePoint", () => {
+    let result = "";
+    let expected = "";
+
+    expect(result).toStrictEqual(expected);
+  });
+
+  test("expectCodePoints", () => {
+    let result = "";
+    let expected = "";
+
+    expect(result).toStrictEqual(expected);
+  });
+
+  test("expectString", () => {
+    let result = "";
+    let expected = "";
+
+    expect(result).toStrictEqual(expected);
+  });
+
+  test("repeated", () => {
+    let result = "";
+    let expected = "";
+
+    expect(result).toStrictEqual(expected);
+  });
+
+  test("orElse", () => {
+    let result = "";
+    let expected = "";
+
+    expect(result).toStrictEqual(expected);
+  });
+
+  test("getFirst", () => {
+    let result = "";
+    let expected = "";
+
+    expect(result).toStrictEqual(expected);
+  });
+
+  test("getSecond", () => {
+    let result = "";
+    let expected = "";
+
+    expect(result).toStrictEqual(expected);
+  });
+
+  test("first", () => {
+    let result = "";
+    let expected = "";
+
+    expect(result).toStrictEqual(expected);
+  });
+
+  test("second", () => {
+    let result = "";
+    let expected = "";
+
+    expect(result).toStrictEqual(expected);
+  });
+
+  test("andThen", () => {
+    let result = "";
+    let expected = "";
+
+    expect(result).toStrictEqual(expected);
+  });
+
+  test("convert", () => {
+    let result = "";
+    let expected = "";
+
+    expect(result).toStrictEqual(expected);
+  });
+
+  test("optional && expectSpaces", () => {
+    let input = new Input("A", 0);
+    let expected = new Result(new Nothing(), input);
+    let result = optional(expectSeveral(isSpaceChar, isSpaceChar))(input);
+
+    expect(result).toStrictEqual(expected);
+
+    input = new Input(" A", 0);
+    expected = new Result(" ", new Input(" A", 1));
+    result = optional(expectSeveral(isSpaceChar, isSpaceChar))(input);
+
+    expect(result).toStrictEqual(expected);
+  });
+
+  test("stringToInput", () => {
+    let result = stringToInput("a");
+    let expected = new Input("a", 0);
+
+    expect(result).toStrictEqual(expected);
+  });
+
   test("isIdentifierStartChar", () => {
     let result = isIdentifierStartChar("a");
     let expected = true;
@@ -67,7 +165,7 @@ describe("Test parser.js", () => {
     expect(result).toStrictEqual(expected);
   });
 
-  test("expectIdentifier && expectSeveral", () => {
+  test("expectSeveral && expectIdentifier", () => {
     let input = new Input("a&b", 0);
     let result = expectSeveral(isIdentifierStartChar, isIdentifierChar)(input);
     let expected = new Result("a", new Input("a&b", 1));
@@ -93,26 +191,10 @@ describe("Test parser.js", () => {
     expect(result).toStrictEqual(expected);
   });
 
-  test("expectSpaces && optional", () => {
-    let input = new Input("A", 0);
-    let expected = new Result(new Nothing(), input);
-    let result = optional(expectSeveral(isSpaceChar, isSpaceChar))(input);
-
-    expect(result).toStrictEqual(expected);
-
-    input = new Input(" A", 0);
-    expected = new Result(" ", new Input(" A", 1));
-    result = optional(expectSeveral(isSpaceChar, isSpaceChar))(input);
+  test("maybeSpacesBefore", () => {
+    let result = "";
+    let expected = "";
 
     expect(result).toStrictEqual(expected);
   });
-
-  test("stringToInput", () => {
-    let result = stringToInput("a");
-    let expected = new Input("a", 0);
-
-    expect(result).toStrictEqual(expected);
-  });
-
-  
 });
