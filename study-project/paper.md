@@ -19,9 +19,9 @@ Despite often deceived as an object-oriented programming language, JavaScript al
 JavaScript is also event-driven and has good support for asynchronous programming [moz01].
 
 Interestingly, the original plan of Netscape was to integrate Scheme, a Lisp dialect with functional paradigm, into their browser.
-But because of marketing reasons, it was decided, to create a new language with syntax similar to Java.
-Later the newly created language was called JavaScript and integrated into the Netscape browser.
-While being a new language, JavaScript has taken functional concepts of Scheme and integrated them in to the language, besides the imperative and object-oriented paradigms [ant16].
+But for marketing reasons, it was decided, to create a new language with syntax similar to Java.
+Later the newly created language was called JavaScript and was integrated into the Netscape browser.
+While being a new language, JavaScript has taken functional concepts of Scheme and integrated them in to the language, besides the also found imperative and object-oriented paradigms [ant16].
 
 However, to stay within the scope of this paper, the focus will be on the functional aspects of JavaScript. These will be presented in the following sections.
 
@@ -48,7 +48,7 @@ The expression is parsed by building an abstract syntax tree (AST), consisting o
 
 ## Functional programming concepts
 
-Functional programming and the functional programming paradigm, consist of various concepts.
+Functional programming and the functional programming paradigm, consists of various concepts.
 To see how well JavaScript and Go are suited for functional programming, we will take a look on these concepts and their support in both languages.
 
 ### Type system
