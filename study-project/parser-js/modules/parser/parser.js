@@ -321,7 +321,7 @@ const isSpaceChar = codePoint =>
  * Accept the first code point from the Input if isFirstChar
  * returns true. After reading the first character, take all following code
  * points as long as they satisfy isLaterChar. Stop parsing the Input at the
- * first code point that doesn't satisfy isLaterChar. Only fails if the first
+ * first code point that doesn't satisfy isLaterChar. Only fail if the first
  * character from the Input doesn't satisfy isFirstChar!
  *
  * @param {any} isFirstChar A function.
@@ -396,6 +396,10 @@ export {
   maybeSpacesBefore,
   orElse,
   stringToInput,
+  isIdentifierStartChar,
+  isDigit,
+  isIdentifierChar,
+  isSpaceChar,
 };
 
 // const expectNumber = () => expectSeveral(isDigit, isDigit);
