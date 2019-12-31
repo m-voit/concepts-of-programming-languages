@@ -53,7 +53,7 @@ test("parseVariable", () => {
   const result = parseVariable(stringToInput(text));
 
   expect(result.result).toStrictEqual(expected);
-  expect(result.remainingInput).not.toStrictEqual(null);
+  expect(result.remainingInput).toStrictEqual(null);
 });
 
 test("parseExclamationMarks", () => {
