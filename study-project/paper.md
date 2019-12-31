@@ -20,7 +20,7 @@ JavaScript is also event-driven and has good support for asynchronous programmin
 Interestingly, the original plan of Netscape was to integrate Scheme, a Lisp dialect with functional paradigm, into their browser.
 But for marketing reasons, it was decided, to create a new language with syntax similar to Java.
 Later the newly created language was called JavaScript and was integrated into the Netscape browser.
-While being a new language, JavaScript has taken functional concepts of Scheme and integrated them in to the language, besides the also found imperative and object-oriented paradigms [ant16].
+While being a new language, JavaScript has taken functional concepts of Scheme and integrated them in to the language, besides imperative and object-oriented concepts [ant16].
 
 However, to stay within the scope of this paper, the focus will be on the functional aspects of JavaScript. These will be presented in the following sections.
 
@@ -41,13 +41,13 @@ The parser parses Boolean expressions with the following EBNF grammar.
 <var> ::= '[a-zA-Z0-9]*'
 ```
 
-A valid expression to be parsed by the parser would be `A & B | !C`.
+`A & B | !C` is a possible expression to be parsed by the parser.
 Depending on the values of A, B and C, which can be true or false, the parser determines the result of the expression.
-The expression is parsed by building an abstract syntax tree (AST), consisting of `Or`, `And`, `Not` and `Value` nodes, mimicking the EBNF grammar.
+The expression is then parsed by building an abstract syntax tree (AST), consisting of `Or`, `And`, `Not` and `Value` nodes, mimicking the EBNF grammar.
 
 ## Functional programming concepts
 
-Functional programming and the functional programming paradigm, consists of various concepts.
+Functional programming and the functional programming paradigm have various unique concepts.
 To see how well JavaScript and Go are suited for functional programming, we will take a look on these concepts and their support in both languages.
 
 ### Type system
@@ -56,7 +56,7 @@ JavaScript is a dynamic and weakly typed programming language, that also feature
 Because the language is weakly typed, types are implicitly cast depending on the used operation.
 Furthermore, the dynamic typing allows for types to change their type at runtime, when their assigned value changes [moz05].
 
-In the context of functional programming, the dynamic and weakly typing of JavaScript allows for writing easily reusable functions.
+In the context of functional programming, the dynamic and weakly typing of JavaScript allows for writing highly reusable functions.
 This is especially useful for higher order functions and function composition, because there is no need to do frequent type casts or using `any` types.
 
 ```javascript
@@ -66,7 +66,7 @@ text = 5; // Type of text now is number.
 
 In Go the type system doesn't have generic types, so we have to use an empty interface to simulate an `any` type.
 This makes the code more verbose and less readable than JavaScript code, while providing no benefit to the developer.
-Generally speaking, the Go type system is not tailored to functional programming and is more or less a hurdle to the developer.
+Generally speaking, the Go type system is not tailored to functional programming and is more or less a hurdle to the developer, when used this way.
 
 A problem of using empty interfaces to simulate generic types is a hit on performance, when doing many type conversions.
 This is no problem in the small parser example, but might become one at a larger scale and should therefore be mentioned [she17].
@@ -83,8 +83,8 @@ Immutability is a desired property, especially in functional programming, becaus
 
 <!-- Add explanation. -->
 
-Unfortunately, true immutability as desired by functional programming, can't be achieved in JavaScript.
-Although it's possible to create constructs that are sort of immutable, there is no immutability like in pure functional programming languages.
+Unfortunately, true immutability as desired, can't be achieved in JavaScript.
+Although it's possible to create constructs that are sort of immutable, there is no immutability as in pure functional programming languages.
 
 ```javascript
 const a = "Hello";
@@ -94,8 +94,8 @@ const a = { name: "Hello" };
 a.name = "World"; // Still possible.
 ```
 
-In JavaScript there are some ways to achieve immutability like the `const` keyword, introduced with ES6, that allows to define constant variables.
-While `const` allows defining constant primitive types as strings, objects created with the `const` keyword are still mutable.
+In JavaScript there are some ways to achieve immutability like the `const` keyword, that allows to define constant variables.
+While primitive types as strings defined with the `const` keyword are constant, objects created with the `const` keyword are still mutable.
 This is the case, because properties of constant objects, can still be reassigned after creation [moz07].
 
 It's also possible to _freeze_ an object after creation.
@@ -103,7 +103,7 @@ This makes the object immutable, but still has the caveat, that it doesn't effec
 Therefore, it's necessary to call freeze recursively on an object that should be immutable [moz08].
 
 But this is more like a workaround than true immutability provided by the language.
-Furthermore, it's error prone to developer mistakes and may not play nicely with libraries, that expect mutable objects.
+Furthermore, it's error prone to developer mistakes and may not play nicely with libraries expecting mutable objects.
 
 ```go
 TODO
@@ -111,16 +111,16 @@ TODO
 
 In Go immutability is quite similar to JavaScript and can't be easily achieved.
 Except strings, data types in Go are by default mutable and only primitive data types like `bool` and `int` can declared to be constant.
-Immutability of composite data types like Go's `structs` is the responsibility of the developer.
+Immutability of composite data types like Go's `structs` are in the responsibility of the developer.
 
-For Go Version 2, there is a proposal to introduce immutable data types to Go.
-So the state of immutability in Go might change in the future, when Go Version 2 is released [git01].
+For Go 2.0, there is a proposal to introduce immutable data types to Go.
+So this might change in the future, when Go 2.0 is released [git01].
 
-To sum it up, as of today there is some support for immutability in JavaScript in Go, but not by default and not easily usable.
+To sum it up, as of today there is some support for immutability in JavaScript and in Go, but not by default and not easily usable.
 
 ### First class functions
 
-First class functions are the foundation of supporting functional paradigms in a programming language.
+First class functions are the foundation of supporting functional programming in a programming language.
 A language with first class functions has to meet the following criteria:
 
 - Allow passing functions as parameters to other functions.
@@ -131,14 +131,14 @@ A language with first class functions has to meet the following criteria:
 The listed properties also allow for concepts such as higher-order functions and functional composition, which both are described later.
 
 In JavaScript, all the mentioned properties are supported.
-Therefore, functions in JavaScript are first class functions and are treated like first-class citizens in the programming language [moz06][fog13].
-This allows it to assign the `optional()` and the `expectSeveral()` function to the `expectSpaces` variable.
+Therefore, functions in JavaScript are first class functions and are treated like first-class citizens [moz06][fog13].
+This allows us to assign the `optional()` and the `expectSeveral()` function to the `expectSpaces` variable in the example below.
 
 ```javascript
 /**
  * Parse [ \t\n\r]* from the Input.
  */
-const expectSpaces = () => optional(expectSeveral(isSpaceChar, isSpaceChar));
+const expectSpaces = optional(expectSeveral(isSpaceChar, isSpaceChar));
 ```
 
 The same holds true for Go, that supports first class functions as well as JavaScript [she17][gol01].
@@ -152,9 +152,9 @@ var ExpectSpaces Parser = ExpectSeveral(isSpaceChar, isSpaceChar).Optional()
 
 ### Closures and lambda expressions
 
-Closures and lambda expression, also called anonymous functions, are unnamed functions, often returned from another function.
+Closures or lambda expressions, also called anonymous functions, are unnamed functions, often returned from another function.
 To be precise, a closure is the reference to the local state of the function, that returns an anonymous function.
-However, both terms are often used interchangeably, because both concepts belong to the concept of anonymous functions returned by an outer function [fog13].
+However, both terms are often used interchangeably, because both concepts belong to the concept of anonymous functions, returned by an outer function [fog13].
 
 Support for closures is found in all programming languages with first class functions.
 This is the case, because closures are needed for anonymous functions to work.
@@ -180,7 +180,7 @@ As discussed in the first class functions section, JavaScript has first class fu
 
 The convert function of the Boolean parser for example takes two arguments.
 A parser function to be executed and a converter function to convert the result of the parser function.
-This higher order function can now be used for any desired parser function and with an arbitrary converter function.
+This higher order function can be used for any desired parser function and with an arbitrary converter function.
 The result is a highly flexible and easily reusable function.
 
 ```javascript
@@ -244,14 +244,14 @@ To achieve this a pure function only uses its input and doesn't use or mutate in
 This property of pure functions gives us referential transparency.
 That means it's possible to replace a function with its result without changing the behaviour of a program.
 
-JavaScript allows writing pure functions, but doesn't have special constructs to enforce side effect free and pure functions [fog13].
+JavaScript allows writing pure functions, but doesn't have special constructs to enforce side effect free and therefore pure functions [fog13].
 
 The same holds true for Go.
-Like in JavaScript, it's possible writing pure and side effect free functions in Go, but there are no special constructs to enforce these concepts.
-Furthermore, because Go doesn't support tail-call optimization, which is discussed later, there are performance impacts, when using pure functions excessively.
+Like in JavaScript, it's possible to write pure and side effect free functions in Go, but there are no special constructs to enforce these concepts.
+Furthermore, because Go doesn't support tail-call optimization, which is discussed later, there are performance impacts, when heavily using pure functions.
 So as long as there is no tail-call optimization in Go, pure functions should be used with precautions [she17].
 
-Therefore, pure functions are possible in both languages, but it's in the hand of the programmer writing them.
+Therefore, pure functions are possible in both languages, but it's in the responsibility of the programmer to keep them pure.
 
 ### Lazy evaluation
 
@@ -277,14 +277,13 @@ Therefore, the call stack grows with each function call and causes large memory 
 Tail-call optimization prevents this by overwriting the unneeded stack frames of the previous function calls.
 So tail-call optimization is needed for efficient functional programming.
 
-Tail-call optimization is part of JavaScript since ECMAScript 6, which was introduced in 2015.
-This allows efficient functional programming in JavaScript.
+Tail-call optimization is a part of JavaScript since ECMAScript 6, which was introduced in 2015.
 
 Go on the other side has no support for tail-call optimization.
 This means that heavy using of recursion and functional programming in Go will have an impact on performance.
 There are some workarounds for this issue, but they are out of the scope of this paper.[med02][she17]
 
-Summarized, the support for efficient programming of recursion heavy functions is better in JavaScript than it is in Go.
+Summarized, the support for efficient recursion heavy programming is better in JavaScript than it is in Go.
 
 ### Pattern matching
 
