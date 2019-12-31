@@ -30,7 +30,7 @@ describe("Test parser.js", () => {
     expect(result).toStrictEqual(expected);
   });
 
-  test("expectCodePoints", () => {
+  test("expectCodePoints & expectString", () => {
     let input = null;
     let result = expectCodePoints("a&b|c")(input);
     let expected = new Result(null, input);
@@ -43,16 +43,9 @@ describe("Test parser.js", () => {
 
     expect(result).toStrictEqual(expected);
 
-    input = new Input("a&b", 0);
+    input = new Input("a&b|c", 0);
     result = expectCodePoints("a&b|c")(input);
     expected = new Result("a&b|c", input);
-
-    expect(result).toStrictEqual(expected);
-  });
-
-  test("expectString", () => {
-    let result = "";
-    let expected = "";
 
     expect(result).toStrictEqual(expected);
   });
