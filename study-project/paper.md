@@ -9,7 +9,6 @@ However, the main goal of this paper is to show the possibilities and support of
 ## Table of contents
 
 <!-- TODO -->
-<!-- Monads -->
 
 ## JavaScript Overview
 
@@ -162,9 +161,7 @@ This is the case, because closures are needed for anonymous functions to work.
 Without closures and therefore no references to the _outer_ function, that is returning the _inner_ function, the _inner_ function would stop working when being called directly [moz02][fog13].
 
 ```javascript
-const sum = (arg1, arg2) => {
-  return arg1 + arg2;
-};
+TODO
 ```
 
 In JavaScript lambda expressions can be written very concisely with the arrow functions syntax, introduced with ECMAScript 6 [moz04].
@@ -315,6 +312,7 @@ No support in Go.
 - [ker17] Mastering Javascript Functional Programming, Federico Kereki, Packt Publishing, 2017-12-29
 - [med01] Introduction to Functional JavaScript, <https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a> (viewed 2019-12-21)
 - [med02] Functional Go <https://medium.com/@geisonfgfg/functional-go-bc116f4c96a4> (viewed 2019-12-26)
+- [med03] JS ES6 Recursive Tail Call Optimization <https://medium.com/@mlaythe/js-es6-recursive-tail-call-optimization-feaf2dada3f6> (viewed 2019-12-31)
 - [moz01] MDN JavaScript, <https://developer.mozilla.org/en-US/docs/Web/JavaScript> (viewed 2019-12-25)
 - [moz02] MDN Closures, <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures> (viewed 2019-12-23)
 - [moz03] MDN Functions, <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions> (viewed 2019-12-25)
