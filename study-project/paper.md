@@ -65,7 +65,7 @@ text = "Hello World!"; // Type of text is string.
 text = 5; // Type of text now is number.
 ```
 
-In go the type system doesn't have generic types, so we have to use an empty interface to simulate an `any` type.
+In Go the type system doesn't have generic types, so we have to use an empty interface to simulate an `any` type.
 This makes the code more verbose and less readable than JavaScript code, while providing no benefit to the developer.
 Generally speaking, the Go type system is not tailored to functional programming and is more or less a hurdle to the developer.
 
