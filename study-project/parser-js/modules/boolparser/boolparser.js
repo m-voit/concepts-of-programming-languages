@@ -13,6 +13,7 @@ import {
   repeated,
   maybeSpacesBefore,
   orElse,
+  Input,
 } from "../parser/parser";
 
 /**
@@ -32,19 +33,21 @@ import {
  * Parse the following grammar: Expression := Or Spaces*
  * The syntax tree is exactly the one returned by Or.
  *
- * @returns Result.
+ * @param {Input} input The input to be parsed.
+ * @returns A result.
  */
 export const parseExpression = input =>
   first(andThen(parseOr, optional(expectSpaces)))(input);
 
 /**
  * Parse the following grammar: Or := And ^ ("|" ^ Or)?
- * If the parser for ("|" ^ Or)? produces nothing then parseOr will return the
- * tree returned by And. Otherwise parseOr will return a new Or Node containing
- * the sub-trees returned by the recursive calls. parseOr uses expect to parse
+ * If the parser for ("|" ^ Or)? produces nothing then return the
+ * tree returned by And. Otherwise return a new Or Node containing
+ * the sub-trees returned by the recursive calls. It uses expect to parse
  * the symbol "|", i. e. it actually allows for Space* ^ "|".
  *
- * @returns Result.
+ * @param {Input} input The input to be parsed.
+ * @returns A result.
  */
 export const parseOr = input =>
   convert(
@@ -54,12 +57,13 @@ export const parseOr = input =>
 
 /**
  * Parse the following grammar: And := Not ^ ("&" ^ And)?
- * If the parser for ("&" ^ And)? produces nothing then parseAnd will return the
- * tree returned by Not. Otherwise parseAnd will return a new And Node containing
- * the sub-trees returned by the recursive calls. parseAnd uses expect to parse
+ * If the parser for ("&" ^ And)? produces nothing then return the
+ * tree returned by Not. Otherwise return a new And Node containing
+ * the sub-trees returned by the recursive calls. It uses expect to parse
  * the symbol "&", i. e. it actually allows for Space* ^ "&".
  *
- * @returns Result.
+ * @param {Input} input The input to be parsed.
+ * @returns A result.
  */
 export const parseAnd = input =>
   convert(
@@ -74,7 +78,8 @@ export const parseAnd = input =>
  * the tree parsed by parseAtom. Otherwise parseNot will wrap the atom in as many
  * Not nodes as there are exclamation marks.
  *
- * @returns Result.
+ * @param {Input} input The input to be parsed.
+ * @returns A result.
  */
 export const parseNot = input =>
   convert(andThen(parseExclamationMarks, parseAtom), pair => {
@@ -83,22 +88,24 @@ export const parseNot = input =>
 
 /**
  * Parse the following grammar: "!"*
- * It returns the number of exclamation marks in Result. Result as an int.
- * parseExclamationMarks uses expect to parse the symbol "!", i. e. it actually
+ * Return the number of exclamation marks in Result. Result as an int.
+ * It uses expect to parse the symbol "!", i. e. it actually
  * allows for Space* ^ "!".
  *
- * @returns Result.
+ * @param {Input} input The input to be parsed.
+ * @returns A result.
  */
 export const parseExclamationMarks = input =>
   convert(repeated(expect("!")), arg => arg.length)(input);
 
 /**
  * Parse the followiong grammar: Atom := Variable | "(" ^ Expression ^ ")"
- * The parenthesis won't appear in the abstract syntax tree. parseAtom uses
+ * The parenthesis won't appear in the abstract syntax tree. It uses
  * Parser.First() and Parser.Second() to extract the tree returned by
  * parseExpression.
  *
- * @returns Result.
+ * @param {Input} input The input to be parsed.
+ * @returns A result.
  */
 export const parseAtom = input =>
   orElse(
@@ -112,7 +119,8 @@ export const parseAtom = input =>
  * combinators package and uses the Convert method on parsers to create the
  * ast.Val node.
  *
- * @returns Result.
+ * @param {Input} input The input to be parsed.
+ * @returns A result.
  */
 export const parseVariable = input =>
   convert(maybeSpacesBefore(expectIdentifier), arg => new Value(arg))(input);
@@ -120,9 +128,9 @@ export const parseVariable = input =>
 /**
  * Wrap the node into Not nodes.
  *
- * @param {number} number
- * @param {any} node
- * @returns Node.
+ * @param {number} number The number of NOT nodes to wrap the node in.
+ * @param {any} node The AST node to be wrapped into NOT nodes.
+ * @returns A new NOT node.
  */
 export const makeNot = (number, node) => {
   return number <= 0 ? node : new Not(makeNot(number - 1, node));
@@ -135,9 +143,9 @@ export const makeNot = (number, node) => {
  * then create an And node containing the first and the second
  * component of the Pair as sub-nodes.
  *
- * @param {any} first
- * @param {any} second
- * @returns Result.
+ * @param {any} first The left hand side of the AND node.
+ * @param {any} second The right hand side of the AND node.
+ * @returns A new AND node.
  */
 export const makeAnd = (first, second) => {
   const pair = new Pair(first, second);
@@ -154,9 +162,9 @@ export const makeAnd = (first, second) => {
  * then create an Or node containing the first and the second
  * component of the Pair as sub-nodes.
  *
- * @param {any} first
- * @param {any} second
- * @returns Result.
+ * @param {any} first The left hand side of the OR node.
+ * @param {any} second The right hand side of the OR node.
+ * @returns A new OR node.
  */
 export const makeOr = (first, second) => {
   const pair = new Pair(first, second);
