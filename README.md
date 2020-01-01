@@ -19,7 +19,7 @@ Then run one of the following npm scripts.
 
 ## Go
 
-- To run a local go files in Visual Studio code, use `Ctrl + F5` or open the debug menu and use `Start Without Debugging`.
+- To run local go files in Visual Studio code, use `Ctrl + F5` or open the debug menu and use `Start Without Debugging`.
 
 ## Seminar paper
 
