@@ -151,7 +151,7 @@ export const repeated = parser => input => {
 };
 
 /**
- * Use the first parser to parse the Input. If this fails use the second
+ * Use the first parser to parse the Input. If it fails use the second
  * parser to parse the same Input. Only use non-overlapping
  * parsers with this combinator! For the most part it's the usual alternative
  * except that it's first-come, first-served: if the first parser succeeds,
@@ -161,7 +161,7 @@ export const repeated = parser => input => {
  *
  * @param {any} parser The parser.
  * @param {any} alternativeParser An alternative parser to be used when first parser fails.
- * @returns Result.
+ * @returns A new Result.
  */
 export const orElse = (parser, alternativeParser) => input => {
   const firstResult = parser(input);
@@ -174,7 +174,7 @@ export const orElse = (parser, alternativeParser) => input => {
  * return the argument if it is not a pair.
  *
  * @param {Pair | any} pair A pair.
- * @returns An new Result.
+ * @returns A new Result.
  */
 export const getFirst = pair => (pair instanceof Pair ? pair.first : pair);
 
@@ -328,6 +328,7 @@ export const isSpaceChar = codePoint =>
  *
  * @param {any} isFirstChar A function.
  * @param {any} isLaterChar A function.
+ * @returns A new Result.
  */
 export const expectSeveral = (isFirstChar, isLaterChar) => input => {
   if (null === input) {
