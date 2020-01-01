@@ -12,14 +12,14 @@ import {
   expect as expectThis,
 } from "./boolparser";
 
-test("makeOr", () => {
-  let result = makeOr(new Value("a"), new Value("b"));
-  let expected = new Or(new Value("a"), new Value("b"));
+test("makeNot", () => {
+  let result = makeNot(0, new Value("a"));
+  let expected = new Value("a");
 
   expect(result).toStrictEqual(expected);
 
-  result = makeOr(new Value("a"), new Nothing());
-  expected = new Value("a");
+  result = makeNot(3, new Value("a"));
+  expected = new Not(new Not(new Not(new Value("a"))));
 
   expect(result).toStrictEqual(expected);
 });
@@ -36,14 +36,34 @@ test("makeAnd", () => {
   expect(result).toStrictEqual(expected);
 });
 
-test("makeNot", () => {
-  let result = makeNot(0, new Value("a"));
-  let expected = new Value("a");
+test("makeOr", () => {
+  let result = makeOr(new Value("a"), new Value("b"));
+  let expected = new Or(new Value("a"), new Value("b"));
 
   expect(result).toStrictEqual(expected);
 
-  result = makeNot(3, new Value("a"));
-  expected = new Not(new Not(new Not(new Value("a"))));
+  result = makeOr(new Value("a"), new Nothing());
+  expected = new Value("a");
+
+  expect(result).toStrictEqual(expected);
+});
+
+test("expect", () => {
+  let input = new Input("!a", 0);
+  let result = expectThis("!")(input);
+  let expected = new Result("!", new Input("!a", 1));
+
+  expect(result).toStrictEqual(expected);
+
+  input = new Input("   !a", 0);
+  result = expectThis("!")(input);
+  expected = new Result("!", new Input("   !a", 4));
+
+  expect(result).toStrictEqual(expected);
+
+  input = new Input("   a&b", 0);
+  result = expectThis("!")(input);
+  expected = new Result(null, new Input("   a&b", 3));
 
   expect(result).toStrictEqual(expected);
 });
@@ -183,24 +203,4 @@ describe("parseExpression", () => {
     expect(result.result).toStrictEqual(expected);
     expect(result.remainingInput).toStrictEqual(null);
   });
-});
-
-test("expect", () => {
-  let input = new Input("!a", 0);
-  let result = expectThis("!")(input);
-  let expected = new Result("!", new Input("!a", 1));
-
-  expect(result).toStrictEqual(expected);
-
-  input = new Input("   !a", 0);
-  result = expectThis("!")(input);
-  expected = new Result("!", new Input("   !a", 4));
-
-  expect(result).toStrictEqual(expected);
-
-  input = new Input("   a&b", 0);
-  result = expectThis("!")(input);
-  expected = new Result(null, new Input("   a&b", 3));
-
-  expect(result).toStrictEqual(expected);
 });
