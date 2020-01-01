@@ -44,8 +44,8 @@ describe("Test parser.js", () => {
     expect(result).toStrictEqual(expected);
 
     input = new Input("a&b|c", 0);
-    result = expectCodePoints("a&b|c")(input);
-    expected = new Result("a&b|c", input);
+    result = expectCodePoints("a&b")(input);
+    expected = new Result("a&b", new Input("a&b|c", 3));
 
     expect(result).toStrictEqual(expected);
   });
