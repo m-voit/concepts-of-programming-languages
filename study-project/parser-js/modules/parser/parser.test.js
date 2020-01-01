@@ -96,20 +96,6 @@ describe("Test parser.js", () => {
     expect(result).toStrictEqual(expected);
   });
 
-  test("first", () => {
-    let result = "";
-    let expected = "";
-
-    expect(result).toStrictEqual(expected);
-  });
-
-  test("second", () => {
-    let result = "";
-    let expected = "";
-
-    expect(result).toStrictEqual(expected);
-  });
-
   test("andThen", () => {
     let result = "";
     let expected = "";
