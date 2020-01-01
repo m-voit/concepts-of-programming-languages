@@ -34,7 +34,7 @@ import {
  *
  * @returns Result.
  */
-const parseExpression = input =>
+export const parseExpression = input =>
   first(andThen(parseOr, optional(expectSpaces)))(input);
 
 /**
@@ -46,7 +46,7 @@ const parseExpression = input =>
  *
  * @returns Result.
  */
-const parseOr = input =>
+export const parseOr = input =>
   convert(
     andThen(parseAnd, optional(second(andThen(expect("|"), parseOr)))),
     makeOr,
@@ -61,7 +61,7 @@ const parseOr = input =>
  *
  * @returns Result.
  */
-const parseAnd = input =>
+export const parseAnd = input =>
   convert(
     andThen(parseNot, optional(second(andThen(expect("&"), parseAnd)))),
     makeAnd,
@@ -76,7 +76,7 @@ const parseAnd = input =>
  *
  * @returns Result.
  */
-const parseNot = input =>
+export const parseNot = input =>
   convert(andThen(parseExclamationMarks, parseAtom), pair => {
     return makeNot(pair.first, pair.second);
   })(input);
@@ -89,7 +89,7 @@ const parseNot = input =>
  *
  * @returns Result.
  */
-const parseExclamationMarks = input =>
+export const parseExclamationMarks = input =>
   convert(repeated(expect("!")), arg => arg.length)(input);
 
 /**
@@ -100,7 +100,7 @@ const parseExclamationMarks = input =>
  *
  * @returns Result.
  */
-const parseAtom = input =>
+export const parseAtom = input =>
   orElse(
     parseVariable,
     second(first(andThen(andThen(expect("("), parseExpression), expect(")")))),
@@ -114,7 +114,7 @@ const parseAtom = input =>
  *
  * @returns Result.
  */
-const parseVariable = input =>
+export const parseVariable = input =>
   convert(maybeSpacesBefore(expectIdentifier), arg => new Value(arg))(input);
 
 /**
@@ -124,7 +124,7 @@ const parseVariable = input =>
  * @param {any} node
  * @returns Node.
  */
-const makeNot = (number, node) => {
+export const makeNot = (number, node) => {
   return number <= 0 ? node : new Not(makeNot(number - 1, node));
 };
 
@@ -139,7 +139,7 @@ const makeNot = (number, node) => {
  * @param {any} second
  * @returns Result.
  */
-const makeAnd = (first, second) => {
+export const makeAnd = (first, second) => {
   const pair = new Pair(first, second);
 
   return pair.second instanceof Nothing
@@ -158,7 +158,7 @@ const makeAnd = (first, second) => {
  * @param {any} second
  * @returns Result.
  */
-const makeOr = (first, second) => {
+export const makeOr = (first, second) => {
   const pair = new Pair(first, second);
 
   return pair.second instanceof Nothing
@@ -172,16 +172,4 @@ const makeOr = (first, second) => {
  *
  * @param {string} string
  */
-const expect = string => maybeSpacesBefore(expectString(string));
-
-/**
- * Export functions.
- */
-export {
-  makeNot,
-  makeAnd,
-  makeOr,
-  parseExpression,
-  parseExclamationMarks,
-  parseVariable,
-};
+export const expect = string => maybeSpacesBefore(expectString(string));
