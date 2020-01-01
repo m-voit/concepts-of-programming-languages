@@ -17,6 +17,9 @@ import {
   getFirst,
   getSecond,
   andThen,
+  orElse,
+  expectString,
+  maybeSpacesBefore,
 } from "./parser";
 import { Value } from "../ast/ast";
 
@@ -63,8 +66,19 @@ describe("Test parser.js", () => {
   });
 
   test("orElse", () => {
-    let result = "";
-    let expected = "";
+    let firstParser = expectSeveral(isSpaceChar, isSpaceChar);
+    let secondParser = expectSeveral(isIdentifierStartChar, isIdentifierChar);
+    let input = new Input(" a&b", 0);
+
+    let result = orElse(firstParser, secondParser)(input);
+    let expected = new Result(" ", new Input(" a&b", 1));
+
+    expect(result).toStrictEqual(expected);
+
+    input = new Input("a&b", 0);
+
+    result = orElse(firstParser, secondParser)(input);
+    expected = new Result("a", new Input("a&b", 1));
 
     expect(result).toStrictEqual(expected);
   });
@@ -216,8 +230,11 @@ describe("Test parser.js", () => {
   });
 
   test("maybeSpacesBefore", () => {
-    let result = "";
-    let expected = "";
+    let input = new Input("  a&b", 0);
+    let parser = expectString("a&b")(input);
+
+    let result = maybeSpacesBefore(parser);
+    let expected = new Result("a&b", new Input("  a&b", 4));
 
     expect(result).toStrictEqual(expected);
   });
