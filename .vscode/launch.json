@@ -6,20 +6,18 @@
   "configurations": [
     {
       "type": "node",
-      "name": "vscode-jest-tests",
+      "name": "run-jest",
       "request": "launch",
       "program": "${workspaceFolder}/study-project/parser-js/node_modules/jest/bin/jest",
-      "args": [
-        "--runInBand"
-      ],
+      "args": ["--runInBand"],
       "cwd": "${workspaceFolder}/study-project/parser-js",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "disableOptimisticBPs": true
     },
     {
-      "name": "Launch Go",
       "type": "go",
+      "name": "run-go",
       "request": "launch",
       "mode": "auto",
       "program": "${file}",
