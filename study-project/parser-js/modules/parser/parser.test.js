@@ -13,7 +13,11 @@ import {
   isSpaceChar,
   optional,
   stringToInput,
+  Pair,
+  getFirst,
+  getSecond,
 } from "./parser";
+import { Value } from "../ast/ast";
 
 describe("Test parser.js", () => {
   test("expectCodePoint", () => {
@@ -65,15 +69,29 @@ describe("Test parser.js", () => {
   });
 
   test("getFirst", () => {
-    let result = "";
-    let expected = "";
+    let pair = new Pair(new Value("a"), new Value("b"));
+    let result = getFirst(pair);
+    let expected = new Value("a");
+
+    expect(result).toStrictEqual(expected);
+
+    pair = new Value("a");
+    result = getFirst(pair);
+    expected = new Value("a");
 
     expect(result).toStrictEqual(expected);
   });
 
   test("getSecond", () => {
-    let result = "";
-    let expected = "";
+    let pair = new Pair(new Value("a"), new Value("b"));
+    let result = getSecond(pair);
+    let expected = new Value("b");
+
+    expect(result).toStrictEqual(expected);
+
+    pair = new Value("b");
+    result = getSecond(pair);
+    expected = new Value("b");
 
     expect(result).toStrictEqual(expected);
   });
