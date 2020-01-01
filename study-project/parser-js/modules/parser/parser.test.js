@@ -16,6 +16,7 @@ import {
   Pair,
   getFirst,
   getSecond,
+  andThen,
 } from "./parser";
 import { Value } from "../ast/ast";
 
@@ -97,8 +98,12 @@ describe("Test parser.js", () => {
   });
 
   test("andThen", () => {
-    let result = "";
-    let expected = "";
+    let firstParser = expectSeveral(isSpaceChar, isSpaceChar);
+    let secondParser = expectSeveral(isIdentifierStartChar, isIdentifierChar);
+    let input = new Input(" a&b", 0);
+
+    let result = andThen(firstParser, secondParser)(input);
+    let expected = new Result(new Pair(" ", "a"), new Input(" a&b", 2));
 
     expect(result).toStrictEqual(expected);
   });
