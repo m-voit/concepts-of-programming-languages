@@ -14,7 +14,7 @@
 /**
  * Or is the logical OR Operator in an AST.
  */
-class Or {
+export class Or {
   /**
    * @param {Or | Value | And} lhs The AST node on the left hand side.
    * @param {Or | Value | And} rhs The AST node on the right hand side.
@@ -38,7 +38,7 @@ class Or {
 /**
  * And is the logical AND Operator in an AST.
  */
-class And {
+export class And {
   /**
    * @param {And | Value | Not} lhs The AST node on the left hand side.
    * @param {And | Value | Not} rhs The AST node on the right hand side.
@@ -62,7 +62,7 @@ class And {
 /**
  * Not is the NOT operator in the AST.
  */
-class Not {
+export class Not {
   /**
    * @param {Value | Not | Or} ex An AST node.
    */
@@ -84,7 +84,7 @@ class Not {
 /**
  * Value is a boolean variable in an AST.
  */
-class Value {
+export class Value {
   /**
    * @param {string} name The name of the value.
    */
@@ -102,11 +102,6 @@ class Value {
     return vars.get(this.name);
   }
 }
-
-/**
- * Export classes to be used in other modules.
- */
-export { Or, And, Not, Value };
 
 /**
  * Or is the logical OR Operator in an AST.
