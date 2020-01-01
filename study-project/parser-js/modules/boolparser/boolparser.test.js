@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import { Or, And, Not, Value } from "../ast/ast";
-import { Nothing, stringToInput } from "../parser/parser";
+import { Nothing, stringToInput, Input, Result } from "../parser/parser";
 import {
   makeNot,
   makeAnd,
@@ -9,6 +9,7 @@ import {
   parseExpression,
   parseExclamationMarks,
   parseVariable,
+  expect as expectThis,
 } from "./boolparser";
 
 test("makeOr", () => {
@@ -71,7 +72,7 @@ describe("parseExpression", () => {
     const expected = new Not(new Value("a"));
 
     expect(result.result).toStrictEqual(expected);
-    expect(result.remainingInput).not.toStrictEqual(null);
+    expect(result.remainingInput).toStrictEqual(null);
   });
 
   test("a&b", () => {
@@ -79,7 +80,7 @@ describe("parseExpression", () => {
     const expected = new And(new Value("a"), new Value("b"));
 
     expect(result.result).toStrictEqual(expected);
-    expect(result.remainingInput).not.toStrictEqual(null);
+    expect(result.remainingInput).toStrictEqual(null);
   });
 
   test("a|b", () => {
@@ -87,7 +88,7 @@ describe("parseExpression", () => {
     const expected = new Or(new Value("a"), new Value("b"));
 
     expect(result.result).toStrictEqual(expected);
-    expect(result.remainingInput).not.toStrictEqual(null);
+    expect(result.remainingInput).toStrictEqual(null);
   });
 
   test(" a &  b", () => {
@@ -95,7 +96,7 @@ describe("parseExpression", () => {
     const expected = new And(new Value("a"), new Value("b"));
 
     expect(result.result).toStrictEqual(expected);
-    expect(result.remainingInput).not.toStrictEqual(null);
+    expect(result.remainingInput).toStrictEqual(null);
   });
 
   test("a   ", () => {
@@ -103,7 +104,7 @@ describe("parseExpression", () => {
     const expected = new Value("a");
 
     expect(result.result).toStrictEqual(expected);
-    expect(result.remainingInput).not.toStrictEqual(null);
+    expect(result.remainingInput).toStrictEqual(null);
   });
 
   test("a&b&c", () => {
@@ -114,7 +115,7 @@ describe("parseExpression", () => {
     );
 
     expect(result.result).toStrictEqual(expected);
-    expect(result.remainingInput).not.toStrictEqual(null);
+    expect(result.remainingInput).toStrictEqual(null);
   });
 
   test("a&(b&c)", () => {
@@ -125,7 +126,7 @@ describe("parseExpression", () => {
     );
 
     expect(result.result).toStrictEqual(expected);
-    expect(result.remainingInput).not.toStrictEqual(null);
+    expect(result.remainingInput).toStrictEqual(null);
   });
 
   test("(a&b)&c", () => {
@@ -136,7 +137,7 @@ describe("parseExpression", () => {
     );
 
     expect(result.result).toStrictEqual(expected);
-    expect(result.remainingInput).not.toStrictEqual(null);
+    expect(result.remainingInput).toStrictEqual(null);
   });
 
   test("a|b|c", () => {
@@ -147,7 +148,7 @@ describe("parseExpression", () => {
     );
 
     expect(result.result).toStrictEqual(expected);
-    expect(result.remainingInput).not.toStrictEqual(null);
+    expect(result.remainingInput).toStrictEqual(null);
   });
 
   test("a|(b|c)", () => {
@@ -158,7 +159,7 @@ describe("parseExpression", () => {
     );
 
     expect(result.result).toStrictEqual(expected);
-    expect(result.remainingInput).not.toStrictEqual(null);
+    expect(result.remainingInput).toStrictEqual(null);
   });
 
   test("(a|b)|c", () => {
@@ -169,7 +170,7 @@ describe("parseExpression", () => {
     );
 
     expect(result.result).toStrictEqual(expected);
-    expect(result.remainingInput).not.toStrictEqual(null);
+    expect(result.remainingInput).toStrictEqual(null);
   });
 
   test("!a & b|c&!(d|e)", () => {
@@ -180,6 +181,26 @@ describe("parseExpression", () => {
     );
 
     expect(result.result).toStrictEqual(expected);
-    expect(result.remainingInput).not.toStrictEqual(null);
+    expect(result.remainingInput).toStrictEqual(null);
   });
+});
+
+test("expect", () => {
+  let input = new Input("!a", 0);
+  let result = expectThis("!")(input);
+  let expected = new Result("!", new Input("!a", 1));
+
+  expect(result).toStrictEqual(expected);
+
+  input = new Input("   !a", 0);
+  result = expectThis("!")(input);
+  expected = new Result("!", new Input("   !a", 4));
+
+  expect(result).toStrictEqual(expected);
+
+  input = new Input("   a&b", 0);
+  result = expectThis("!")(input);
+  expected = new Result(null, new Input("   a&b", 3));
+
+  expect(result).toStrictEqual(expected);
 });
