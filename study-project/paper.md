@@ -83,7 +83,7 @@ Immutability is a desired property, especially in functional programming, becaus
 
 <!-- Add explanation. -->
 
-Unfortunately, true immutability as desired, can't be achieved in JavaScript.
+Unfortunately, true immutability can't be achieved in JavaScript.
 Although it's possible to create constructs that are sort of immutable, there is no immutability as in pure functional programming languages.
 
 ```javascript
@@ -283,7 +283,7 @@ Go on the other side has no support for tail-call optimization.
 This means that heavy using of recursion and functional programming in Go will have an impact on performance.
 There are some workarounds for this issue, but they are out of the scope of this paper.[med02][she17]
 
-Summarized, the support for efficient recursion heavy programming is better in JavaScript than it is in Go.
+Summarized, JavaScript has better support for efficient recursion heavy programming than Go.
 
 ### Pattern matching
 
