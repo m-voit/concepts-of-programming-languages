@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import { Or, And, Not, Value } from "../ast/ast";
-import { Nothing, stringToInput, Input, Result } from "../parser/parser";
+import { Nothing, stringToInput, Input, Result, Pair } from "../parser/parser";
 import {
   makeNot,
   makeAnd,
@@ -25,24 +25,24 @@ test("makeNot", () => {
 });
 
 test("makeAnd", () => {
-  let result = makeAnd(new Value("a"), new Value("b"));
+  let result = makeAnd(new Pair(new Value("a"), new Value("b")));
   let expected = new And(new Value("a"), new Value("b"));
 
   expect(result).toStrictEqual(expected);
 
-  result = makeAnd(new Value("a"), new Nothing());
+  result = makeAnd(new Pair(new Value("a"), new Nothing()));
   expected = new Value("a");
 
   expect(result).toStrictEqual(expected);
 });
 
 test("makeOr", () => {
-  let result = makeOr(new Value("a"), new Value("b"));
+  let result = makeOr(new Pair(new Value("a"), new Value("b")));
   let expected = new Or(new Value("a"), new Value("b"));
 
   expect(result).toStrictEqual(expected);
 
-  result = makeOr(new Value("a"), new Nothing());
+  result = makeOr(new Pair(new Value("a"), new Nothing()));
   expected = new Value("a");
 
   expect(result).toStrictEqual(expected);
