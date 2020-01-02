@@ -1,10 +1,7 @@
 package parser
 
 import (
-  "bufio"
   "container/list"
-  "io"
-  "os"
   "strings"
 )
 
@@ -45,24 +42,6 @@ func ExpectCodePoint(expectedCodePoint rune) Parser {
       return Result{expectedCodePoint, Input.RemainingInput()}
     }
     return Result{nil, Input}
-  }
-}
-
-// Fail just is a failing parser. No tricks.
-var Fail Parser = func(Input Input) Result {
-  return Result{nil, Input}
-}
-
-// ExpectNotCodePoint expects exactly one rune in the Input that does not
-// appear in the forbiddenCodePoints.
-func ExpectNotCodePoint(forbiddenCodePoints []rune) Parser {
-  return func(Input Input) Result {
-    for _, forbiddenCodePoint := range forbiddenCodePoints {
-      if Input.CurrentCodePoint() == forbiddenCodePoint {
-        return Result{nil, Input}
-      }
-    }
-    return Result{Input.CurrentCodePoint(), Input.RemainingInput()}
   }
 }
 
@@ -115,51 +94,6 @@ func (parser Parser) Repeated() Parser {
       result.RemainingInput = oneMoreResult.RemainingInput
     }
     return result
-  }
-}
-
-// OnceOrMore is like Repeated except that it doesn't allow parsing zero times.
-func (parser Parser) OnceOrMore() Parser {
-  return func(Input Input) Result {
-    var result = parser.Repeated()(Input)
-    if result.Result.(*list.List).Len() > 0 {
-      return result
-    }
-    return Result{nil, Input}
-  }
-}
-
-// RepeatAndFoldLeft is like Repeat except that it doesn't produce a list.
-// You can make RepeatAndFoldLeft implement Repeat by using the empty list as
-// the accumulator and PushBack as the combine function. The accumulator is
-// the initial value and every result of the parser will be added to the
-// accumulator using the combine function. See the calculator example for
-// an idiomatic use-case.
-func (parser Parser) RepeatAndFoldLeft(accumulator interface{},
-  combine func(interface{},
-    interface{}) interface{}) Parser {
-  return func(Input Input) Result {
-    var result = Result{accumulator, Input}
-    for result.RemainingInput != nil {
-      var oneMoreResult = parser(result.RemainingInput)
-      if oneMoreResult.Result == nil {
-        return result
-      }
-      result.Result = combine(result.Result, oneMoreResult.Result)
-      result.RemainingInput = oneMoreResult.RemainingInput
-    }
-    return result
-  }
-}
-
-// Bind uses the result of a first parser to construct a second parser that
-// will parse the left-over Input from the first parser. You can use this
-// to implement syntax annotations.
-func (parser Parser) Bind(constructor func(interface{}) Parser) Parser {
-  return func(Input Input) Result {
-    var firstResult = parser(Input)
-    var secondParser = constructor(firstResult.Result)
-    return secondParser(firstResult.RemainingInput)
   }
 }
 
@@ -276,61 +210,6 @@ func (parser Parser) Optional() Parser {
   }
 }
 
-// FileInput is an implementation of Input
-// You can use FileToInput to create instances of this type directly
-// from a path.
-type FileInput struct {
-
-  // File is the underlying file of this parser Input
-  File io.RuneReader
-
-  // CurrentRune is the current character
-  CurrentRune rune
-
-  // RestOfInput is what remains after the CurrentRune
-  RestOfInput *FileInput
-}
-
-// FileToInput converts a RuneReader into a Input.
-func FileToInput(file io.RuneReader) *FileInput {
-  var r, _, err = file.ReadRune()
-  if err != nil {
-    return &FileInput{file, '\x00', nil}
-  }
-  return &FileInput{file, r, nil}
-}
-
-// FilenameToInput opens a file and converts it into Input.
-func FilenameToInput(filename string) *FileInput {
-  var file, err = os.Open(filename)
-  if err != nil {
-    panic(err)
-  }
-  return FileToInput(bufio.NewReader(file))
-}
-
-// RemainingInput is necessary for Input to implement Input
-func (input *FileInput) RemainingInput() Input {
-  if input.RestOfInput != nil {
-    return input.RestOfInput
-  }
-  if input.File == nil {
-    return nil
-  }
-  var r, _, err = input.File.ReadRune()
-  if err != nil {
-    input.File = nil
-    return nil
-  }
-  input.RestOfInput = &FileInput{input.File, r, nil}
-  return input.RestOfInput
-}
-
-// CurrentCodePoint is necessary for Input to implement Input
-func (input *FileInput) CurrentCodePoint() rune {
-  return input.CurrentRune
-}
-
 // RuneArrayInput is an implementation of Input.
 // You can use StringToInput to create instances of this type directly
 // from strings.
@@ -421,10 +300,6 @@ var ExpectIdentifier Parser = ExpectSeveral(isIdentifierStartChar, isIdentifierC
 
 // ExpectSpaces parses a [ \t\n\r]* from the Input.
 var ExpectSpaces Parser = ExpectSeveral(isSpaceChar, isSpaceChar).Optional()
-
-// ExpectNumber parses a [0-9]+ from the Input and the result will be a string.
-// You need to convert it into your favorite number type by yourself.
-var ExpectNumber Parser = ExpectSeveral(isDigit, isDigit)
 
 // MaybeSpacesBefore allows and ignores space characters before applying the
 // parser from the argument.
