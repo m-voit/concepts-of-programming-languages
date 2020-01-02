@@ -64,7 +64,7 @@ export class Nothing {}
  */
 export class Result {
   /**
-   * @param {string | any | Pair} result
+   * @param {Pair | Nothing | string | number | null | any} result
    * @param {Input} remainingInput
    */
   constructor(result, remainingInput) {
