@@ -230,11 +230,11 @@ describe("Test parser.js", () => {
   });
 
   test("maybeSpacesBefore", () => {
-    let input = new Input("  a&b", 0);
-    let parser = expectString("a&b")(input);
+    let input = new Input("  a&b|c", 0);
+    let parser = expectString("a&b");
 
-    let result = maybeSpacesBefore(parser);
-    let expected = new Result("a&b", new Input("  a&b", 4));
+    let result = maybeSpacesBefore(parser)(input);
+    let expected = new Result("a&b", new Input("  a&b|c", 5));
 
     expect(result).toStrictEqual(expected);
   });
