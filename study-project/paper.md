@@ -8,7 +8,10 @@ However, the main goal of this paper is to show the possibilities and support of
 
 ## Table of contents
 
-<!-- TODO -->
+1. [JavaScript Overview](#overview)
+2. [Parser for Boolean expressions](#parser)
+
+<a name="overview"></a>
 
 ## JavaScript Overview
 
@@ -23,6 +26,8 @@ Later the newly created language was called JavaScript and integrated into the N
 While being a new language, JavaScript has taken the functional concepts of Scheme and integrated them in to the language, besides imperative and object-oriented concepts [ant16].
 
 However, to stay within the scope of this paper, the focus will be on the functional aspects of JavaScript. These will be presented in the following sections.
+
+<a name="parser"></a>
 
 ## Parser for Boolean expressions
 
