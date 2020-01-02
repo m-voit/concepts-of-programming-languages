@@ -58,13 +58,6 @@ describe("Test parser.js", () => {
     expect(result).toStrictEqual(expected);
   });
 
-  test("repeated", () => {
-    let result = "";
-    let expected = "";
-
-    expect(result).toStrictEqual(expected);
-  });
-
   test("orElse", () => {
     let firstParser = expectSeveral(isSpaceChar, isSpaceChar);
     let secondParser = expectSeveral(isIdentifierStartChar, isIdentifierChar);
@@ -118,13 +111,6 @@ describe("Test parser.js", () => {
 
     let result = andThen(firstParser, secondParser)(input);
     let expected = new Result(new Pair(" ", "a"), new Input(" a&b", 2));
-
-    expect(result).toStrictEqual(expected);
-  });
-
-  test("convert", () => {
-    let result = "";
-    let expected = "";
 
     expect(result).toStrictEqual(expected);
   });
