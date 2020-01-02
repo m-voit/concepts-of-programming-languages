@@ -9,11 +9,9 @@ However, the main goal of this paper is to show the possibilities and support of
 ## Table of contents
 
 1. [JavaScript Overview](#javascript-overview)
-2. [Parser for Boolean expressions](#par)
-3. [Functional programming concepts](#parser)
+2. [Parser for Boolean expressions](#parser-for-boolean-expressions)
+3. [Functional programming concepts](#functional-programming-concepts)
    1. [Type system](#type-system)
-
-
 
 ## JavaScript Overview
 
@@ -28,8 +26,6 @@ Later the newly created language was called JavaScript and integrated into the N
 While being a new language, JavaScript has taken the functional concepts of Scheme and integrated them in to the language, besides imperative and object-oriented concepts [ant16].
 
 However, to stay within the scope of this paper, the focus will be on the functional aspects of JavaScript. These will be presented in the following sections.
-
-<a name="parser-for-boolean-expressions"></a>
 
 ## Parser for Boolean expressions
 
@@ -53,14 +49,10 @@ Depending on the values of A, B and C, which can be true or false, the parser de
 The expression is then parsed by building an abstract syntax tree (AST), consisting of `Or`, `And`, `Not` and `Value` nodes, mimicking the EBNF grammar.
 The created AST then allows to determine the results of the expression when A, B and C are replaced by either `TRUE` or `FALSE`.
 
-<a name="concepts"></a>
-
 ## Functional programming concepts
 
 Functional programming and the functional programming paradigm have various unique concepts.
 To see how well JavaScript and Go are suited for functional programming, we will take a look on these concepts and their support in both languages.
-
-<a name="type-system"></a>
 
 ### Type system
 
@@ -96,8 +88,6 @@ func makeOr(argument interface{}) interface{} {
   return ast.Or{LHS: firstNode, RHS: secondNode}
 }
 ```
-
-<a name="immutability"></a>
 
 ### Immutability
 
@@ -154,8 +144,6 @@ So this might change in the future, when Go 2.0 is released [git01].
 
 To sum it up, as of today there is some support for immutability in JavaScript and in Go, but not by default and not easily usable.
 
-<a name="first-class-functions"></a>
-
 ### First class functions
 
 First class functions are the foundation of supporting functional programming in a programming language.
@@ -183,8 +171,6 @@ The only difference is the chaining of the function calls instead of nesting the
 ```go
 var ExpectSpaces Parser = ExpectSeveral(isSpaceChar, isSpaceChar).Optional()
 ```
-
-<a name="closures"></a>
 
 ### Closures and lambda expressions
 
@@ -224,8 +210,6 @@ func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
 
 In Go lambda expressions are a bit more verbose, especially because the type system requires explicit types as mentioned in the type system section earlier.
 Apart from that, lambda expressions in Go are equal to lambda expressions in JavaScript [she17].
-
-<a name="higher-order-functions"></a>
 
 ### Higher-order functions and function composition
 
@@ -274,8 +258,6 @@ This can be seen in the `converter` function example above.
 In Go, function composition requires the programmer to use empty interfaces.
 This is required by Go type system as discussed earlier.
 
-<a name="pure-functions"></a>
-
 ### Pure functions
 
 Pure functions are functions that have no side effects and no hidden inner state.
@@ -293,8 +275,6 @@ So as long as there is no tail-call optimization in Go, pure functions should be
 
 Therefore, pure functions are possible in both languages, but it's in the responsibility of the programmer to keep them pure.
 
-<a name="lazy-evaluation"></a>
-
 ### Lazy evaluation
 
 There are two ways to evaluate functions, eager and lazy evaluation.
@@ -306,8 +286,6 @@ This is possible, because functions are only evaluated, when they are actually u
 
 Unfortunately both, Go and JavaScript, use eager evaluation for functions with no built-in support for lazy evaluation.
 However, it's possible to simulate lazy evaluation in both languages, but it's no core part of the two programming languages.
-
-<a name="recursion"></a>
 
 ### Recursion and tail-call optimization
 
@@ -330,14 +308,10 @@ There are some workarounds for this issue, but they are out of the scope of this
 
 Summarized, JavaScript has better support for efficient recursion heavy programming than Go.
 
-<a name="pattern-matching"></a>
-
 ### Pattern matching
 
 JavaScript might get it. There is a stage 1 proposal.
 No support in Go.
-
-<a name="algebraic-data-types"></a>
 
 ### Algebraic data types
 
@@ -345,8 +319,6 @@ No support in Go.
 
 Not possible with JavaScript, but with typescript a JavaScript superset.
 No support in Go.
-
-<a name="summary"></a>
 
 ## Summary
 
@@ -365,25 +337,23 @@ The only real difference is the higher verbosity of the Go code, due to type ann
 In the big picture, when compared to Go, JavaScript shows more focus on functional programming, especially on topics like tail-call optimization or short lambda expressions.
 To sum it up, the support of functional programming in JavaScript is more advanced than it is in Go.
 
-<a name="referecens"></a>
-
 ## References
 
 - [ant16] JavaScript: Functional Programming for JavaScript Developers, Ved Antani; Simon Timms; Dan Mantyla, Packt Publishing, 2016-08-31
 - [fog13] Functional JavaScript, Michael Fogus, O'Reilly Media, Inc., 2013-06-10
-- [git01] proposal: Go 2: immutable type qualifier <https://github.com/golang/go/issues/27975> (viewed 2019-12-26)
-- [git02] ECMAScript Pattern Matching <https://github.com/tc39/proposal-pattern-matching> (viewed 2019-12-27)
-- [gol01] Codewalk: First-Class Functions in Go <https://golang.org/doc/codewalk/functions/> (viewed 2019-12-26)
+- [git01] [proposal: Go 2: immutable type qualifier](https://github.com/golang/go/issues/27975) (viewed 2019-12-26)
+- [git02] [ECMAScript Pattern Matching](https://github.com/tc39/proposal-pattern-matching) (viewed 2019-12-27)
+- [gol01] [Codewalk: First-Class Functions in Go](https://golang.org/doc/codewalk/functions/) (viewed 2019-12-26)
 - [ker17] Mastering Javascript Functional Programming, Federico Kereki, Packt Publishing, 2017-12-29
-- [med01] Introduction to Functional JavaScript, <https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a> (viewed 2019-12-21)
-- [med02] Functional Go <https://medium.com/@geisonfgfg/functional-go-bc116f4c96a4> (viewed 2019-12-26)
-- [med03] JS ES6 Recursive Tail Call Optimization <https://medium.com/@mlaythe/js-es6-recursive-tail-call-optimization-feaf2dada3f6> (viewed 2019-12-31)
-- [moz01] MDN JavaScript, <https://developer.mozilla.org/en-US/docs/Web/JavaScript> (viewed 2019-12-25)
-- [moz02] MDN Closures, <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures> (viewed 2019-12-23)
-- [moz03] MDN Functions, <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions> (viewed 2019-12-25)
-- [moz04] MDN Arrow function expressions, <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions> (viewed 2019-12-25)
-- [moz05] MDN JavaScript data types and data structures, <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures> (viewed 2019-12-25)
-- [moz06] MDN First-class Function <https://developer.mozilla.org/en-US/docs/Glossary/First-class_Function> (viewed 2019-12-25)
-- [moz07] MDN const <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const> (viewed 2019-12-26)
-- [moz08] MDN Object.freeze() <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze> (viewed 2019-12-26)
+- [med01] [Introduction to Functional JavaScript](https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a) (viewed 2019-12-21)
+- [med02] [Functional Go](https://medium.com/@geisonfgfg/functional-go-bc116f4c96a4) (viewed 2019-12-26)
+- [med03] [JS ES6 Recursive Tail Call Optimization](https://medium.com/@mlaythe/js-es6-recursive-tail-call-optimization-feaf2dada3f6) (viewed 2019-12-31)
+- [moz01] [MDN JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) (viewed 2019-12-25)
+- [moz02] [MDN Closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures) (viewed 2019-12-23)
+- [moz03] [MDN Functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions) (viewed 2019-12-25)
+- [moz04] [MDN Arrow function expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) (viewed 2019-12-25)
+- [moz05] [MDN JavaScript data types and data structures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures) (viewed 2019-12-25)
+- [moz06] [MDN First-class Function](https://developer.mozilla.org/en-US/docs/Glossary/First-class_Function) (viewed 2019-12-25)
+- [moz07] [MDN const](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const) (viewed 2019-12-26)
+- [moz08] [MDN Object.freeze()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze) (viewed 2019-12-26)
 - [she17] Learning Functional Programming in Go, Lex Sheehan, Packt Publishing, 2017-11-24
