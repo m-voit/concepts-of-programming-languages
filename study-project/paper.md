@@ -60,11 +60,11 @@ In the context of functional programming, the dynamic and weakly typing of JavaS
 This is especially useful for higher order functions and function composition, because there is no need to do frequent type casts or using `any` types.
 
 ```javascript
-text = "Hello World!"; // Type of text is string.
-text = 5; // Type of text now is number.
+export const makeOr = pair =>
+  pair.second instanceof Nothing ? pair.first : new Or(pair.first, pair.second);
 ```
 
-In Go the type system doesn't have generic types, so we have to use an empty interface to simulate an `any` type.
+The Go type system doesn't have generic types, so we have to use an empty interface to simulate an `any` type.
 This makes the code more verbose and less readable than JavaScript code, while providing no benefit to the developer.
 Generally speaking, the Go type system is not tailored to functional programming and is more or less a hurdle to the developer, when used this way.
 
@@ -74,7 +74,15 @@ This is no problem in the small parser example, but might become one at a larger
 However, by using empty interfaces, it's still possible to write flexible and reusable functions in Go.
 
 ```go
-TODO
+func makeOr(argument interface{}) interface{} {
+  var pair = argument.(Pair)
+  if pair.Second == (Nothing{}) {
+    return pair.First
+  }
+  var firstNode = pair.First.(ast.Node)
+  var secondNode = pair.Second.(ast.Node)
+  return ast.Or{LHS: firstNode, RHS: secondNode}
+}
 ```
 
 ### Immutability
@@ -87,11 +95,16 @@ Unfortunately, true immutability can't be achieved in JavaScript.
 Although it's possible to create constructs that are sort of immutable, there is no immutability as in pure functional programming languages.
 
 ```javascript
-const a = "Hello";
-a = "World"; // Not possible.
+export const optional = parser => input => {
+  const result = parser(input);
 
-const a = { name: "Hello" };
-a.name = "World"; // Still possible.
+  if (result.result === null) {
+    result.result = new Nothing();
+    result.remainingInput = input;
+  }
+
+  return result;
+};
 ```
 
 In JavaScript there are some ways to achieve immutability like the `const` keyword, that allows to define constant variables.
@@ -106,12 +119,21 @@ But this is more like a workaround than true immutability provided by the langua
 Furthermore, it's error prone to developer mistakes and may not play nicely with libraries expecting mutable objects.
 
 ```go
-TODO
+func (parser Parser) Optional() Parser {
+  return func(Input Input) Result {
+    var result = parser(Input)
+    if result.Result == nil {
+      result.Result = Nothing{}
+      result.RemainingInput = Input
+    }
+    return result
+  }
+}
 ```
 
 In Go immutability is quite similar to JavaScript and can't be easily achieved.
-Except strings, data types in Go are by default mutable and only primitive data types like `bool` and `int` can declared to be constant.
-Immutability of composite data types like Go's `structs` are in the responsibility of the developer.
+Except strings, data types in Go are mutable by default and only primitive data types like `bool` and `int` can declared to be constant.
+Immutability of composite data types like Go's `structs` are in the responsibility of the developer. <!-- Rework -->
 
 For Go 2.0, there is a proposal to introduce immutable data types to Go.
 So this might change in the future, when Go 2.0 is released [git01].
@@ -135,9 +157,6 @@ Therefore, functions in JavaScript are first class functions and are treated lik
 This allows us to assign the `optional()` and the `expectSeveral()` function to the `expectSpaces` variable in the example below.
 
 ```javascript
-/**
- * Parse [ \t\n\r]* from the Input.
- */
 const expectSpaces = optional(expectSeveral(isSpaceChar, isSpaceChar));
 ```
 
@@ -146,7 +165,6 @@ Like in JavaScript it's possible to assign the `ExpectSeveral()` and the `Option
 The only difference is the chaining of the function calls instead of nesting them and the explicit `Parser` type of the variable.
 
 ```go
-// ExpectSpaces parses a [ \t\n\r]* from the Input.
 var ExpectSpaces Parser = ExpectSeveral(isSpaceChar, isSpaceChar).Optional()
 ```
 
@@ -161,13 +179,29 @@ This is the case, because closures are needed for anonymous functions to work.
 Without closures and therefore no references to the _outer_ function, that is returning the _inner_ function, the _inner_ function would stop working when being called directly [moz02][fog13].
 
 ```javascript
-TODO
+export const convert = (parser, converter) => input => {
+  const result = parser(input);
+
+  if (result.result !== null) {
+    result.result = converter(result.result);
+  }
+
+  return result;
+};
 ```
 
 In JavaScript lambda expressions can be written very concisely with the arrow functions syntax, introduced with ECMAScript 6 [moz04].
 
 ```go
-TODO
+func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
+  return func(Input Input) Result {
+    var result = parser(Input)
+    if result.Result != nil {
+      result.Result = converter(result.Result)
+    }
+    return result
+  }
+}
 ```
 
 In Go lambda expressions are a bit more verbose, especially because the type system requires explicit types as mentioned in the type system section earlier.
@@ -184,22 +218,10 @@ This higher order function can be used for any desired parser function and with 
 The result is a highly flexible and easily reusable function.
 
 ```javascript
-/**
- * Apply the converter to the result of a successful parse.
- * If the parser fails then do nothing.
- *
- * @param {any} parser The parser.
- * @param {any} converter A function to be applied to the parser result.
- * @returns Result.
- */
-const convert = (parser, converter) => input => {
-  const result = parser(input);
+export const orElse = (parser, alternativeParser) => input => {
+  const firstResult = parser(input);
 
-  if (result.result !== null) {
-    result.result = converter(result.result);
-  }
-
-  return result;
+  return firstResult.result !== null ? firstResult : alternativeParser(input);
 };
 ```
 
@@ -209,17 +231,13 @@ The main differences between the Go and the JavaScript implementation are the em
 Again the reason for this is the different type system of JavaScript and Go as discussed earlier [med02][she17].
 
 ```go
-// Convert applies the converter to the result of a successful parse.
-// If the parser fails then Convert won't do anything.
-func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
+func (parser Parser) OrElse(alternativeParser Parser) Parser {
   return func(Input Input) Result {
-    var result = parser(Input)
-
-    if result.Result != nil {
-      result.Result = converter(result.Result)
+    var FirstResult = parser(Input)
+    if FirstResult.Result != nil {
+      return FirstResult
     }
-
-    return result
+    return alternativeParser(Input)
   }
 }
 ```
