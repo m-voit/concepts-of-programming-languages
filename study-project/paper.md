@@ -318,7 +318,20 @@ No support in Go.
 
 ## Summary
 
-<!-- How good is functional JavaScript suited to implement a parser? -->
+After implementing the Boolean parser, it can be said that JavaScript is well suited to implement a parser.
+As we have seen, JavaScript has good support for all the basic concepts of functional programming.
+It's only missing some advanced concepts like pattern matching or algebraic data types, which would have simplified the parser implementation.
+
+The only real downside is the dynamic and weakly typed type system of JavaScript.
+While this allows for easily writing reusable functions, it also makes it hard to spot errors.
+This was especially the case on some parser functions taking a lot of different inputs, like the convert function.
+However, this disadvantage of JavaScript is more of general problem than a specific problem in functional programming.
+
+When it comes to implementing the parser, the differences between Go and JavaScript are subtle.
+The only real difference is the higher verbosity of the Go code, due to type annotations and type casts.
+
+In the big picture, when compared to Go, JavaScript shows more focus on functional programming, especially on topics like tail-call optimization or short lambda expressions.
+To sum it up, the support of functional programming in JavaScript is more advanced than it is in Go.
 
 ## References
 
