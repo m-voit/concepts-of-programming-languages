@@ -8,10 +8,23 @@ However, the main goal of this paper is to show the possibilities and support of
 
 ## Table of contents
 
-1. [JavaScript Overview](#javascript-overview)
-2. [Parser for Boolean expressions](#parser-for-boolean-expressions)
-3. [Functional programming concepts](#functional-programming-concepts)
-   1. [Type system](#type-system)
+- [Compare functional programming in Go with JavaScript](#compare-functional-programming-in-go-with-javascript)
+  - [Table of contents](#table-of-contents)
+  - [JavaScript Overview](#javascript-overview)
+  - [Parser for Boolean expressions](#parser-for-boolean-expressions)
+  - [Functional programming concepts](#functional-programming-concepts)
+    - [Type system](#type-system)
+    - [Immutability](#immutability)
+    - [First class functions](#first-class-functions)
+    - [Closures and lambda expressions](#closures-and-lambda-expressions)
+    - [Higher-order functions and function composition](#higher-order-functions-and-function-composition)
+    - [Pure functions](#pure-functions)
+    - [Lazy evaluation](#lazy-evaluation)
+    - [Recursion and tail-call optimization](#recursion-and-tail-call-optimization)
+    - [Pattern matching](#pattern-matching)
+    - [Algebraic data types](#algebraic-data-types)
+  - [Summary](#summary)
+  - [References](#references)
 
 ## JavaScript Overview
 
