@@ -137,23 +137,19 @@ export const makeNot = (number, node) => {
 };
 
 /**
- * Take a Pair of Nodes as an argument and return Node.
+ * Take a Pair of Nodes as an argument and return a Node.
  * If the second component of the pair is equal to Nothing then return
  * the first component of the Pair. If the second component is a Node
  * then create an And node containing the first and the second
  * component of the Pair as sub-nodes.
  *
- * @param {any} first The left hand side of the AND node.
- * @param {any} second The right hand side of the AND node.
+ * @param {Pair} pair A pair of Nodes.
  * @returns A new AND node.
  */
-export const makeAnd = (first, second) => {
-  const pair = new Pair(first, second);
-
-  return pair.second instanceof Nothing
+export const makeAnd = pair =>
+  pair.second instanceof Nothing
     ? pair.first
     : new And(pair.first, pair.second);
-};
 
 /**
  * Take a Pair of Nodes as an argument and return a Node.
@@ -162,17 +158,11 @@ export const makeAnd = (first, second) => {
  * then create an Or node containing the first and the second
  * component of the Pair as sub-nodes.
  *
- * @param {any} first The left hand side of the OR node.
- * @param {any} second The right hand side of the OR node.
+ * @param {Pair} pair A pair of Nodes.
  * @returns A new OR node.
  */
-export const makeOr = (first, second) => {
-  const pair = new Pair(first, second);
-
-  return pair.second instanceof Nothing
-    ? pair.first
-    : new Or(pair.first, pair.second);
-};
+export const makeOr = pair =>
+  pair.second instanceof Nothing ? pair.first : new Or(pair.first, pair.second);
 
 /**
  * Expect the parameter string at the beginning of the Input and ignore
