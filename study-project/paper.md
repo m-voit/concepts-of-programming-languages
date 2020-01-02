@@ -90,10 +90,13 @@ func makeOr(argument interface{}) interface{} {
 
 Immutability is a desired property, especially in functional programming, because it reduces unintended side effects.
 
-<!-- Add explanation. -->
-
 Unfortunately, true immutability can't be achieved in JavaScript.
-Although it's possible to create constructs that are sort of immutable, there is no immutability as in pure functional programming languages.
+Although it's possible to create constructs that are sort of immutable, there is no built-in immutability as in pure functional programming languages.
+
+One way to achieve immutability in JavaScript is to use the `const` keyword, that allows to define constant variables, functions or objects.
+But while primitive types as strings defined with the `const` keyword are truly constant, objects created with the `const` keyword are still mutable [moz07].
+As we can see in the example below, the properties of the `result` object can still be reassigned, despite the `result` object being declared as `const`.
+So, used on an object, the `const` keyword only prevents to assign a new value to the object.
 
 ```javascript
 export const optional = parser => input => {
@@ -108,16 +111,17 @@ export const optional = parser => input => {
 };
 ```
 
-In JavaScript there are some ways to achieve immutability like the `const` keyword, that allows to define constant variables.
-While primitive types as strings defined with the `const` keyword are constant, objects created with the `const` keyword are still mutable.
-This is the case, because properties of constant objects, can still be reassigned after creation [moz07].
+Another way to achieve immutability is to _freeze_ an object after creation.
+This makes the object truly immutable, but still has the caveat, that it doesn't effect nested objects.
+Therefore, it's necessary to call _freeze_ recursively on an object that should be truly immutable [moz08].
 
-It's also possible to _freeze_ an object after creation.
-This makes the object immutable, but still has the caveat, that it doesn't effect nested objects.
-Therefore, it's necessary to call freeze recursively on an object that should be immutable [moz08].
+However, this is prone to developer mistakes and may not play nicely with libraries expecting mutable objects.
 
-But this is more like a workaround than true immutability provided by the language.
-Furthermore, it's error prone to developer mistakes and may not play nicely with libraries expecting mutable objects.
+In Go immutability is quite similar to JavaScript and can't be easily achieved.
+Except strings, data types in Go are mutable by default and only primitive data types like `bool` and `int` can declared to be constant.
+The immutability of composite data types like Go's `structs` on the other hand, is in the responsibility of the developer.
+
+As we can see in the example below, there is no way to declare the `result` struct as constant.
 
 ```go
 func (parser Parser) Optional() Parser {
@@ -132,11 +136,7 @@ func (parser Parser) Optional() Parser {
 }
 ```
 
-In Go immutability is quite similar to JavaScript and can't be easily achieved.
-Except strings, data types in Go are mutable by default and only primitive data types like `bool` and `int` can declared to be constant.
-Immutability of composite data types like Go's `structs` are in the responsibility of the developer. <!-- Rework -->
-
-For Go 2.0, there is a proposal to introduce immutable data types to Go.
+For Go 2.0 however, there is a proposal to introduce new immutable data types to Go.
 So this might change in the future, when Go 2.0 is released [git01].
 
 To sum it up, as of today there is some support for immutability in JavaScript and in Go, but not by default and not easily usable.
