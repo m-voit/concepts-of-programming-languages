@@ -1,6 +1,5 @@
 import { Or, And, Not, Value } from "../ast/ast";
 import {
-  Pair,
   Nothing,
   first,
   second,
@@ -13,7 +12,10 @@ import {
   repeated,
   maybeSpacesBefore,
   orElse,
+  // eslint-disable-next-line no-unused-vars
   Input,
+  // eslint-disable-next-line no-unused-vars
+  Pair,
 } from "../parser/parser";
 
 /**
@@ -132,9 +134,8 @@ export const parseVariable = input =>
  * @param {any} node The AST node to be wrapped into NOT nodes.
  * @returns A new NOT node.
  */
-export const makeNot = (number, node) => {
-  return number <= 0 ? node : new Not(makeNot(number - 1, node));
-};
+export const makeNot = (number, node) =>
+  number <= 0 ? node : new Not(makeNot(number - 1, node));
 
 /**
  * Take a Pair of Nodes as an argument and return a Node.
