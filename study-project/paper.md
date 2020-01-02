@@ -8,10 +8,12 @@ However, the main goal of this paper is to show the possibilities and support of
 
 ## Table of contents
 
-1. [JavaScript Overview](#overview)
-2. [Parser for Boolean expressions](#parser)
+1. [JavaScript Overview](#javascript-overview)
+2. [Parser for Boolean expressions](#par)
+3. [Functional programming concepts](#parser)
+   1. [Type system](#type-system)
 
-<a name="overview"></a>
+
 
 ## JavaScript Overview
 
@@ -27,7 +29,7 @@ While being a new language, JavaScript has taken the functional concepts of Sche
 
 However, to stay within the scope of this paper, the focus will be on the functional aspects of JavaScript. These will be presented in the following sections.
 
-<a name="parser"></a>
+<a name="parser-for-boolean-expressions"></a>
 
 ## Parser for Boolean expressions
 
@@ -51,10 +53,14 @@ Depending on the values of A, B and C, which can be true or false, the parser de
 The expression is then parsed by building an abstract syntax tree (AST), consisting of `Or`, `And`, `Not` and `Value` nodes, mimicking the EBNF grammar.
 The created AST then allows to determine the results of the expression when A, B and C are replaced by either `TRUE` or `FALSE`.
 
+<a name="concepts"></a>
+
 ## Functional programming concepts
 
 Functional programming and the functional programming paradigm have various unique concepts.
 To see how well JavaScript and Go are suited for functional programming, we will take a look on these concepts and their support in both languages.
+
+<a name="type-system"></a>
 
 ### Type system
 
@@ -90,6 +96,8 @@ func makeOr(argument interface{}) interface{} {
   return ast.Or{LHS: firstNode, RHS: secondNode}
 }
 ```
+
+<a name="immutability"></a>
 
 ### Immutability
 
@@ -146,6 +154,8 @@ So this might change in the future, when Go 2.0 is released [git01].
 
 To sum it up, as of today there is some support for immutability in JavaScript and in Go, but not by default and not easily usable.
 
+<a name="first-class-functions"></a>
+
 ### First class functions
 
 First class functions are the foundation of supporting functional programming in a programming language.
@@ -173,6 +183,8 @@ The only difference is the chaining of the function calls instead of nesting the
 ```go
 var ExpectSpaces Parser = ExpectSeveral(isSpaceChar, isSpaceChar).Optional()
 ```
+
+<a name="closures"></a>
 
 ### Closures and lambda expressions
 
@@ -212,6 +224,8 @@ func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
 
 In Go lambda expressions are a bit more verbose, especially because the type system requires explicit types as mentioned in the type system section earlier.
 Apart from that, lambda expressions in Go are equal to lambda expressions in JavaScript [she17].
+
+<a name="higher-order-functions"></a>
 
 ### Higher-order functions and function composition
 
@@ -260,6 +274,8 @@ This can be seen in the `converter` function example above.
 In Go, function composition requires the programmer to use empty interfaces.
 This is required by Go type system as discussed earlier.
 
+<a name="pure-functions"></a>
+
 ### Pure functions
 
 Pure functions are functions that have no side effects and no hidden inner state.
@@ -277,6 +293,8 @@ So as long as there is no tail-call optimization in Go, pure functions should be
 
 Therefore, pure functions are possible in both languages, but it's in the responsibility of the programmer to keep them pure.
 
+<a name="lazy-evaluation"></a>
+
 ### Lazy evaluation
 
 There are two ways to evaluate functions, eager and lazy evaluation.
@@ -288,6 +306,8 @@ This is possible, because functions are only evaluated, when they are actually u
 
 Unfortunately both, Go and JavaScript, use eager evaluation for functions with no built-in support for lazy evaluation.
 However, it's possible to simulate lazy evaluation in both languages, but it's no core part of the two programming languages.
+
+<a name="recursion"></a>
 
 ### Recursion and tail-call optimization
 
@@ -304,15 +324,20 @@ So tail-call optimization is needed for efficient functional programming.
 Tail-call optimization is a part of JavaScript since ECMAScript 6, which was introduced in 2015.
 
 Go on the other side has no support for tail-call optimization.
+<!-- Wont be introduced because of better error stacks -->
 This means that heavy using of recursion and functional programming in Go will have an impact on performance.
 There are some workarounds for this issue, but they are out of the scope of this paper.[med02][she17]
 
 Summarized, JavaScript has better support for efficient recursion heavy programming than Go.
 
+<a name="pattern-matching"></a>
+
 ### Pattern matching
 
 JavaScript might get it. There is a stage 1 proposal.
 No support in Go.
+
+<a name="algebraic-data-types"></a>
 
 ### Algebraic data types
 
@@ -320,6 +345,8 @@ No support in Go.
 
 Not possible with JavaScript, but with typescript a JavaScript superset.
 No support in Go.
+
+<a name="summary"></a>
 
 ## Summary
 
@@ -337,6 +364,8 @@ The only real difference is the higher verbosity of the Go code, due to type ann
 
 In the big picture, when compared to Go, JavaScript shows more focus on functional programming, especially on topics like tail-call optimization or short lambda expressions.
 To sum it up, the support of functional programming in JavaScript is more advanced than it is in Go.
+
+<a name="referecens"></a>
 
 ## References
 
