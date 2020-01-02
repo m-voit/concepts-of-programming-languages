@@ -161,7 +161,7 @@ This allows us to assign the `optional()` and the `expectSeveral()` function to 
 const expectSpaces = optional(expectSeveral(isSpaceChar, isSpaceChar));
 ```
 
-The same holds true for Go, that supports first class functions as well as JavaScript [she17][gol01].
+The same holds true for Go, that has same support for first class functions than JavaScript [she17][gol01].
 Like in JavaScript it's possible to assign the `ExpectSeveral()` and the `Optional()` function to the `ExpectSpaces` variable.
 The only difference is the chaining of the function calls instead of nesting them and the explicit `Parser` type of the variable.
 
@@ -206,7 +206,7 @@ func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
 ```
 
 In Go lambda expressions are a bit more verbose, especially because the type system requires explicit types as mentioned in the type system section earlier.
-Otherwise, lambda expressions in Go are equal to lambda expressions in JavaScript [she17].
+Apart from that, lambda expressions in Go are equal to lambda expressions in JavaScript [she17].
 
 ### Higher-order functions and function composition
 
@@ -267,7 +267,7 @@ JavaScript allows writing pure functions, but doesn't have special constructs to
 
 The same holds true for Go.
 Like in JavaScript, it's possible to write pure and side effect free functions in Go, but there are no special constructs to enforce these concepts.
-Furthermore, because Go doesn't support tail-call optimization, which is discussed later, there are performance impacts, when heavily using pure functions.
+Furthermore, because Go doesn't support tail-call optimization, which is discussed later, there is a performance impact on heavy use of pure functions and recursion.
 So as long as there is no tail-call optimization in Go, pure functions should be used with precautions [she17].
 
 Therefore, pure functions are possible in both languages, but it's in the responsibility of the programmer to keep them pure.
@@ -282,17 +282,17 @@ In the context of functional programming, lazy evaluation is useful for performa
 This is possible, because functions are only evaluated, when they are actually used and therefore no unnecessary calculations are done.
 
 Unfortunately both, Go and JavaScript, use eager evaluation for functions with no built-in support for lazy evaluation.
-However, it's possible to simulate lazy evaluation in both languages, but it's no fundamental part of the two programming languages.
+However, it's possible to simulate lazy evaluation in both languages, but it's no core part of the two programming languages.
 
 ### Recursion and tail-call optimization
 
-To avoid mutating state functional programming uses recursion.
-This happens when a function calls itself with new parameters to compute something instead of mutating state inside the function.
-Unfortunately recursion is less efficient than iteration, especially when used frequently like in functional programming.
+To avoid mutating state functional programming makes heavy use of recursion.
+Recursion happens when a function calls itself with new parameters to compute something instead of mutating state inside the function.
+Unfortunately recursion is less efficient than iteration.
 
 A technique to remedy the performance issues of recursion is called tail-call optimization.
-Without tail-call optimization each recursive call to a function adds a new stack frame to the call stack.
-Therefore, the call stack grows with each function call and causes large memory usage on deeply nested recursion functions.
+Without tail-call optimization each recursive call to a function, adds a new stack frame to the call stack.
+Therefore, the call stack grows with each function call and causes high memory usage on deeply nested recursion functions.
 Tail-call optimization prevents this by overwriting the unneeded stack frames of the previous function calls.
 So tail-call optimization is needed for efficient functional programming.
 
