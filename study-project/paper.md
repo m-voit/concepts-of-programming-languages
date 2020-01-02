@@ -17,10 +17,10 @@ It is a general purpose programming language and runs in the browser as well as 
 Despite often deceived as an object-oriented programming language, JavaScript also follows functional and imperative paradigms.
 JavaScript is also event-driven and has good support for asynchronous programming [moz01].
 
-Interestingly, the original plan of Netscape was to integrate Scheme, a Lisp dialect with functional paradigm, into their browser.
-But for marketing reasons, it was decided, to create a new language with syntax similar to Java.
-Later the newly created language was called JavaScript and was integrated into the Netscape browser.
-While being a new language, JavaScript has taken functional concepts of Scheme and integrated them in to the language, besides imperative and object-oriented concepts [ant16].
+Interestingly, the original plan of Netscape was to integrate Scheme, a Lisp dialect, into their browser.
+But for marketing reasons, it was decided, to create a new language with a syntax similar to Java.
+Later the newly created language was called JavaScript and integrated into the Netscape browser.
+While being a new language, JavaScript has taken the functional concepts of Scheme and integrated them in to the language, besides imperative and object-oriented concepts [ant16].
 
 However, to stay within the scope of this paper, the focus will be on the functional aspects of JavaScript. These will be presented in the following sections.
 
@@ -28,7 +28,7 @@ However, to stay within the scope of this paper, the focus will be on the functi
 
 The parser for Boolean expressions is a practical example to compare functional programming in Go and JavaScript.
 It is implemented using functional programming concepts and will be used to provide code examples for various functional programming aspects discussed later.
-Generally speaking the parser is built using parser combinators, which are suited to be implemented with functional programming.
+Generally speaking the parser is built using parser combinators, which are good example to be implemented with functional programming.
 The parser parses Boolean expressions with the following EBNF grammar.
 
 ```ebnf
@@ -44,6 +44,7 @@ The parser parses Boolean expressions with the following EBNF grammar.
 `A & B | !C` is a possible expression to be parsed by the parser.
 Depending on the values of A, B and C, which can be true or false, the parser determines the result of the expression.
 The expression is then parsed by building an abstract syntax tree (AST), consisting of `Or`, `And`, `Not` and `Value` nodes, mimicking the EBNF grammar.
+The created AST then allows to determine the results of the expression when A, B and C are replaced by either `TRUE` or `FALSE`.
 
 ## Functional programming concepts
 
