@@ -21,8 +21,8 @@ However, the main goal of this paper is to show the possibilities and support of
     - [Pure functions](#pure-functions)
     - [Lazy evaluation](#lazy-evaluation)
     - [Recursion and tail-call optimization](#recursion-and-tail-call-optimization)
-    - [Pattern matching](#pattern-matching)
     - [Algebraic data types](#algebraic-data-types)
+    - [Pattern matching](#pattern-matching)
   - [Summary](#summary)
   - [References](#references)
 
@@ -321,17 +321,49 @@ There are some workarounds for this issue, but they are out of the scope of this
 
 Summarized, JavaScript has better support for efficient recursion heavy programming than Go.
 
-### Pattern matching
-
-JavaScript might get it. There is a stage 1 proposal.
-No support in Go.
-
 ### Algebraic data types
 
-<!-- Sum/Product types, discriminate unions -->
+Algebraic data types, also named sum/product types or discriminate unions, are a concept in functional programming languages to represent data structures by composing them with other types.
 
-Not possible with JavaScript, but with typescript a JavaScript superset.
-No support in Go.
+An example for this is the AST of our parser example.
+The AST is a data structure consisting of nodes with the `OR`, `AND`, `NOT` or `VALUE` type.
+
+With support of algebraic data structure we could write the AST much more concisely as we can see in following example.
+
+```typescript
+type Or = { lhs: Node, rhs: Node };
+type And = { lhs: Node, rhs: Node };
+type Not = { ex: Node };
+type Value = { name: string };
+
+type Node = Or | And | Not | Value;
+```
+
+Unfortunately this is not possible in JavaScript because it lacks types.
+However, by using TypeScript, a JavaScript superset, it would be possible to use this syntax today.
+
+In Go this feature isn't present either, but there is an ongoing discussion to introduce sum types along with generic types in Go 2.0 [git03].
+This means, in the future, Go might get support for union types, allowing to easily represent AST nodes.
+
+### Pattern matching
+
+Pattern matching is a concept found in functional programming languages like Haskell to work with data structures [has01].
+It's often used in conjunction with algebraic data types to select different behaviour depending on the data type.
+
+In our parser example this would be useful for the evaluate function that could be written in a more functional matter instead of using JavaScript classes.
+There is a stage 1 proposal to introduce pattern matching to JavaScript in the future [git02].
+This means, in the future, the evaluate function could be written concisely as in the example below.
+
+```javascript
+const evaluate = (vars, node) => case (node) {
+  when (node instanceof Or) -> evaluate(vars, node.lhs) || evaluate(vars, node.rhs)
+  when (node instanceof And) -> evaluate(vars, node.lhs) && evaluate(vars, node.rhs)
+  when (node instanceof Not) -> !evaluate(vars, node.ex)
+  when (node instanceof Value) -> vars.get(node.name)
+}
+```
+
+In Go on the other hand there is no support for pattern matching and there are no plans to introduce it to the language.
 
 ## Summary
 
@@ -342,7 +374,7 @@ It's only missing some advanced concepts like pattern matching or algebraic data
 The only real downside is the dynamic and weakly typed type system of JavaScript.
 While this allows for easily writing reusable functions, it also makes it hard to spot errors.
 This was especially the case on some parser functions taking a lot of different inputs, like the convert function.
-However, this disadvantage of JavaScript is more of general problem than a specific problem in functional programming.
+However, this disadvantage is more of general problem in JavaScript than a specific problem in functional programming.
 
 When it comes to implementing the parser, the differences between Go and JavaScript are subtle.
 The only real difference is the higher verbosity of the Go code, due to type annotations and type casts.
@@ -356,7 +388,9 @@ To sum it up, the support of functional programming in JavaScript is more advanc
 - [fog13] Functional JavaScript, Michael Fogus, O'Reilly Media, Inc., 2013-06-10
 - [git01] [proposal: Go 2: immutable type qualifier](https://github.com/golang/go/issues/27975) (viewed 2019-12-26)
 - [git02] [ECMAScript Pattern Matching](https://github.com/tc39/proposal-pattern-matching) (viewed 2019-12-27)
+- [git03] [proposal: spec: add sum types / discriminated unions #19412](https://github.com/golang/go/issues/19412) (viewed 2020-01-03)
 - [gol01] [Codewalk: First-Class Functions in Go](https://golang.org/doc/codewalk/functions/) (viewed 2019-12-26)
+- [has01] [Case Expressions and Pattern Matching](https://www.haskell.org/tutorial/patterns.html) (viewed 2020-01-03)
 - [ker17] Mastering Javascript Functional Programming, Federico Kereki, Packt Publishing, 2017-12-29
 - [med01] [Introduction to Functional JavaScript](https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a) (viewed 2019-12-21)
 - [med02] [Functional Go](https://medium.com/@geisonfgfg/functional-go-bc116f4c96a4) (viewed 2019-12-26)
