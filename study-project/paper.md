@@ -111,10 +111,10 @@ func makeOr(argument interface{}) interface{} {
 Immutability is a desired property, especially in functional programming, because it reduces unintended side effects.
 
 Unfortunately, true immutability can't be achieved in JavaScript.
-Although it's possible to create constructs that are sort of immutable, there is no built-in immutability as in pure functional programming languages.
+Although it's possible to create constructs that are sort of immutable, there is no built-in or default immutability as in pure functional programming languages.
 
 One way to achieve immutability in JavaScript is to use the `const` keyword, that allows to define constant variables, functions or objects.
-But while primitive types as strings defined with the `const` keyword are truly constant, objects created with the `const` keyword are still mutable [moz07].
+But while primitive types as strings are truly constant, when defined with the `const` keyword, objects created with the `const` keyword are still mutable [moz07].
 As we can see in the example below, the properties of the `result` object can still be reassigned, despite the `result` object being declared as `const`.
 So, used on an object, the `const` keyword only prevents to assign a new value to the object.
 
@@ -140,21 +140,6 @@ However, this is prone to developer mistakes and may not play nicely with librar
 In Go immutability is quite similar to JavaScript and can't be easily achieved.
 Except strings, data types in Go are mutable by default and only primitive data types like `bool` and `int` can declared to be constant.
 The immutability of composite data types like Go's `structs` on the other hand, is in the responsibility of the developer.
-
-As we can see in the example below, there is no way to declare the `result` struct as constant.
-
-```go
-func (parser Parser) Optional() Parser {
-  return func(Input Input) Result {
-    var result = parser(Input)
-    if result.Result == nil {
-      result.Result = Nothing{}
-      result.RemainingInput = Input
-    }
-    return result
-  }
-}
-```
 
 For Go 2.0 however, there is a proposal to introduce new immutable data types to Go.
 So this might change in the future, when Go 2.0 is released [git01].
