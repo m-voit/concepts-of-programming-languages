@@ -1,10 +1,11 @@
 # Compare functional programming in Go with JavaScript
 
-This paper compares functional programming in Go with functional programming in JavaScript.
-It compares the type system, functions and functional programming in Go with JavaScript.
+This paper compares functional programming in JavaScript with functional programming in Go.
+At the beginning, it gives a short overview over JavaScript and it's history.
 Furthermore, an implementation of a parser for Boolean expressions is used as a practical example to compare functional programming in the two programming languages.
+Additionally, JavaScript and Go are compared on their support of basic and advanced functional programming concepts.
+These functional programming concepts are explained and looked at in the paper.
 At the end of the paper there will be an evaluation and summary on how suitable JavaScript is to implement a functional parser.
-However, the main goal of this paper is to show the possibilities and support of functional programming concepts in JavaScript.
 
 ## Table of contents
 
@@ -44,7 +45,7 @@ However, to stay within the scope of this paper, the focus will be on the functi
 
 The parser for Boolean expressions is a practical example to compare functional programming in Go and JavaScript.
 It is implemented using functional programming concepts and will be used to provide code examples for various functional programming aspects discussed later.
-Generally speaking the parser is built using parser combinators, which are good example to be implemented with functional programming.
+Generally speaking the parser is built using parser combinators, which are a good example to be implemented with functional programming.
 The parser parses Boolean expressions with the following EBNF grammar.
 
 ```ebnf
@@ -57,10 +58,10 @@ The parser parses Boolean expressions with the following EBNF grammar.
 <var> ::= '[a-zA-Z0-9]*'
 ```
 
-`A & B | !C` is a possible expression to be parsed by the parser.
+`A & B | !C` is a possible expression, that can be parsed by the parser.
 Depending on the values of A, B and C, which can be true or false, the parser determines the result of the expression.
 The expression is then parsed by building an abstract syntax tree (AST), consisting of `Or`, `And`, `Not` and `Value` nodes, mimicking the EBNF grammar.
-The created AST then allows to determine the results of the expression when A, B and C are replaced by either `TRUE` or `FALSE`.
+The created AST allows it to determine the results of the expression, when A, B and C are replaced by either `TRUE` or `FALSE`.
 
 ## Functional programming concepts
 
@@ -70,25 +71,28 @@ To see how well JavaScript and Go are suited for functional programming, we will
 ### Type system
 
 JavaScript is a dynamic and weakly typed programming language, that also features duck-typing.
-Because the language is weakly typed, types are implicitly cast depending on the used operation.
-Furthermore, the dynamic typing allows for types to change their type at runtime, when their assigned value changes [moz05].
+Weakly typed means, types are implicitly cast depending on the used operation.
+Furthermore, dynamic typing allows for types to change their type at runtime, when their assigned value changes [moz05].
 
-In the context of functional programming, the dynamic and weakly typing of JavaScript allows for writing highly reusable functions.
-This is especially useful for higher order functions and function composition, because there is no need to do frequent type casts or using `any` types.
+In the context of functional programming, the dynamic and weakly typing of JavaScript simplifies writing highly reusable functions.
+This is especially useful for higher-order functions and function composition, because there is no need to use `any` types or do frequent type casts.
 
 ```javascript
 export const makeOr = pair =>
   pair.second instanceof Nothing ? pair.first : new Or(pair.first, pair.second);
 ```
 
-The Go type system doesn't have generic types, so we have to use an empty interface to simulate an `any` type.
+Go on the other hand is a strict and strongly typed programming language.
+This means types are explicitly assigned and cannot change after assignment, except when explicitly cast by the developer.
+
+Furthermore, there are no generic types in Go, so we have to use an empty interface to simulate an `any` type.
 This makes the code more verbose and less readable than JavaScript code, while providing no benefit to the developer.
 Generally speaking, the Go type system is not tailored to functional programming and is more or less a hurdle to the developer, when used this way.
 
-A problem of using empty interfaces to simulate generic types is a hit on performance, when doing many type conversions.
-This is no problem in the small parser example, but might become one at a larger scale and should therefore be mentioned [she17].
+Additionally, using empty interfaces to simulate generic types has an impact on performance, especially when doing many type conversions.
+This is no problem in the rather small parser example, but might become one at a larger scale and should therefore be mentioned [she17].
 
-However, by using empty interfaces, it's still possible to write flexible and reusable functions in Go.
+However, by using empty interfaces, it's possible to write flexible and reusable functions in Go.
 
 ```go
 func makeOr(argument interface{}) interface{} {
