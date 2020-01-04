@@ -1,7 +1,7 @@
 {
   "name": "parser",
   "version": "1.0.0",
-  "description": "Boolean expression parser in functional JavaScript.",
+  "description": "Boolean expression parser written in functional JavaScript.",
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
