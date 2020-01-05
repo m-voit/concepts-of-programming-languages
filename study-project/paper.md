@@ -252,18 +252,18 @@ This is required by Go type system as discussed earlier.
 
 Pure functions are functions that have no side effects and no hidden inner state.
 This means, a function, given the same input, always produces the same output.
-To achieve this a pure function only uses its input and doesn't use or mutate internal state.
+To achieve this, a pure function uses only its input and does not use or mutate the internal state.
 This property of pure functions gives us referential transparency.
 That means it's possible to replace a function with its result without changing the behaviour of a program.
 
-JavaScript allows writing pure functions, but doesn't have special constructs to enforce side effect free and therefore pure functions [fog13].
+JavaScript allows the writing of pure functions, but has no special constructs to enforce side effect free and therefore pure functions [fog13].
 
-The same holds true for Go.
-Like in JavaScript, it's possible to write pure and side effect free functions in Go, but there are no special constructs to enforce these concepts.
-Furthermore, because Go doesn't support tail-call optimization, which is discussed later, there is a performance impact on heavy use of pure functions and recursion.
-So as long as there is no tail-call optimization in Go, pure functions should be used with precautions [she17].
+The same applies to Go.
+As in JavaScript, it's possible to write pure and side effect free functions in Go, but there are no special constructs to enforce these concepts.
+Since Go also doesn't support tail-call optimization, which will be discussed later, there is a performance impact on the heavy use of pure functions and recursion.
+So as long as there is no tail-call optimization in Go, pure functions should be used with precaution [she17].
 
-Therefore, pure functions are possible in both languages, but it's in the responsibility of the programmer to keep them pure.
+Therefore, pure functions are possible in both languages, but it's the responsibility of the developer to keep them pure.
 
 ### Lazy evaluation
 
