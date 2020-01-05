@@ -259,7 +259,7 @@ That means it's possible to replace a function with its result without changing 
 const isDigit = codePoint => "0" <= codePoint && codePoint <= "9";
 ```
 
-The `isDigit()` function in the example above is pure, because it doesn't mutate the given `codepoint` and it will always return true when given a digit between `0` and `9`.
+The `isDigit()` function in the above example is pure, because it doesn't mutate the given `codepoint` and always returns true if a digit between `0` and `9` is given.
 JavaScript thus allows the writing of pure functions, but has no special constructs to enforce side effect free and therefore pure functions [fog13].
 
 The same applies to Go.
