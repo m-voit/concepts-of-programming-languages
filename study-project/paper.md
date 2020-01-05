@@ -303,9 +303,8 @@ So tail-call optimization is needed for efficient functional programming.
 
 Tail-call optimization is a part of JavaScript since ECMAScript 6, which was introduced in 2015.
 
-Go on the other side has no support for tail-call optimization.
-<!-- Wont be introduced because of better error stacks -->
-This means that heavy using of recursion and functional programming in Go will have an impact on performance.
+Go on the other side has no support for tail-call optimization and according to the Go developers, they don't see this as a problem affecting many people, so the won't add support for tail-call optimization [git04].
+This means heavy using of recursion and functional programming in Go will have an impact on performance.
 There are some workarounds for this issue, but they are out of the scope of this paper.[med02][she17]
 
 Summarized, JavaScript has better support for efficient recursion heavy programming than Go.
@@ -331,7 +330,7 @@ type Node = Or | And | Not | Value;
 Unfortunately this is not possible in JavaScript because it lacks types.
 However, by using TypeScript, a JavaScript superset, it would be possible to use this syntax today.
 
-In Go this feature isn't present either, but there is an ongoing discussion to introduce sum types along with generic types in Go 2.0 [git03].
+In Go this feature isn't present either, but there is an ongoing discussion to introduce sum types along with generic types in Go 2.0 [gol02][git03].
 This means, in the future, Go might get support for union types, allowing to easily represent AST nodes.
 
 ### Pattern matching
@@ -340,7 +339,7 @@ Pattern matching is a concept found in functional programming languages like Has
 It's often used in conjunction with algebraic data types to select different behaviour depending on the data type.
 
 In our parser example this would be useful for the evaluate function that could be written in a more functional matter instead of using JavaScript classes.
-There is a stage 1 proposal to introduce pattern matching to JavaScript in the future [git02].
+There is a stage 1 proposal to introduce pattern matching to ECMAScript in the future [git02].
 This means, in the future, the evaluate function could be written concisely as in the example below.
 
 ```javascript
@@ -353,6 +352,7 @@ const evaluate = (vars, node) => case (node) {
 ```
 
 In Go on the other hand there is no support for pattern matching and there are no plans to introduce it to the language.
+But it even in absent of pattern matching in Go, something similar can be achieved by using interfaces and switch statements [eli01].
 
 ## Summary
 
@@ -366,7 +366,7 @@ This was especially the case on some parser functions taking a lot of different 
 However, this disadvantage is more of general problem in JavaScript than a specific problem in functional programming.
 
 When it comes to implementing the parser, the differences between Go and JavaScript are subtle.
-The only real difference is the higher verbosity of the Go code, due to type annotations and type casts.
+The only outstanding difference is the higher verbosity of the Go code, due to type annotations and type casts.
 
 In the big picture, when compared to Go, JavaScript shows more focus on functional programming, especially on topics like tail-call optimization or short lambda expressions.
 To sum it up, the support of functional programming in JavaScript is more advanced than it is in Go.
@@ -374,11 +374,14 @@ To sum it up, the support of functional programming in JavaScript is more advanc
 ## References
 
 - [ant16] JavaScript: Functional Programming for JavaScript Developers, Ved Antani; Simon Timms; Dan Mantyla, Packt Publishing, 2016-08-31
+- [eli01] [Go and Algebraic Data Types](https://eli.thegreenplace.net/2018/go-and-algebraic-data-types/) (viewed 2020-01-05)
 - [fog13] Functional JavaScript, Michael Fogus, O'Reilly Media, Inc., 2013-06-10
 - [git01] [proposal: Go 2: immutable type qualifier](https://github.com/golang/go/issues/27975) (viewed 2019-12-26)
 - [git02] [ECMAScript Pattern Matching](https://github.com/tc39/proposal-pattern-matching) (viewed 2019-12-27)
 - [git03] [proposal: spec: add sum types / discriminated unions #19412](https://github.com/golang/go/issues/19412) (viewed 2020-01-03)
+- [git04] [proposal: Go 2: add become statement to support tail calls](https://github.com/golang/go/issues/22624) (viewed 2020-01-05)
 - [gol01] [Codewalk: First-Class Functions in Go](https://golang.org/doc/codewalk/functions/) (viewed 2019-12-26)
+- [gol02] [Go FAQ: Why does Go not have variant types?](https://golang.org/doc/faq#variant_types) (viewed 2020-01-05)
 - [has01] [Case Expressions and Pattern Matching](https://www.haskell.org/tutorial/patterns.html) (viewed 2020-01-03)
 - [ker17] Mastering Javascript Functional Programming, Federico Kereki, Packt Publishing, 2017-12-29
 - [med01] [Introduction to Functional JavaScript](https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a) (viewed 2019-12-21)
