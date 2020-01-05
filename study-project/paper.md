@@ -97,11 +97,14 @@ However, by using empty interfaces, it's possible to write flexible and reusable
 ```go
 func makeOr(argument interface{}) interface{} {
   var pair = argument.(Pair)
+
   if pair.Second == (Nothing{}) {
     return pair.First
   }
+
   var firstNode = pair.First.(ast.Node)
   var secondNode = pair.Second.(ast.Node)
+
   return ast.Or{LHS: firstNode, RHS: secondNode}
 }
 ```
@@ -196,9 +199,11 @@ func ExpectString(expectedString string) Parser {
   return func(Input Input) Result {
     var result = ExpectCodePoints([]rune(expectedString))(Input)
     var runes, isRuneArray = result.Result.([]rune)
+
     if isRuneArray {
       result.Result = string(runes)
     }
+
     return result
   }
 }
@@ -239,9 +244,11 @@ The reason for this is again the different type system of JavaScript and Go, as 
 func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
   return func(Input Input) Result {
     var result = parser(Input)
+
     if result.Result != nil {
       result.Result = converter(result.Result)
     }
+
     return result
   }
 }
@@ -332,7 +339,7 @@ It's often used in conjunction with algebraic data types to select different beh
 
 In our parser example this would be useful for the `evaluate()` function, which could be written in a more functional style instead of using JavaScript classes.
 There is a stage 1 proposal to introduce pattern matching to ECMAScript in the future [git02].
-This means, that in the future, the `evaluate()` function could be written concisely as in following example.
+This means, that in the future, the `evaluate()` function could be written concisely as in the following example.
 
 ```javascript
 const evaluate = (vars, node) => case (node) {
