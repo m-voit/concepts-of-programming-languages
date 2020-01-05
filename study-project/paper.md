@@ -250,7 +250,7 @@ func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
 Function composition is a concept that allows to build complex functions out of one or more simple functions.
 Generally speaking, function composition is an application of higher-order functions.
 
-<!-- Currying -->
+<!-- Currying TODO -->
 
 Function composition works good in JavaScript, especially because of the permissive type system, discussed earlier.
 It's easy and straight forward to use various functions to build complex functions.
