@@ -334,12 +334,12 @@ This means that Go could receive support for sum types in the future, allowing e
 
 ### Pattern matching
 
-Pattern matching is a concept found in functional programming languages like Haskell to work with data structures [has01].
+Pattern matching is a concept from primary functional programming languages like Haskell to work with data structures [has01].
 It's often used in conjunction with algebraic data types to select different behaviour depending on the data type.
 
-In our parser example this would be useful for the evaluate function that could be written in a more functional matter instead of using JavaScript classes.
+In our parser example this would be useful for the `evaluate()` function, which could be written in a more functional style instead of using JavaScript classes.
 There is a stage 1 proposal to introduce pattern matching to ECMAScript in the future [git02].
-This means, in the future, the evaluate function could be written concisely as in the example below.
+This means, that in the future, the `evaluate()` function could be written concisely as in following example.
 
 ```javascript
 const evaluate = (vars, node) => case (node) {
@@ -350,7 +350,7 @@ const evaluate = (vars, node) => case (node) {
 }
 ```
 
-In Go on the other hand there is no support for pattern matching and there are no plans to introduce it to the language.
+In Go, by contrast, there is no support for pattern matching and there are no plans to introduce it to the language.
 But it even in absent of pattern matching in Go, something similar can be achieved by using interfaces and switch statements [eli01].
 
 ## Summary
