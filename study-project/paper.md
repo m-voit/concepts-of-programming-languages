@@ -286,7 +286,7 @@ In the context of functional programming, lazy evaluation is useful for performa
 This is possible, because functions are only evaluated, when they are actually used and therefore no unnecessary calculations are done.
 
 Unfortunately both, Go and JavaScript, use eager evaluation for functions with no built-in support for lazy evaluation.
-However, it's possible to simulate lazy evaluation in both languages, but it's no core part of the two programming languages.
+However, it's possible to simulate lazy evaluation in both languages, but it's no core part of the two programming languages [med02][med04].
 
 ### Recursion and tail-call optimization
 
@@ -304,7 +304,7 @@ Tail-call optimization is a part of JavaScript since ECMAScript 6, which was int
 
 Go on the other side has no support for tail-call optimization and according to the Go developers, they don't see this as a problem affecting many people, so the won't add support for tail-call optimization [git04].
 This means heavy using of recursion and functional programming in Go will have an impact on performance.
-There are some workarounds for this issue, but they are out of the scope of this paper.[med02][she17]
+There are some workarounds for this issue, but they are out of the scope of this paper [med02][she17].
 
 Summarized, JavaScript has better support for efficient recursion heavy programming than Go.
 
@@ -386,6 +386,7 @@ To sum it up, the support of functional programming in JavaScript is more advanc
 - [med01] [Introduction to Functional JavaScript](https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a) (viewed 2019-12-21)
 - [med02] [Functional Go](https://medium.com/@geisonfgfg/functional-go-bc116f4c96a4) (viewed 2019-12-26)
 - [med03] [JS ES6 Recursive Tail Call Optimization](https://medium.com/@mlaythe/js-es6-recursive-tail-call-optimization-feaf2dada3f6) (viewed 2019-12-31)
+- [med04] [Lazy Evaluation in Javascript](https://medium.com/hackernoon/lazy-evaluation-in-javascript-84f7072631b7) (viewed 2020-01-05)
 - [moz01] [MDN JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) (viewed 2019-12-25)
 - [moz02] [MDN Closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures) (viewed 2019-12-23)
 - [moz03] [MDN Functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions) (viewed 2019-12-25)
