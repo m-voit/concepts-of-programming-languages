@@ -4,8 +4,8 @@ This paper compares functional programming in JavaScript with functional program
 At the beginning, it gives a short overview over JavaScript and it's history.
 Furthermore, an implementation of a parser for Boolean expressions is used as a practical example to compare functional programming in the two programming languages.
 Additionally, JavaScript and Go are compared on their support of basic and advanced functional programming concepts.
-These functional programming concepts are explained and looked at in the paper.
-At the end of the paper there will be an evaluation and summary on how suitable JavaScript is to implement a functional parser.
+These concepts of functional programming are explained and looked at in the paper.
+At the end of the paper there will be an evaluation and summary on how suitable JavaScript is for implementing a functional parser.
 
 ## Table of contents
 
@@ -141,7 +141,7 @@ In Go immutability is quite similar to JavaScript and can't be easily achieved.
 Except strings, data types in Go are mutable by default and only primitive data types like `bool` and `int` can declared to be constant.
 The immutability of composite data types like Go's `structs` on the other hand, is in the responsibility of the developer.
 
-For Go 2.0 however, there is a proposal to introduce new immutable data types to Go.
+For Go 2.0 however, there is a proposal to introduce new immutable data types.
 So this might change in the future, when Go 2.0 is released [git01].
 
 To sum it up, as of today there is some support for immutability in JavaScript and in Go, but not by default and not easily usable.
@@ -156,9 +156,9 @@ A language with first class functions has to meet the following criteria:
 - Allow functions to be assigned to variables.
 - Allow functions to be stored in data structures like arrays.
 
-The listed properties also allow for concepts such as higher-order functions and functional composition, which both are described later.
+The listed properties also allow for concepts such as higher-order functions and functional composition, both of which are described later.
 
-In JavaScript, all the mentioned properties are supported.
+In JavaScript, all the criteria is met.
 Therefore, functions in JavaScript are first class functions and are treated like first-class citizens [moz06][fog13].
 This allows us to assign the `optional()` and the `expectSeveral()` function to the `expectSpaces` variable in the example below.
 
@@ -166,9 +166,9 @@ This allows us to assign the `optional()` and the `expectSeveral()` function to 
 const expectSpaces = optional(expectSeveral(isSpaceChar, isSpaceChar));
 ```
 
-The same holds true for Go, that has same support for first class functions than JavaScript [she17][gol01].
+The same applies to Go, which has the same support for first class functions than JavaScript [she17][gol01].
 Like in JavaScript it's possible to assign the `ExpectSeveral()` and the `Optional()` function to the `ExpectSpaces` variable.
-The only difference is the chaining of the function calls instead of nesting them and the explicit `Parser` type of the variable.
+The only difference is the chaining of function calls instead of nesting and the explicit `Parser` type of the variable.
 
 ```go
 var ExpectSpaces Parser = ExpectSeveral(isSpaceChar, isSpaceChar).Optional()
@@ -178,11 +178,11 @@ var ExpectSpaces Parser = ExpectSeveral(isSpaceChar, isSpaceChar).Optional()
 
 Closures or lambda expressions, also called anonymous functions, are unnamed functions, often returned from another function.
 To be precise, a closure is the reference to the local state of the function, that returns an anonymous function.
-However, both terms are often used interchangeably, because both concepts belong to the concept of anonymous functions, returned by an outer function [fog13].
+However, both terms are often used interchangeably, since both concepts belong to the concept of anonymous functions, returned by an outer function [fog13].
 
 Support for closures is found in all programming languages with first class functions.
-This is the case, because closures are needed for anonymous functions to work.
-Without closures and therefore no references to the _outer_ function, that is returning the _inner_ function, the _inner_ function would stop working when being called directly [moz02][fog13].
+This is the case because closures are needed for anonymous functions to work.
+Without closures and thus without references to the _outer_ function, returning the _inner_ function, the _inner_ function would stop working when called directly [moz02][fog13].
 
 ```javascript
 export const convert = (parser, converter) => input => {
@@ -196,7 +196,7 @@ export const convert = (parser, converter) => input => {
 };
 ```
 
-In JavaScript lambda expressions can be written very concisely with the arrow functions syntax, introduced with ECMAScript 6 [moz04].
+In JavaScript, lambda expressions can be written very concisely using the arrow function syntax introduced with ECMAScript 6 [moz04].
 
 ```go
 func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
