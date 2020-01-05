@@ -294,19 +294,19 @@ To avoid mutating state functional programming makes heavy use of recursion.
 Recursion happens when a function calls itself with new parameters to compute something instead of mutating state inside the function.
 Unfortunately recursion is less efficient than iteration.
 
-A technique to remedy the performance issues of recursion is called tail-call optimization.
-Without tail-call optimization each recursive call to a function, adds a new stack frame to the call stack.
-Therefore, the call stack grows with each function call and causes high memory usage on deeply nested recursion functions.
-Tail-call optimization prevents this by overwriting the unneeded stack frames of the previous function calls.
-So tail-call optimization is needed for efficient functional programming.
+A technique for remedying the performance issues of recursion is called tail-call optimization (TCO).
+Without TCO, a new stack frame is added to the call stack each time a function is recursively called.
+Therefore, the call stack grows with every function call and results in high memory consumption for deeply nested recursion functions.
+TCO prevents this by overwriting the unneeded stack frames of previous function calls.
+TCO is thus required for efficient functional programming.
 
-Tail-call optimization is a part of JavaScript since ECMAScript 6, which was introduced in 2015.
+JavaScript supports TCO since the introduction of ECMAScript 6 in 2015.
 
-Go on the other side has no support for tail-call optimization and according to the Go developers, they don't see this as a problem affecting many people, so the won't add support for tail-call optimization [git04].
-This means heavy using of recursion and functional programming in Go will have an impact on performance.
-There are some workarounds for this issue, but they are out of the scope of this paper [med02][she17].
+Go on the other side has no support for TCO and according to the Go developers, they don't see this as a problem that affects many people, so they won't add support for TCO [git04].
+This means that the heavy use of recursion and functional programming in Go will have an impact on performance.
+In fact, there are some workarounds for this issue, but they are out of the scope of this paper [med02][she17].
 
-Summarized, JavaScript has better support for efficient recursion heavy programming than Go.
+Summarized, JavaScript has better support for efficient recursive programming than Go.
 
 ### Algebraic data types
 
