@@ -22,11 +22,12 @@
     </head>
     <body class="vscode-light">
         <h1 id="compare-functional-programming-in-go-with-javascript">Compare functional programming in Go with JavaScript</h1>
-<p>This paper compares functional programming in Go with functional programming in JavaScript.
-It compares the type system, functions and functional programming in Go with JavaScript.
+<p>This paper compares functional programming in JavaScript with functional programming in Go.
+At the beginning, it gives a short overview over JavaScript and it's history.
 Furthermore, an implementation of a parser for Boolean expressions is used as a practical example to compare functional programming in the two programming languages.
-At the end of the paper there will be an evaluation and summary on how suitable JavaScript is to implement a functional parser.
-However, the main goal of this paper is to show the possibilities and support of functional programming concepts in JavaScript.</p>
+Additionally, JavaScript and Go are compared on their support of basic and advanced functional programming concepts.
+These functional programming concepts are explained and looked at in the paper.
+At the end of the paper there will be an evaluation and summary on how suitable JavaScript is to implement a functional parser.</p>
 <h2 id="table-of-contents">Table of contents</h2>
 <ul>
 <li><a href="#compare-functional-programming-in-go-with-javascript">Compare functional programming in Go with JavaScript</a>
@@ -66,7 +67,7 @@ While being a new language, JavaScript has taken the functional concepts of Sche
 <h2 id="parser-for-boolean-expressions">Parser for Boolean expressions</h2>
 <p>The parser for Boolean expressions is a practical example to compare functional programming in Go and JavaScript.
 It is implemented using functional programming concepts and will be used to provide code examples for various functional programming aspects discussed later.
-Generally speaking the parser is built using parser combinators, which are good example to be implemented with functional programming.
+Generally speaking the parser is built using parser combinators, which are a good example to be implemented with functional programming.
 The parser parses Boolean expressions with the following EBNF grammar.</p>
 <pre><code class="language-ebnf"><div>&lt;<span class="hljs-attribute">e</span><span class="hljs-attribute">x</span><span class="hljs-attribute">p</span><span class="hljs-attribute">r</span><span class="hljs-attribute">e</span><span class="hljs-attribute">s</span><span class="hljs-attribute">s</span><span class="hljs-attribute">i</span><span class="hljs-attribute">o</span><span class="hljs-attribute">n</span>&gt; ::= &lt;term&gt; { &lt;or&gt; &lt;term&gt; }
 &lt;term&gt; ::= &lt;factor&gt; { &lt;and&gt; &lt;factor&gt; }
@@ -76,28 +77,30 @@ The parser parses Boolean expressions with the following EBNF grammar.</p>
 &lt;not&gt; ::= <span class="hljs-string">'!'</span>
 &lt;var&gt; ::= <span class="hljs-string">'[a-zA-Z0-9]*'</span>
 </div></code></pre>
-<p><code>A &amp; B | !C</code> is a possible expression to be parsed by the parser.
+<p><code>A &amp; B | !C</code> is a possible expression, that can be parsed by the parser.
 Depending on the values of A, B and C, which can be true or false, the parser determines the result of the expression.
 The expression is then parsed by building an abstract syntax tree (AST), consisting of <code>Or</code>, <code>And</code>, <code>Not</code> and <code>Value</code> nodes, mimicking the EBNF grammar.
-The created AST then allows to determine the results of the expression when A, B and C are replaced by either <code>TRUE</code> or <code>FALSE</code>.</p>
+The created AST allows it to determine the results of the expression, when A, B and C are replaced by either <code>TRUE</code> or <code>FALSE</code>.</p>
 <h2 id="functional-programming-concepts">Functional programming concepts</h2>
 <p>Functional programming and the functional programming paradigm have various unique concepts.
 To see how well JavaScript and Go are suited for functional programming, we will take a look on these concepts and their support in both languages.</p>
 <h3 id="type-system">Type system</h3>
 <p>JavaScript is a dynamic and weakly typed programming language, that also features duck-typing.
-Because the language is weakly typed, types are implicitly cast depending on the used operation.
-Furthermore, the dynamic typing allows for types to change their type at runtime, when their assigned value changes [moz05].</p>
-<p>In the context of functional programming, the dynamic and weakly typing of JavaScript allows for writing highly reusable functions.
-This is especially useful for higher order functions and function composition, because there is no need to do frequent type casts or using <code>any</code> types.</p>
+Weakly typed means, types are implicitly cast depending on the used operation.
+Furthermore, dynamic typing allows for types to change their type at runtime, when their assigned value changes [moz05].</p>
+<p>In the context of functional programming, the dynamic and weakly typing of JavaScript simplifies writing highly reusable functions.
+This is especially useful for higher-order functions and function composition, because there is no need to use <code>any</code> types or do frequent type casts.</p>
 <pre><code class="language-javascript"><div><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> makeOr = <span class="hljs-function"><span class="hljs-params">pair</span> =&gt;</span>
   pair.second <span class="hljs-keyword">instanceof</span> Nothing ? pair.first : <span class="hljs-keyword">new</span> Or(pair.first, pair.second);
 </div></code></pre>
-<p>The Go type system doesn't have generic types, so we have to use an empty interface to simulate an <code>any</code> type.
+<p>Go on the other hand is a strict and strongly typed programming language.
+This means types are explicitly assigned and cannot change after assignment, except when explicitly cast by the developer.</p>
+<p>Furthermore, there are no generic types in Go, so we have to use an empty interface to simulate an <code>any</code> type.
 This makes the code more verbose and less readable than JavaScript code, while providing no benefit to the developer.
 Generally speaking, the Go type system is not tailored to functional programming and is more or less a hurdle to the developer, when used this way.</p>
-<p>A problem of using empty interfaces to simulate generic types is a hit on performance, when doing many type conversions.
-This is no problem in the small parser example, but might become one at a larger scale and should therefore be mentioned [she17].</p>
-<p>However, by using empty interfaces, it's still possible to write flexible and reusable functions in Go.</p>
+<p>Additionally, using empty interfaces to simulate generic types has an impact on performance, especially when doing many type conversions.
+This is no problem in the rather small parser example, but might become one at a larger scale and should therefore be mentioned [she17].</p>
+<p>However, by using empty interfaces, it's possible to write flexible and reusable functions in Go.</p>
 <pre><code class="language-go"><div><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">makeOr</span><span class="hljs-params">(argument <span class="hljs-keyword">interface</span>{})</span> <span class="hljs-title">interface</span></span>{} {
   <span class="hljs-keyword">var</span> pair = argument.(Pair)
   <span class="hljs-keyword">if</span> pair.Second == (Nothing{}) {
@@ -111,9 +114,9 @@ This is no problem in the small parser example, but might become one at a larger
 <h3 id="immutability">Immutability</h3>
 <p>Immutability is a desired property, especially in functional programming, because it reduces unintended side effects.</p>
 <p>Unfortunately, true immutability can't be achieved in JavaScript.
-Although it's possible to create constructs that are sort of immutable, there is no built-in immutability as in pure functional programming languages.</p>
+Although it's possible to create constructs that are sort of immutable, there is no built-in or default immutability as in pure functional programming languages.</p>
 <p>One way to achieve immutability in JavaScript is to use the <code>const</code> keyword, that allows to define constant variables, functions or objects.
-But while primitive types as strings defined with the <code>const</code> keyword are truly constant, objects created with the <code>const</code> keyword are still mutable [moz07].
+But while primitive types as strings are truly constant, when defined with the <code>const</code> keyword, objects created with the <code>const</code> keyword are still mutable [moz07].
 As we can see in the example below, the properties of the <code>result</code> object can still be reassigned, despite the <code>result</code> object being declared as <code>const</code>.
 So, used on an object, the <code>const</code> keyword only prevents to assign a new value to the object.</p>
 <pre><code class="language-javascript"><div><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> optional = <span class="hljs-function"><span class="hljs-params">parser</span> =&gt;</span> input =&gt; {
@@ -134,18 +137,6 @@ Therefore, it's necessary to call <em>freeze</em> recursively on an object that 
 <p>In Go immutability is quite similar to JavaScript and can't be easily achieved.
 Except strings, data types in Go are mutable by default and only primitive data types like <code>bool</code> and <code>int</code> can declared to be constant.
 The immutability of composite data types like Go's <code>structs</code> on the other hand, is in the responsibility of the developer.</p>
-<p>As we can see in the example below, there is no way to declare the <code>result</code> struct as constant.</p>
-<pre><code class="language-go"><div><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(parser Parser)</span> <span class="hljs-title">Optional</span><span class="hljs-params">()</span> <span class="hljs-title">Parser</span></span> {
-  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(Input Input)</span> <span class="hljs-title">Result</span></span> {
-    <span class="hljs-keyword">var</span> result = parser(Input)
-    <span class="hljs-keyword">if</span> result.Result == <span class="hljs-literal">nil</span> {
-      result.Result = Nothing{}
-      result.RemainingInput = Input
-    }
-    <span class="hljs-keyword">return</span> result
-  }
-}
-</div></code></pre>
 <p>For Go 2.0 however, there is a proposal to introduce new immutable data types to Go.
 So this might change in the future, when Go 2.0 is released [git01].</p>
 <p>To sum it up, as of today there is some support for immutability in JavaScript and in Go, but not by default and not easily usable.</p>
@@ -264,9 +255,8 @@ Therefore, the call stack grows with each function call and causes high memory u
 Tail-call optimization prevents this by overwriting the unneeded stack frames of the previous function calls.
 So tail-call optimization is needed for efficient functional programming.</p>
 <p>Tail-call optimization is a part of JavaScript since ECMAScript 6, which was introduced in 2015.</p>
-<p>Go on the other side has no support for tail-call optimization.</p>
-<!-- Wont be introduced because of better error stacks -->
-<p>This means that heavy using of recursion and functional programming in Go will have an impact on performance.
+<p>Go on the other side has no support for tail-call optimization and according to the Go developers, they don't see this as a problem affecting many people, so the won't add support for tail-call optimization [git04].
+This means heavy using of recursion and functional programming in Go will have an impact on performance.
 There are some workarounds for this issue, but they are out of the scope of this paper.[med02][she17]</p>
 <p>Summarized, JavaScript has better support for efficient recursion heavy programming than Go.</p>
 <h3 id="algebraic-data-types">Algebraic data types</h3>
@@ -283,13 +273,13 @@ The AST is a data structure consisting of nodes with the <code>OR</code>, <code>
 </div></code></pre>
 <p>Unfortunately this is not possible in JavaScript because it lacks types.
 However, by using TypeScript, a JavaScript superset, it would be possible to use this syntax today.</p>
-<p>In Go this feature isn't present either, but there is an ongoing discussion to introduce sum types along with generic types in Go 2.0 [git03].
+<p>In Go this feature isn't present either, but there is an ongoing discussion to introduce sum types along with generic types in Go 2.0 [gol02][git03].
 This means, in the future, Go might get support for union types, allowing to easily represent AST nodes.</p>
 <h3 id="pattern-matching">Pattern matching</h3>
 <p>Pattern matching is a concept found in functional programming languages like Haskell to work with data structures [has01].
 It's often used in conjunction with algebraic data types to select different behaviour depending on the data type.</p>
 <p>In our parser example this would be useful for the evaluate function that could be written in a more functional matter instead of using JavaScript classes.
-There is a stage 1 proposal to introduce pattern matching to JavaScript in the future [git02].
+There is a stage 1 proposal to introduce pattern matching to ECMAScript in the future [git02].
 This means, in the future, the evaluate function could be written concisely as in the example below.</p>
 <pre><code class="language-javascript"><div><span class="hljs-keyword">const</span> evaluate = <span class="hljs-function">(<span class="hljs-params">vars, node</span>) =&gt;</span> <span class="hljs-keyword">case</span> (node) {
   when (node <span class="hljs-keyword">instanceof</span> Or) -&gt; evaluate(vars, node.lhs) || evaluate(vars, node.rhs)
@@ -298,7 +288,8 @@ This means, in the future, the evaluate function could be written concisely as i
   when (node <span class="hljs-keyword">instanceof</span> Value) -&gt; vars.get(node.name)
 }
 </div></code></pre>
-<p>In Go on the other hand there is no support for pattern matching and there are no plans to introduce it to the language.</p>
+<p>In Go on the other hand there is no support for pattern matching and there are no plans to introduce it to the language.
+But it even in absent of pattern matching in Go, something similar can be achieved by using interfaces and switch statements [eli01].</p>
 <h2 id="summary">Summary</h2>
 <p>After implementing the Boolean parser, it can be said that JavaScript is well suited to implement a parser.
 As we have seen, JavaScript has good support for all the basic concepts of functional programming.
@@ -308,17 +299,20 @@ While this allows for easily writing reusable functions, it also makes it hard t
 This was especially the case on some parser functions taking a lot of different inputs, like the convert function.
 However, this disadvantage is more of general problem in JavaScript than a specific problem in functional programming.</p>
 <p>When it comes to implementing the parser, the differences between Go and JavaScript are subtle.
-The only real difference is the higher verbosity of the Go code, due to type annotations and type casts.</p>
+The only outstanding difference is the higher verbosity of the Go code, due to type annotations and type casts.</p>
 <p>In the big picture, when compared to Go, JavaScript shows more focus on functional programming, especially on topics like tail-call optimization or short lambda expressions.
 To sum it up, the support of functional programming in JavaScript is more advanced than it is in Go.</p>
 <h2 id="references">References</h2>
 <ul>
 <li>[ant16] JavaScript: Functional Programming for JavaScript Developers, Ved Antani; Simon Timms; Dan Mantyla, Packt Publishing, 2016-08-31</li>
+<li>[eli01] <a href="https://eli.thegreenplace.net/2018/go-and-algebraic-data-types/">Go and Algebraic Data Types</a> (viewed 2020-01-05)</li>
 <li>[fog13] Functional JavaScript, Michael Fogus, O'Reilly Media, Inc., 2013-06-10</li>
 <li>[git01] <a href="https://github.com/golang/go/issues/27975">proposal: Go 2: immutable type qualifier</a> (viewed 2019-12-26)</li>
 <li>[git02] <a href="https://github.com/tc39/proposal-pattern-matching">ECMAScript Pattern Matching</a> (viewed 2019-12-27)</li>
 <li>[git03] <a href="https://github.com/golang/go/issues/19412">proposal: spec: add sum types / discriminated unions #19412</a> (viewed 2020-01-03)</li>
+<li>[git04] <a href="https://github.com/golang/go/issues/22624">proposal: Go 2: add become statement to support tail calls</a> (viewed 2020-01-05)</li>
 <li>[gol01] <a href="https://golang.org/doc/codewalk/functions/">Codewalk: First-Class Functions in Go</a> (viewed 2019-12-26)</li>
+<li>[gol02] <a href="https://golang.org/doc/faq#variant_types">Go FAQ: Why does Go not have variant types?</a> (viewed 2020-01-05)</li>
 <li>[has01] <a href="https://www.haskell.org/tutorial/patterns.html">Case Expressions and Pattern Matching</a> (viewed 2020-01-03)</li>
 <li>[ker17] Mastering Javascript Functional Programming, Federico Kereki, Packt Publishing, 2017-12-29</li>
 <li>[med01] <a href="https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a">Introduction to Functional JavaScript</a> (viewed 2019-12-21)</li>
