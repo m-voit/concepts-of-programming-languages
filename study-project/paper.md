@@ -185,16 +185,27 @@ This is the case because closures are needed for anonymous functions to work.
 Without closures and thus without references to the _outer_ function, returning the _inner_ function, the _inner_ function would stop working when called directly [moz02][fog13].
 
 ```javascript
-TODO
+const expectString = expectedString => input => expectCodePoints(expectedString)(input);
 ```
 
 In JavaScript, lambda expressions can be written very concisely using the arrow function syntax introduced with ECMAScript 6 [moz04].
+This can be seen in the example above where the `expectString()` function takes a string as an argument and returns an anonymous function with `input` as it's argument.
 
 ```go
-TODO
+func ExpectString(expectedString string) Parser {
+  return func(Input Input) Result {
+    var result = ExpectCodePoints([]rune(expectedString))(Input)
+    var runes, isRuneArray = result.Result.([]rune)
+    if isRuneArray {
+      result.Result = string(runes)
+    }
+    return result
+  }
+}
 ```
 
-In Go lambda expressions are a bit more verbose, mainly because the type system requires explicit types, as already mentioned in the section on the type system.
+In Go lambda expressions are more verbose, mainly because the type system requires explicit types, as already mentioned in the section on the type system.
+This can be seen in the example of the `expectString()` function above, where we have explicit input types and return types, on both the inner and the outer function.
 Apart from that, lambda expressions in Go are equal to lambda expressions in JavaScript [she17].
 
 ### Higher-order functions and function composition
