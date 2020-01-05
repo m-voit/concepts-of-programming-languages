@@ -16,7 +16,7 @@ At the end of the paper there will be an evaluation and summary on how suitable 
   - [Functional programming concepts](#functional-programming-concepts)
     - [Type system](#type-system)
     - [Immutability](#immutability)
-    - [First class functions](#first-class-functions)
+    - [First-class functions](#first-class-functions)
     - [Closures and lambda expressions](#closures-and-lambda-expressions)
     - [Higher-order functions and function composition](#higher-order-functions-and-function-composition)
     - [Pure functions](#pure-functions)
@@ -146,10 +146,10 @@ So this might change in the future, when Go 2.0 is released [git01].
 
 To sum it up, as of today there is some support for immutability in JavaScript and in Go, but not by default and not easily usable.
 
-### First class functions
+### First-class functions
 
-First class functions are the foundation of supporting functional programming in a programming language.
-A language with first class functions has to meet the following criteria:
+First-class functions are the foundation of supporting functional programming in a programming language.
+A language with first-class functions has to meet the following criteria:
 
 - Allow passing functions as parameters to other functions.
 - Allow functions to be return values of other functions, so that functions can return functions.
@@ -159,14 +159,14 @@ A language with first class functions has to meet the following criteria:
 The listed properties also allow for concepts such as higher-order functions and functional composition, both of which are described later.
 
 In JavaScript, all the criteria is met.
-Therefore, functions in JavaScript are first class functions and are treated like first-class citizens [moz06][fog13].
+Therefore, functions in JavaScript are first-class functions and are treated like first-class citizens [moz06][fog13].
 This allows us to assign the `optional()` and the `expectSeveral()` function to the `expectSpaces` variable in the example below.
 
 ```javascript
 const expectSpaces = optional(expectSeveral(isSpaceChar, isSpaceChar));
 ```
 
-The same applies to Go, which has the same support for first class functions than JavaScript [she17][gol01].
+The same applies to Go, which has the same support for first-class functions than JavaScript [she17][gol01].
 Like in JavaScript it's possible to assign the `ExpectSeveral()` and the `Optional()` function to the `ExpectSpaces` variable.
 The only difference is the chaining of function calls instead of nesting and the explicit `Parser` type of the variable.
 
@@ -180,9 +180,32 @@ Closures or lambda expressions, also called anonymous functions, are unnamed fun
 To be precise, a closure is the reference to the local state of the function, that returns an anonymous function.
 However, both terms are often used interchangeably, since both concepts belong to the concept of anonymous functions, returned by an outer function [fog13].
 
-Support for closures is found in all programming languages with first class functions.
+Support for closures is found in all programming languages with first-class functions.
 This is the case because closures are needed for anonymous functions to work.
 Without closures and thus without references to the _outer_ function, returning the _inner_ function, the _inner_ function would stop working when called directly [moz02][fog13].
+
+```javascript
+TODO
+```
+
+In JavaScript, lambda expressions can be written very concisely using the arrow function syntax introduced with ECMAScript 6 [moz04].
+
+```go
+TODO
+```
+
+In Go lambda expressions are a bit more verbose, mainly because the type system requires explicit types, as already mentioned in the section on the type system.
+Apart from that, lambda expressions in Go are equal to lambda expressions in JavaScript [she17].
+
+### Higher-order functions and function composition
+
+Higher-order functions are functions that accept other functions as arguments or return a function as a result.
+As discussed in the section on first-class functions, JavaScript has first-class functions and thus allows writing and using higher-order functions.
+
+For example, the convert function of the Boolean parser takes two functions as arguments.
+A parser function to be executed and a converter function to convert the result of the parser function.
+This higher order function can be used for any parser function and with any converter function.
+The result is a highly flexible and easily reusable function.
 
 ```javascript
 export const convert = (parser, converter) => input => {
@@ -196,7 +219,10 @@ export const convert = (parser, converter) => input => {
 };
 ```
 
-In JavaScript, lambda expressions can be written very concisely using the arrow function syntax introduced with ECMAScript 6 [moz04].
+In Go, the converter function looks similar to the JavaScript implementation.
+This is the case, because Go has similar support for higher-order functions as JavaScript.
+The main differences between the Go and the JavaScript implementation are the empty interfaces to satisfy the Go type system and the higher verbosity of the Go code.
+The reason for this is again the different type system of JavaScript and Go, as already mentioned [med02][she17].
 
 ```go
 func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
@@ -206,44 +232,6 @@ func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
       result.Result = converter(result.Result)
     }
     return result
-  }
-}
-```
-
-In Go lambda expressions are a bit more verbose, especially because the type system requires explicit types as mentioned in the type system section earlier.
-Apart from that, lambda expressions in Go are equal to lambda expressions in JavaScript [she17].
-
-### Higher-order functions and function composition
-
-Higher-order functions are functions that accept other functions as arguments or return a function as their result.
-As discussed in the first class functions section, JavaScript has first class functions and therefore allows writing and using higher-order functions.
-
-The convert function of the Boolean parser for example takes two arguments.
-A parser function to be executed and a converter function to convert the result of the parser function.
-This higher order function can be used for any desired parser function and with an arbitrary converter function.
-The result is a highly flexible and easily reusable function.
-
-```javascript
-export const orElse = (parser, alternativeParser) => input => {
-  const firstResult = parser(input);
-
-  return firstResult.result !== null ? firstResult : alternativeParser(input);
-};
-```
-
-In Go, the converter function looks similar to the JavaScript implementation.
-This is the case, because Go has similar support for higher-order functions as JavaScript.
-The main differences between the Go and the JavaScript implementation are the empty interfaces to satisfy the Go type system and the higher verbosity of the Go code.
-Again the reason for this is the different type system of JavaScript and Go as discussed earlier [med02][she17].
-
-```go
-func (parser Parser) OrElse(alternativeParser Parser) Parser {
-  return func(Input Input) Result {
-    var FirstResult = parser(Input)
-    if FirstResult.Result != nil {
-      return FirstResult
-    }
-    return alternativeParser(Input)
   }
 }
 ```
