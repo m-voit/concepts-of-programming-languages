@@ -310,12 +310,12 @@ Summarized, JavaScript has better support for efficient recursive programming th
 
 ### Algebraic data types
 
-Algebraic data types, also named sum/product types or discriminate unions, are a concept in functional programming languages to represent data structures by composing them with other types.
+Algebraic data types, also named sum/product types or discriminate unions, are a concept in functional programming languages for representing data structures by composing them with other types.
 
 An example for this is the AST of our parser example.
 The AST is a data structure consisting of nodes with the `OR`, `AND`, `NOT` or `VALUE` type.
 
-With support of algebraic data structure we could write the AST much more concisely as we can see in following example.
+With support of algebraic data types we could write the AST much more concisely, as we can see in following example.
 
 ```typescript
 type Or = { lhs: Node, rhs: Node };
@@ -326,11 +326,11 @@ type Value = { name: string };
 type Node = Or | And | Not | Value;
 ```
 
-Unfortunately this is not possible in JavaScript because it lacks types.
-However, by using TypeScript, a JavaScript superset, it would be possible to use this syntax today.
+Unfortunately this is not possible in JavaScript because it's missing explicit types.
+However, by using TypeScript, a JavaScript superset, it would be possible to use this syntax today [typ01].
 
-In Go this feature isn't present either, but there is an ongoing discussion to introduce sum types along with generic types in Go 2.0 [gol02][git03].
-This means, in the future, Go might get support for union types, allowing to easily represent AST nodes.
+This feature is also missing in Go, but there is an ongoing discussion on the introduction of sum types along with generic types in Go 2.0 [gol02][git03].
+This means that Go could receive support for sum types in the future, allowing easy representation of AST nodes.
 
 ### Pattern matching
 
@@ -396,3 +396,4 @@ To sum it up, the support of functional programming in JavaScript is more advanc
 - [moz07] [MDN const](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const) (viewed 2019-12-26)
 - [moz08] [MDN Object.freeze()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze) (viewed 2019-12-26)
 - [she17] Learning Functional Programming in Go, Lex Sheehan, Packt Publishing, 2017-11-24
+- [typ01] [Discriminated Unions](https://www.typescriptlang.org/docs/handbook/advanced-types.html#discriminated-unions) (2020-01-05)
