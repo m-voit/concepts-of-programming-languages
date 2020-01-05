@@ -18,7 +18,7 @@ At the end of the paper there will be an evaluation and summary on how suitable 
     - [Immutability](#immutability)
     - [First-class functions](#first-class-functions)
     - [Closures and lambda expressions](#closures-and-lambda-expressions)
-    - [Higher-order functions and function composition](#higher-order-functions-and-function-composition)
+    - [Higher-order functions](#higher-order-functions)
     - [Pure functions](#pure-functions)
     - [Lazy evaluation](#lazy-evaluation)
     - [Recursion and tail-call optimization](#recursion-and-tail-call-optimization)
@@ -189,7 +189,7 @@ const expectString = expectedString => input => expectCodePoints(expectedString)
 ```
 
 In JavaScript, lambda expressions can be written very concisely using the arrow function syntax introduced with ECMAScript 6 [moz04].
-This can be seen in the example above where the `expectString()` function takes a string as an argument and returns an anonymous function with `input` as it's argument.
+This can be seen in the example above where the `expectString()` function takes `expectedString` as it's argument and returns an anonymous function with `input` as it's argument.
 
 ```go
 func ExpectString(expectedString string) Parser {
@@ -208,7 +208,7 @@ In Go lambda expressions are more verbose, mainly because the type system requir
 This can be seen in the example of the `expectString()` function above, where we have explicit input types and return types, on both the inner and the outer function.
 Apart from that, lambda expressions in Go are equal to lambda expressions in JavaScript [she17].
 
-### Higher-order functions and function composition
+### Higher-order functions
 
 Higher-order functions are functions that accept other functions as arguments or return a function as a result.
 As discussed in the section on first-class functions, JavaScript has first-class functions and thus allows writing and using higher-order functions.
@@ -247,18 +247,6 @@ func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
 }
 ```
 
-Function composition is a concept that allows to build complex functions out of one or more simple functions.
-Generally speaking, function composition is an application of higher-order functions.
-
-<!-- Currying TODO -->
-
-Function composition works good in JavaScript, especially because of the permissive type system, discussed earlier.
-It's easy and straight forward to use various functions to build complex functions.
-This can be seen in the `converter` function example above.
-
-In Go, function composition requires the programmer to use empty interfaces.
-This is required by Go type system as discussed earlier.
-
 ### Pure functions
 
 Pure functions are functions that have no side effects and no hidden inner state.
@@ -267,7 +255,12 @@ To achieve this, a pure function uses only its input and does not use or mutate 
 This property of pure functions gives us referential transparency.
 That means it's possible to replace a function with its result without changing the behaviour of a program.
 
-JavaScript allows the writing of pure functions, but has no special constructs to enforce side effect free and therefore pure functions [fog13].
+```javascript
+const isDigit = codePoint => "0" <= codePoint && codePoint <= "9";
+```
+
+The `isDigit()` function in the example above is pure, because it doesn't mutate the given `codepoint` and it will always return true when given a digit between `0` and `9`.
+JavaScript thus allows the writing of pure functions, but has no special constructs to enforce side effect free and therefore pure functions [fog13].
 
 The same applies to Go.
 As in JavaScript, it's possible to write pure and side effect free functions in Go, but there are no special constructs to enforce these concepts.
