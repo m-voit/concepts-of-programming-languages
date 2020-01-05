@@ -80,11 +80,10 @@ export class Result {
  * @param {string} expectedCodePoint
  * @returns A new result.
  */
-export const expectCodePoint = expectedCodePoint => input => {
-  return expectedCodePoint === input.currentCodePoint()
+export const expectCodePoint = expectedCodePoint => input =>
+  expectedCodePoint === input.currentCodePoint()
     ? new Result(expectedCodePoint, input.remainingInput())
     : new Result(null, input);
-};
 
 /**
  * Expect exactly the code points from the array
