@@ -75,11 +75,11 @@ Weakly typed means, types are implicitly cast depending on the used operation.
 Furthermore, dynamic typing allows for types to change their type at runtime, when their assigned value changes [moz05].
 
 In the context of functional programming, the dynamic and weakly typing of JavaScript simplifies writing highly reusable functions.
-This is especially useful for higher-order functions and function composition, because there is no need to use `any` types or do frequent type casts.
+This is useful for higher-order functions and function composition, because there is no need to use `any` types or do frequent type casts.
+The `getFirst()` function for example is highly flexible, because it can be used for any argument without a need to specify the possible types of pair in advance.
 
 ```javascript
-export const makeOr = pair =>
-  pair.second instanceof Nothing ? pair.first : new Or(pair.first, pair.second);
+export const getFirst = pair => (pair instanceof Pair ? pair.first : pair);
 ```
 
 Go on the other hand is a strict and strongly typed programming language.
@@ -92,20 +92,15 @@ Generally speaking, the Go type system is not tailored to functional programming
 Additionally, using empty interfaces to simulate generic types has an impact on performance, especially when doing many type conversions.
 This is no problem in the rather small parser example, but might become one at a larger scale and should therefore be mentioned [she17].
 
-However, by using empty interfaces, it's possible to write flexible and reusable functions in Go.
+However, by using empty interfaces, it's possible to write flexible and reusable functions in Go, as we can see in the following example of the `GetFirst()` function.
 
 ```go
-func makeOr(argument interface{}) interface{} {
-  var pair = argument.(Pair)
-
-  if pair.Second == (Nothing{}) {
+func GetFirst(argument interface{}) interface{} {
+  var pair, isPair = argument.(Pair)
+  if isPair {
     return pair.First
   }
-
-  var firstNode = pair.First.(ast.Node)
-  var secondNode = pair.Second.(ast.Node)
-
-  return ast.Or{LHS: firstNode, RHS: secondNode}
+  return argument
 }
 ```
 
