@@ -6,12 +6,12 @@ Master of Informatics course at Rosenheim Technical University of Applied Scienc
 
 ## Setup and requirements
 
-- Install Node.js 12 or newer. Older versions may work, but were not tested.
+- Installed Node.js 12. Other versions may work, but were not tested.
 
 ## Usage
 
 Open a terminal in the directory `./study-project/parser-js`.
-Then run one of the following npm scripts.
+Then run the following npm scripts.
 
 - `npm install` to install the dependencies required for running the tests.
 - `npm run test` to execute the tests.
