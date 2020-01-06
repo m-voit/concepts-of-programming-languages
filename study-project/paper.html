@@ -103,11 +103,14 @@ This is no problem in the rather small parser example, but might become one at a
 <p>However, by using empty interfaces, it's possible to write flexible and reusable functions in Go.</p>
 <pre><code class="language-go"><div><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">makeOr</span><span class="hljs-params">(argument <span class="hljs-keyword">interface</span>{})</span> <span class="hljs-title">interface</span></span>{} {
   <span class="hljs-keyword">var</span> pair = argument.(Pair)
+
   <span class="hljs-keyword">if</span> pair.Second == (Nothing{}) {
     <span class="hljs-keyword">return</span> pair.First
   }
+
   <span class="hljs-keyword">var</span> firstNode = pair.First.(ast.Node)
   <span class="hljs-keyword">var</span> secondNode = pair.Second.(ast.Node)
+
   <span class="hljs-keyword">return</span> ast.Or{LHS: firstNode, RHS: secondNode}
 }
 </div></code></pre>
@@ -175,9 +178,11 @@ This can be seen in the example above where the <code>expectString()</code> func
   <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(Input Input)</span> <span class="hljs-title">Result</span></span> {
     <span class="hljs-keyword">var</span> result = ExpectCodePoints([]<span class="hljs-keyword">rune</span>(expectedString))(Input)
     <span class="hljs-keyword">var</span> runes, isRuneArray = result.Result.([]<span class="hljs-keyword">rune</span>)
+
     <span class="hljs-keyword">if</span> isRuneArray {
       result.Result = <span class="hljs-keyword">string</span>(runes)
     }
+
     <span class="hljs-keyword">return</span> result
   }
 }
@@ -209,9 +214,11 @@ The reason for this is again the different type system of JavaScript and Go, as 
 <pre><code class="language-go"><div><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(parser Parser)</span> <span class="hljs-title">Convert</span><span class="hljs-params">(converter <span class="hljs-keyword">func</span>(<span class="hljs-keyword">interface</span>{})</span> <span class="hljs-title">interface</span></span>{}) Parser {
   <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(Input Input)</span> <span class="hljs-title">Result</span></span> {
     <span class="hljs-keyword">var</span> result = parser(Input)
+
     <span class="hljs-keyword">if</span> result.Result != <span class="hljs-literal">nil</span> {
       result.Result = converter(result.Result)
     }
+
     <span class="hljs-keyword">return</span> result
   }
 }
@@ -274,7 +281,7 @@ This means that Go could receive support for sum types in the future, allowing e
 It's often used in conjunction with algebraic data types to select different behaviour depending on the data type.</p>
 <p>In our parser example this would be useful for the <code>evaluate()</code> function, which could be written in a more functional style instead of using JavaScript classes.
 There is a stage 1 proposal to introduce pattern matching to ECMAScript in the future [git02].
-This means, that in the future, the <code>evaluate()</code> function could be written concisely as in following example.</p>
+This means, that in the future, the <code>evaluate()</code> function could be written concisely as in the following example.</p>
 <pre><code class="language-javascript"><div><span class="hljs-keyword">const</span> evaluate = <span class="hljs-function">(<span class="hljs-params">vars, node</span>) =&gt;</span> <span class="hljs-keyword">case</span> (node) {
   when (node <span class="hljs-keyword">instanceof</span> Or) -&gt; evaluate(vars, node.lhs) || evaluate(vars, node.rhs)
   when (node <span class="hljs-keyword">instanceof</span> And) -&gt; evaluate(vars, node.lhs) &amp;&amp; evaluate(vars, node.rhs)
