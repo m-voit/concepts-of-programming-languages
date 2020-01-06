@@ -76,7 +76,7 @@ Furthermore, dynamic typing allows for types to change their type at runtime, wh
 
 In the context of functional programming, the dynamic and weakly typing of JavaScript simplifies writing highly reusable functions.
 This is useful for higher-order functions and function composition, because there is no need to use `any` types or do frequent type casts.
-The `getFirst()` function for example is highly flexible, because it can be used for any argument without a need to specify the possible types of pair in advance.
+The `getFirst()` function, for example, is highly flexible, because it can be used for any argument without having to specify the possible types of the pair argument in advance.
 
 ```javascript
 export const getFirst = pair => (pair instanceof Pair ? pair.first : pair);
