@@ -17,10 +17,6 @@ Then run one of the following npm scripts.
 - `npm run test` to execute the tests.
 - `npm run test:coverage` to get a test coverage report.
 
-## Go
-
-- To run local go files in Visual Studio code, use `Ctrl + F5` or open the debug menu and use `Start Without Debugging`.
-
 ## Seminar paper
 
 - Written in English.
@@ -43,18 +39,9 @@ Then run one of the following npm scripts.
 - Vergleich des TypSystem, wo bringt das im funktionalen Kontext Vor- oder Nachteile.
 - In erster Linie funktionale Aspekte von JavaScript herausstellen und mit Go vergleichen.
 - Was kann in JS funktional machen und wie funktioniert das.
-- Keine Eingabemöglichkeit nötig.
-- Node.js bzw. npm darf vorrausgesetzt werden.
 
 ## Presentation
 
 - Slides in English, presentation in German.
 - Duration: 15 minutes.
-- First halve of January 2020.
 - Location: Brückenstraße 1 at QAware office.
-
-## Questions
-
-- High level overview over functional programming in go vs js.
-- Only use boolparser as skeleton for the paper.
-- Live Code/Beispiele in Präsentation?
