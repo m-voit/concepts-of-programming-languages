@@ -3,7 +3,7 @@
 This paper compares functional programming in JavaScript with functional programming in Go.
 At the beginning, it gives a short overview over JavaScript and its history.
 Furthermore, an implementation of a parser for Boolean expressions is used as a practical example to compare functional programming in the two programming languages.
-Additionally, JavaScript and Go are compared on their support of basic and advanced functional programming concepts.
+In addition, JavaScript and Go are compared on their support of basic and advanced functional programming concepts.
 These concepts of functional programming are explained and looked at in the paper.
 At the end of the paper there will be an evaluation and summary on how suitable JavaScript is for implementing a parser in a functional style.
 
@@ -72,11 +72,11 @@ To see how well JavaScript and Go are suited for functional programming, we will
 
 JavaScript is a dynamic and weakly typed programming language, that also features duck-typing.
 Weakly typed means, types are implicitly cast depending on the used operation.
-Furthermore, dynamic typing allows for types to change their type at runtime, when their assigned value changes [moz05].
+Furthermore, dynamic typing allows types to change their type at runtime, when their assigned value changes [moz05].
 
 In the context of functional programming, the dynamic and weakly typing of JavaScript simplifies writing highly reusable functions.
-This is useful for higher-order functions and function composition, because there is no need to use `any` types or do frequent type casts.
-The `getFirst()` function, for example, is highly flexible, because it can be used for any argument without having to specify the possible types of the pair argument in advance.
+This is useful for higher-order functions and function composition, because there is no need to use `any` types or make frequent type casts.
+The `getFirst()` function, for example, is highly flexible, because it can be used for any argument without having to specify the possible types of the `pair` argument in advance.
 
 ```javascript
 export const getFirst = pair => (pair instanceof Pair ? pair.first : pair);
@@ -187,7 +187,7 @@ const expectString = expectedString => input => expectCodePoints(expectedString)
 ```
 
 In JavaScript, lambda expressions can be written very concisely using the arrow function syntax introduced with ECMAScript 6 [moz04].
-This can be seen in the example above where the `expectString()` function takes `expectedString` as it's argument and returns an anonymous function with `input` as it's argument.
+This can be seen in the example above where the `expectString()` function takes `expectedString` as it's argument and returns an anonymous function with `input` as its argument.
 
 ```go
 func ExpectString(expectedString string) Parser {
@@ -350,20 +350,20 @@ But it even in absent of pattern matching in Go, something similar can be achiev
 
 ## Summary
 
-After implementing the Boolean parser, one can say that JavaScript is well suited to implement a parser.
+After implementing the Boolean parser, the author is convinced that JavaScript is well suited to implement a parser.
 As we have seen, JavaScript has good support for all basic concepts of functional programming.
 Only some advanced concepts like pattern matching or algebraic data types are missing, which would have simplified the implementation of the parser.
 
 The only real downside is the dynamic and weakly typed type system of JavaScript.
 While this makes it easy to write reusable functions, it also makes it difficult to detect errors.
-This was especially the case with some parser functions that take many inputs, such as the `convert()` function.
+This is especially the case with some parser functions that take many inputs, such as the `convert()` function.
 However, this disadvantage is a more general problem in JavaScript than a specific problem in functional programming.
 
 When it comes to implementing the parser, the differences between Go and JavaScript are subtle.
 The only outstanding difference is the higher verbosity of the Go code, due to type annotations and type casts.
 
 On the whole, JavaScript shows more focus on functional programming compared to Go, especially on topics like tail-call optimization or short lambda expressions.
-In summary, support for functional programming in JavaScript is more advanced than in Go.
+Therefore, support for functional programming in JavaScript is more advanced than in Go.
 
 ## References
 
