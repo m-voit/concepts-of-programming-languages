@@ -36,7 +36,7 @@ In addition, JavaScript is event-driven and has good support for asynchronous pr
 Interestingly, the original plan of Netscape was to integrate Scheme, a Lisp dialect, into their browser.
 But for marketing reasons, it was decided, to create a new language with a syntax similar to Java.
 Later the newly created language was called JavaScript and integrated into the Netscape browser.
-While being a new language, JavaScript has taken the functional concepts of Scheme and integrated them in to the language, besides imperative and object-oriented concepts [ant16].
+Nevertheless, JavaScript has taken the functional concepts of Scheme and integrated them in to the language [ant16].
 
 However, to stay within the scope of this paper, the focus will be on the functional aspects of JavaScript. These will be presented in the following sections.
 
@@ -86,7 +86,7 @@ This means types are explicitly assigned and cannot change after assignment, exc
 
 Furthermore, there are no generic types in Go, so we have to use an empty interface to simulate an `any` type.
 This makes the code more verbose and less readable than JavaScript code, while providing no benefit to the developer.
-Generally speaking, the Go type system is not tailored to functional programming and is more or less a hurdle to the developer, when used this way.
+Generally speaking, the Go type system is not tailored to functional programming.
 
 Additionally, using empty interfaces to simulate generic types has an impact on performance, especially when doing many type conversions.
 This is no problem in the rather small parser example, but might become one at a larger scale and should therefore be mentioned [she17].
@@ -138,8 +138,7 @@ In Go immutability is quite similar to JavaScript and can't be easily achieved.
 Except strings, data types in Go are mutable by default and only primitive data types like `bool` and `int` can declared to be constant.
 The immutability of composite data types like Go's `structs` on the other hand, is in the responsibility of the developer.
 
-For Go 2.0 however, there is a proposal to introduce new immutable data types.
-So this might change in the future, when Go 2.0 is released [git01].
+For Go 2.0 however, there is a proposal to introduce new immutable data types, so this might change in the future [git01].
 
 To sum it up, as of today there is some support for immutability in JavaScript and in Go, but not by default and not easily usable.
 
@@ -177,9 +176,8 @@ Closures or lambda expressions, also called anonymous functions, are unnamed fun
 To be precise, a closure is the reference to the local state of the function, that returns an anonymous function.
 However, both terms are often used interchangeably, since both concepts belong to the concept of anonymous functions, returned by an outer function [fog13].
 
-Support for closures is found in all programming languages with first-class functions.
-This is the case because closures are needed for anonymous functions to work.
-Without closures and thus without references to the _outer_ function, returning the _inner_ function, the _inner_ function would stop working when called directly [moz02][fog13].
+Support for closures is found in all programming languages with first-class functions, because closures are needed for anonymous functions to work.
+Without closures and thus without references to the _outer_ function, the _inner_ function would stop working when called directly [moz02][fog13].
 
 ```javascript
 const expectString = expectedString => input => expectCodePoints(expectedString)(input);
@@ -203,8 +201,8 @@ func ExpectString(expectedString string) Parser {
 }
 ```
 
-In Go lambda expressions are more verbose, mainly because the type system requires explicit types, as already mentioned in the section on the type system.
-This can be seen in the example of the `expectString()` function above, where we have explicit types on the arguments and the return values, on both the inner and the outer function.
+In Go lambda expressions are more verbose, mainly because the type system requires explicit types.
+This can be seen in the example of the `expectString()` function above, where we have explicit types on the arguments and the return values, on both, the inner and the outer function.
 Apart from that, lambda expressions in Go are equal to lambda expressions in JavaScript [she17].
 
 ### Higher-order functions
@@ -212,10 +210,9 @@ Apart from that, lambda expressions in Go are equal to lambda expressions in Jav
 Higher-order functions are functions that accept other functions as arguments or return a function as a result.
 As discussed in the section on first-class functions, JavaScript has first-class functions and thus allows writing and using higher-order functions.
 
-For example, the convert function of the Boolean parser takes two functions as arguments.
+The convert function of the Boolean parser for example takes two functions as its arguments.
 A parser function to be executed and a converter function to convert the result of the parser function.
-This higher order function can be used for any parser function and with any converter function.
-The result is a highly flexible and easily reusable function.
+This flexible and easily reusable higher order function can be used for any parser function and with any converter function.
 
 ```javascript
 export const convert = (parser, converter) => input => {
@@ -229,10 +226,9 @@ export const convert = (parser, converter) => input => {
 };
 ```
 
-In Go, the converter function looks similar to the JavaScript implementation.
+The converter function written in Go looks quite similar to the JavaScript implementation.
 This is the case, because Go has similar support for higher-order functions as JavaScript.
-The main differences between the Go and the JavaScript implementation are the empty interfaces to satisfy the Go type system and the higher verbosity of the Go code.
-The reason for this is again the different type system of JavaScript and Go, as already mentioned [med02][she17].
+The main differences between the Go and the JavaScript implementation are the explicit empty interfaces to satisfy the Go type system and the higher verbosity of the Go code [med02][she17].
 
 ```go
 func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
@@ -253,7 +249,7 @@ func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
 Function composition is quite similar to higher-order functions and can be seen as an application of higher-order functions.
 Function composition generally describes the act of combining multiple functions together to create a more complex function [hac01].
 
-In the parser example, function composition is used to compose the Boolean parser out of simpler parsers, that only parse parts of a Boolean expression.
+The Boolean parser utilizes function composition to compose the Boolean parser out of simpler parsers, that only parse parts of a Boolean expression.
 The following example of the `parseOr()` function shows how the rather complex function is composed out of many simpler functions.
 
 ```javascript
@@ -265,15 +261,14 @@ const parseOr = input =>
 ```
 
 Therefore, function composition is an important part of functional programming, because it allows us to compose complex software out of simple functions.
-Because both, Go and JavaScript, support higher-order functions, the same differences, mentioned in the higher-order functions section, are applicable to function composition.
+Because both, Go and JavaScript, have support for higher-order functions, the differences, mentioned in the higher-order functions section, are also applicable to function composition.
 
 ### Pure functions
 
 Pure functions are functions that have no side effects and no hidden inner state.
 This means, a function, given the same input, always produces the same output.
 To achieve this, a pure function uses only its input and does not use or mutate the internal state.
-This property of pure functions gives us referential transparency.
-That means it's possible to replace a function with its result without changing the behaviour of a program.
+This property of pure functions is called referential transparency and allows to replace a function with its result without changing the behaviour of a program.
 
 ```javascript
 const isDigit = codePoint => "0" <= codePoint && codePoint <= "9";
@@ -295,7 +290,7 @@ There are two ways to evaluate functions, eager and lazy evaluation.
 Programming languages that use eager evaluation, evaluate a function as soon as it's assigned or defined.
 Lazy evaluation, on the other hand, means that functions are evaluated when they are executed, which may happen much later than the assignment.
 
-In the context of functional programming, lazy evaluation is useful for performance optimization.
+In functional programming with heavy use of functions, lazy evaluation is useful for performance optimization.
 This is possible, because functions are only evaluated, when they are actually used and therefore no unnecessary calculations are done.
 
 Unfortunately both, Go and JavaScript, use eager evaluation for functions with no built-in support for lazy evaluation.
@@ -308,8 +303,8 @@ Recursion happens when a function calls itself with new parameters to compute so
 Unfortunately recursion is less efficient than iteration.
 
 A technique for remedying the performance issues of recursion is called tail-call optimization (TCO).
-Without TCO, a new stack frame is added to the call stack each time a function is recursively called.
-Therefore, the call stack grows with every function call and results in high memory consumption for deeply nested recursion functions.
+Without TCO, a new stack frame is added to the call stack each time a function is called recursively.
+Therefore, the call stack grows with every function call and results in high memory consumption for deeply nested recursion.
 TCO prevents this by overwriting the unneeded stack frames of previous function calls.
 TCO is thus required for efficient functional programming.
 
@@ -319,7 +314,7 @@ Go on the other side has no support for TCO and according to the Go developers, 
 This means that the heavy use of recursion and functional programming in Go will have an impact on performance.
 In fact, there are some workarounds for this issue, but they are out of the scope of this paper [med02][she17].
 
-Summarized, JavaScript has better support for efficient recursive programming than Go.
+Summarized, JavaScript has more advanced support for efficient recursive programming than Go.
 
 ### Algebraic data types
 
@@ -343,16 +338,16 @@ Unfortunately this is not possible in JavaScript because it's missing explicit t
 However, by using TypeScript, a JavaScript superset, it would be possible to use this syntax today [typ01].
 
 This feature is also missing in Go, but there is an ongoing discussion on the introduction of sum types along with generic types in Go 2.0 [gol02][git03].
-This means that Go could receive support for sum types in the future, allowing easy representation of AST nodes.
+This means that Go could receive support for sum types in the future, thus allowing easy representation of AST nodes.
 
 ### Pattern matching
 
-Pattern matching is a concept from primary functional programming languages like Haskell to work with data structures [has01].
+Pattern matching is a concept to work with data structures from primary functional programming languages like Haskell [has01].
 It's often used in conjunction with algebraic data types to select different behaviour depending on the data type.
 
 In our parser example this would be useful for the `evaluate()` function, which could be written in a more functional style instead of using JavaScript classes.
 There is a stage 1 proposal to introduce pattern matching to ECMAScript in the future [git02].
-This means, that in the future, the `evaluate()` function could be written concisely as in the following example.
+This means, that in the future, the `evaluate()` function could be written as concisely as in the following example.
 
 ```javascript
 const evaluate = (vars, node) => case (node) {
