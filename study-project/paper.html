@@ -23,11 +23,11 @@
     <body class="vscode-light">
         <h1 id="compare-functional-programming-in-go-with-javascript">Compare functional programming in Go with JavaScript</h1>
 <p>This paper compares functional programming in JavaScript with functional programming in Go.
-At the beginning, it gives a short overview over JavaScript and it's history.
+At the beginning, it gives a short overview over JavaScript and its history.
 Furthermore, an implementation of a parser for Boolean expressions is used as a practical example to compare functional programming in the two programming languages.
-Additionally, JavaScript and Go are compared on their support of basic and advanced functional programming concepts.
+In addition, JavaScript and Go are compared on their support of basic and advanced functional programming concepts.
 These concepts of functional programming are explained and looked at in the paper.
-At the end of the paper there will be an evaluation and summary on how suitable JavaScript is for implementing a functional parser.</p>
+At the end of the paper there will be an evaluation and summary on how suitable JavaScript is for implementing a parser in a functional style.</p>
 <h2 id="table-of-contents">Table of contents</h2>
 <ul>
 <li><a href="#compare-functional-programming-in-go-with-javascript">Compare functional programming in Go with JavaScript</a>
@@ -58,7 +58,7 @@ At the end of the paper there will be an evaluation and summary on how suitable 
 <p>JavaScript is a multi-paradigm programming language and a core technology of the internet.
 It is a general purpose programming language and runs in the browser as well as on the server.
 Despite often deceived as an object-oriented programming language, JavaScript also follows functional and imperative paradigms.
-JavaScript is also event-driven and has good support for asynchronous programming [moz01].</p>
+In addition, JavaScript is event-driven and has good support for asynchronous programming [moz01].</p>
 <p>Interestingly, the original plan of Netscape was to integrate Scheme, a Lisp dialect, into their browser.
 But for marketing reasons, it was decided, to create a new language with a syntax similar to Java.
 Later the newly created language was called JavaScript and integrated into the Netscape browser.
@@ -66,9 +66,9 @@ While being a new language, JavaScript has taken the functional concepts of Sche
 <p>However, to stay within the scope of this paper, the focus will be on the functional aspects of JavaScript. These will be presented in the following sections.</p>
 <h2 id="parser-for-boolean-expressions">Parser for Boolean expressions</h2>
 <p>The parser for Boolean expressions is a practical example to compare functional programming in Go and JavaScript.
-It is implemented using functional programming concepts and will be used to provide code examples for various functional programming aspects discussed later.
-Generally speaking the parser is built using parser combinators, which are a good example to be implemented with functional programming.
-The parser parses Boolean expressions with the following EBNF grammar.</p>
+It is implemented using functional programming concepts and will be used to provide code examples for various functional programming concepts discussed later.
+Generally speaking the parser is built using parser combinators, which are well suited to be implemented with functional programming.
+The parser parses Boolean expressions of the following EBNF grammar.</p>
 <pre><code class="language-ebnf"><div>&lt;<span class="hljs-attribute">e</span><span class="hljs-attribute">x</span><span class="hljs-attribute">p</span><span class="hljs-attribute">r</span><span class="hljs-attribute">e</span><span class="hljs-attribute">s</span><span class="hljs-attribute">s</span><span class="hljs-attribute">i</span><span class="hljs-attribute">o</span><span class="hljs-attribute">n</span>&gt; ::= &lt;term&gt; { &lt;or&gt; &lt;term&gt; }
 &lt;term&gt; ::= &lt;factor&gt; { &lt;and&gt; &lt;factor&gt; }
 &lt;factor&gt; ::= &lt;var&gt; | &lt;not&gt; &lt;factor&gt; | (&lt;expression&gt;)
@@ -87,11 +87,11 @@ To see how well JavaScript and Go are suited for functional programming, we will
 <h3 id="type-system">Type system</h3>
 <p>JavaScript is a dynamic and weakly typed programming language, that also features duck-typing.
 Weakly typed means, types are implicitly cast depending on the used operation.
-Furthermore, dynamic typing allows for types to change their type at runtime, when their assigned value changes [moz05].</p>
+Furthermore, dynamic typing allows types to change their type at runtime, when their assigned value changes [moz05].</p>
 <p>In the context of functional programming, the dynamic and weakly typing of JavaScript simplifies writing highly reusable functions.
-This is especially useful for higher-order functions and function composition, because there is no need to use <code>any</code> types or do frequent type casts.</p>
-<pre><code class="language-javascript"><div><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> makeOr = <span class="hljs-function"><span class="hljs-params">pair</span> =&gt;</span>
-  pair.second <span class="hljs-keyword">instanceof</span> Nothing ? pair.first : <span class="hljs-keyword">new</span> Or(pair.first, pair.second);
+This is useful for higher-order functions and function composition, because there is no need to use <code>any</code> types or make frequent type casts.
+The <code>getFirst()</code> function, for example, is highly flexible, because it can be used for any argument without having to specify the possible types of the <code>pair</code> argument in advance.</p>
+<pre><code class="language-javascript"><div><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> getFirst = <span class="hljs-function"><span class="hljs-params">pair</span> =&gt;</span> (pair <span class="hljs-keyword">instanceof</span> Pair ? pair.first : pair);
 </div></code></pre>
 <p>Go on the other hand is a strict and strongly typed programming language.
 This means types are explicitly assigned and cannot change after assignment, except when explicitly cast by the developer.</p>
@@ -100,18 +100,13 @@ This makes the code more verbose and less readable than JavaScript code, while p
 Generally speaking, the Go type system is not tailored to functional programming and is more or less a hurdle to the developer, when used this way.</p>
 <p>Additionally, using empty interfaces to simulate generic types has an impact on performance, especially when doing many type conversions.
 This is no problem in the rather small parser example, but might become one at a larger scale and should therefore be mentioned [she17].</p>
-<p>However, by using empty interfaces, it's possible to write flexible and reusable functions in Go.</p>
-<pre><code class="language-go"><div><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">makeOr</span><span class="hljs-params">(argument <span class="hljs-keyword">interface</span>{})</span> <span class="hljs-title">interface</span></span>{} {
-  <span class="hljs-keyword">var</span> pair = argument.(Pair)
-
-  <span class="hljs-keyword">if</span> pair.Second == (Nothing{}) {
+<p>However, by using empty interfaces, it's possible to write flexible and reusable functions in Go, as we can see in the following example of the <code>GetFirst()</code> function.</p>
+<pre><code class="language-go"><div><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">GetFirst</span><span class="hljs-params">(argument <span class="hljs-keyword">interface</span>{})</span> <span class="hljs-title">interface</span></span>{} {
+  <span class="hljs-keyword">var</span> pair, isPair = argument.(Pair)
+  <span class="hljs-keyword">if</span> isPair {
     <span class="hljs-keyword">return</span> pair.First
   }
-
-  <span class="hljs-keyword">var</span> firstNode = pair.First.(ast.Node)
-  <span class="hljs-keyword">var</span> secondNode = pair.Second.(ast.Node)
-
-  <span class="hljs-keyword">return</span> ast.Or{LHS: firstNode, RHS: secondNode}
+  <span class="hljs-keyword">return</span> argument
 }
 </div></code></pre>
 <h3 id="immutability">Immutability</h3>
@@ -173,7 +168,7 @@ Without closures and thus without references to the <em>outer</em> function, ret
 <pre><code class="language-javascript"><div><span class="hljs-keyword">const</span> expectString = <span class="hljs-function"><span class="hljs-params">expectedString</span> =&gt;</span> input =&gt; expectCodePoints(expectedString)(input);
 </div></code></pre>
 <p>In JavaScript, lambda expressions can be written very concisely using the arrow function syntax introduced with ECMAScript 6 [moz04].
-This can be seen in the example above where the <code>expectString()</code> function takes <code>expectedString</code> as it's argument and returns an anonymous function with <code>input</code> as it's argument.</p>
+This can be seen in the example above where the <code>expectString()</code> function takes <code>expectedString</code> as it's argument and returns an anonymous function with <code>input</code> as its argument.</p>
 <pre><code class="language-go"><div><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">ExpectString</span><span class="hljs-params">(expectedString <span class="hljs-keyword">string</span>)</span> <span class="hljs-title">Parser</span></span> {
   <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(Input Input)</span> <span class="hljs-title">Result</span></span> {
     <span class="hljs-keyword">var</span> result = ExpectCodePoints([]<span class="hljs-keyword">rune</span>(expectedString))(Input)
@@ -188,7 +183,7 @@ This can be seen in the example above where the <code>expectString()</code> func
 }
 </div></code></pre>
 <p>In Go lambda expressions are more verbose, mainly because the type system requires explicit types, as already mentioned in the section on the type system.
-This can be seen in the example of the <code>expectString()</code> function above, where we have explicit input types and return types, on both the inner and the outer function.
+This can be seen in the example of the <code>expectString()</code> function above, where we have explicit types on the arguments and the return values, on both the inner and the outer function.
 Apart from that, lambda expressions in Go are equal to lambda expressions in JavaScript [she17].</p>
 <h3 id="higher-order-functions">Higher-order functions</h3>
 <p>Higher-order functions are functions that accept other functions as arguments or return a function as a result.
@@ -292,17 +287,17 @@ This means, that in the future, the <code>evaluate()</code> function could be wr
 <p>In Go, by contrast, there is no support for pattern matching and there are no plans to introduce it to the language.
 But it even in absent of pattern matching in Go, something similar can be achieved by using interfaces and switch statements [eli01].</p>
 <h2 id="summary">Summary</h2>
-<p>After implementing the Boolean parser, one can say that JavaScript is well suited to implement a parser.
+<p>After implementing the Boolean parser, the author is convinced that JavaScript is well suited to implement a parser.
 As we have seen, JavaScript has good support for all basic concepts of functional programming.
 Only some advanced concepts like pattern matching or algebraic data types are missing, which would have simplified the implementation of the parser.</p>
 <p>The only real downside is the dynamic and weakly typed type system of JavaScript.
 While this makes it easy to write reusable functions, it also makes it difficult to detect errors.
-This was especially the case with some parser functions that take many inputs, such as the <code>convert()</code> function.
+This is especially the case with some parser functions that take many inputs, such as the <code>convert()</code> function.
 However, this disadvantage is a more general problem in JavaScript than a specific problem in functional programming.</p>
 <p>When it comes to implementing the parser, the differences between Go and JavaScript are subtle.
 The only outstanding difference is the higher verbosity of the Go code, due to type annotations and type casts.</p>
 <p>On the whole, JavaScript shows more focus on functional programming compared to Go, especially on topics like tail-call optimization or short lambda expressions.
-In summary, support for functional programming in JavaScript is more advanced than in Go.</p>
+Therefore, support for functional programming in JavaScript is more advanced than in Go.</p>
 <h2 id="references">References</h2>
 <ul>
 <li>[ant16] JavaScript: Functional Programming for JavaScript Developers, Ved Antani; Simon Timms; Dan Mantyla, Packt Publishing, 2016-08-31</li>
