@@ -1,11 +1,11 @@
 # Compare functional programming in Go with JavaScript
 
 This paper compares functional programming in JavaScript with functional programming in Go.
-At the beginning, it gives a short overview over JavaScript and it's history.
+At the beginning, it gives a short overview over JavaScript and its history.
 Furthermore, an implementation of a parser for Boolean expressions is used as a practical example to compare functional programming in the two programming languages.
 Additionally, JavaScript and Go are compared on their support of basic and advanced functional programming concepts.
 These concepts of functional programming are explained and looked at in the paper.
-At the end of the paper there will be an evaluation and summary on how suitable JavaScript is for implementing a functional parser.
+At the end of the paper there will be an evaluation and summary on how suitable JavaScript is for implementing a parser in a functional style.
 
 ## Table of contents
 
@@ -32,7 +32,7 @@ At the end of the paper there will be an evaluation and summary on how suitable 
 JavaScript is a multi-paradigm programming language and a core technology of the internet.
 It is a general purpose programming language and runs in the browser as well as on the server.
 Despite often deceived as an object-oriented programming language, JavaScript also follows functional and imperative paradigms.
-JavaScript is also event-driven and has good support for asynchronous programming [moz01].
+In addition, JavaScript is event-driven and has good support for asynchronous programming [moz01].
 
 Interestingly, the original plan of Netscape was to integrate Scheme, a Lisp dialect, into their browser.
 But for marketing reasons, it was decided, to create a new language with a syntax similar to Java.
@@ -44,9 +44,9 @@ However, to stay within the scope of this paper, the focus will be on the functi
 ## Parser for Boolean expressions
 
 The parser for Boolean expressions is a practical example to compare functional programming in Go and JavaScript.
-It is implemented using functional programming concepts and will be used to provide code examples for various functional programming aspects discussed later.
-Generally speaking the parser is built using parser combinators, which are a good example to be implemented with functional programming.
-The parser parses Boolean expressions with the following EBNF grammar.
+It is implemented using functional programming concepts and will be used to provide code examples for various functional programming concepts discussed later.
+Generally speaking the parser is built using parser combinators, which are well suited to be implemented with functional programming.
+The parser parses Boolean expressions of the following EBNF grammar.
 
 ```ebnf
 <expression> ::= <term> { <or> <term> }
@@ -205,7 +205,7 @@ func ExpectString(expectedString string) Parser {
 ```
 
 In Go lambda expressions are more verbose, mainly because the type system requires explicit types, as already mentioned in the section on the type system.
-This can be seen in the example of the `expectString()` function above, where we have explicit input types and return types, on both the inner and the outer function.
+This can be seen in the example of the `expectString()` function above, where we have explicit types on the arguments and the return values, on both the inner and the outer function.
 Apart from that, lambda expressions in Go are equal to lambda expressions in JavaScript [she17].
 
 ### Higher-order functions
