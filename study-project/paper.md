@@ -263,7 +263,7 @@ const parseOr = input =>
 ```
 
 Therefore, function composition is an important part of functional programming, because it allows us to compose complex software out of simple functions.
-Because both, Go and JavaScript, have support for higher-order functions, the differences, as mentioned in the higher-order functions section, are also applicable to function composition.
+Because both, Go and JavaScript, have support for higher-order functions, the same differences, as mentioned in the higher-order functions section, are applicable to function composition.
 
 ### Pure functions
 
