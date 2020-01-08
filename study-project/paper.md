@@ -104,13 +104,13 @@ func GetFirst(argument interface{}) interface{} {
 
 ### Immutability
 
-Immutability is a desired property, especially in functional programming, because it reduces unintended side effects.
+Immutability is a desired property, especially for functional programming, because it reduces unintended side effects.
 
 Unfortunately, true immutability can't be achieved in JavaScript.
-Although it's possible to create constructs that are sort of immutable, there is no built-in or default immutability as in pure functional programming languages.
+Although it's possible to create constructs that are sort of immutable, there is no built-in or default immutability as in pure functional programming languages like Haskell.
 
 One way to achieve immutability in JavaScript is to use the `const` keyword, that allows to define constant variables, functions or objects.
-But while primitive types as strings are truly constant, when defined with the `const` keyword, objects created with the `const` keyword are still mutable [moz07].
+But while primitive types as strings are truly constant, when declared with the `const` keyword, objects declared with the `const` keyword are still mutable [moz07].
 As we can see in the example below, the properties of the `result` object can still be reassigned, despite the `result` object being declared as `const`.
 So, used on an object, the `const` keyword only prevents to assign a new value to the object.
 
@@ -152,7 +152,7 @@ A language with first-class functions has to meet the following criteria:
 - Allow functions to be assigned to variables.
 - Allow functions to be stored in data structures like arrays.
 
-The listed properties also allow for concepts such as higher-order functions and functional composition, both of which are described later.
+The listed properties also allow for concepts such as higher-order functions and function composition, both of which are described later.
 
 In JavaScript, all the criteria is met.
 Therefore, functions in JavaScript are first-class functions and are treated like first-class citizens [moz06][fog13].
@@ -162,7 +162,7 @@ This allows us to assign the `optional()` and the `expectSeveral()` function to 
 const expectSpaces = optional(expectSeveral(isSpaceChar, isSpaceChar));
 ```
 
-The same applies to Go, which has the same support for first-class functions than JavaScript [she17][gol01].
+The same applies to Go, which has the same support for first-class functions as JavaScript [she17][gol01].
 Like in JavaScript it's possible to assign the `ExpectSeveral()` and the `Optional()` function to the `ExpectSpaces` variable.
 The only difference is the chaining of function calls instead of nesting and the explicit `Parser` type of the variable.
 
@@ -185,7 +185,7 @@ const expectString = expectedString => input => expectCodePoints(expectedString)
 ```
 
 In JavaScript, lambda expressions can be written very concisely using the arrow function syntax introduced with ECMAScript 6 [moz04].
-This can be seen in the example above where the `expectString()` function takes `expectedString` as it's argument and returns an anonymous function with `input` as its argument.
+This can be seen in the example above where the `expectString()` function takes `expectedString` as its argument and returns an anonymous function with `input` as its argument.
 
 ```go
 func ExpectString(expectedString string) Parser {
@@ -246,6 +246,25 @@ func (parser Parser) Convert(converter func(interface{}) interface{}) Parser {
   }
 }
 ```
+
+### Function composition
+
+Function composition is quite similar to higher-order functions and can be seen as an application of higher-order functions.
+Function composition generally describes the act of combining multiple functions together to create a more complex function [hac01].
+
+In the parser example, function composition is used to compose the Boolean parser out of simpler parsers, that only parse parts of a Boolean expression.
+The following example of the `parseOr()` function shows how the rather complex function is composed out of many simpler functions.
+
+```javascript
+const parseOr = input =>
+  convert(
+    andThen(parseAnd, optional(second(andThen(expect("|"), parseOr)))),
+    makeOr,
+  )(input);
+```
+
+Therefore, function composition is an important part of functional programming, because it allows us to compose software out of functions.
+Because both, Go and JavaScript, support higher-order functions, the same differences, mentioned in the higher-order functions section, are applicable to function composition.
 
 ### Pure functions
 
@@ -374,6 +393,7 @@ Therefore, support for functional programming in JavaScript is more advanced tha
 - [git04] [proposal: Go 2: add become statement to support tail calls](https://github.com/golang/go/issues/22624) (viewed 2020-01-05)
 - [gol01] [Codewalk: First-Class Functions in Go](https://golang.org/doc/codewalk/functions/) (viewed 2019-12-26)
 - [gol02] [Go FAQ: Why does Go not have variant types?](https://golang.org/doc/faq#variant_types) (viewed 2020-01-05)
+- [hac01] [Functional programming paradigms in modern JavaScript: Function Composition](https://hackernoon.com/functional-programming-paradigms-in-modern-javascript-function-composition-109670038859) (viewed 2020-01-08)
 - [has01] [Case Expressions and Pattern Matching](https://www.haskell.org/tutorial/patterns.html) (viewed 2020-01-03)
 - [ker17] Mastering Javascript Functional Programming, Federico Kereki, Packt Publishing, 2017-12-29
 - [med01] [Introduction to Functional JavaScript](https://medium.com/functional-javascript/introduction-to-functional-javascript-45a9dca6c64a) (viewed 2019-12-21)
