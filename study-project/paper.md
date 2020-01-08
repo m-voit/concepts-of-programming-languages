@@ -9,22 +9,24 @@ At the end of the paper there will be an evaluation and summary on how suitable 
 
 ## Table of contents
 
-1. [JavaScript Overview](#javascript-overview)
-1. [Parser for Boolean expressions](#parser-for-boolean-expressions)
-1. [Functional programming concepts](#functional-programming-concepts)
-    1. [Type system](#type-system)
-    1. [Immutability](#immutability)
-    1. [First-class functions](#first-class-functions)
-    1. [Closures and lambda expressions](#closures-and-lambda-expressions)
-    1. [Higher-order functions](#higher-order-functions)
-    1. [Function composition](#function-composition)
-    1. [Pure functions](#pure-functions)
-    1. [Lazy evaluation](#lazy-evaluation)
-    1. [Recursion and tail-call optimization](#recursion-and-tail-call-optimization)
-    1. [Algebraic data types](#algebraic-data-types)
-    1. [Pattern matching](#pattern-matching)
-1. [Summary](#summary)
-1. [References](#references)
+- [Compare functional programming in Go with JavaScript](#compare-functional-programming-in-go-with-javascript)
+  - [Table of contents](#table-of-contents)
+  - [JavaScript Overview](#javascript-overview)
+  - [Parser for Boolean expressions](#parser-for-boolean-expressions)
+  - [Functional programming concepts](#functional-programming-concepts)
+    - [Type system](#type-system)
+    - [Immutability](#immutability)
+    - [First-class functions](#first-class-functions)
+    - [Closures and lambda expressions](#closures-and-lambda-expressions)
+    - [Higher-order functions](#higher-order-functions)
+    - [Function composition](#function-composition)
+    - [Pure functions](#pure-functions)
+    - [Lazy evaluation](#lazy-evaluation)
+    - [Recursion and tail-call optimization](#recursion-and-tail-call-optimization)
+    - [Algebraic data types](#algebraic-data-types)
+    - [Pattern matching](#pattern-matching)
+  - [Summary](#summary)
+  - [References](#references)
 
 ## JavaScript Overview
 
@@ -261,7 +263,7 @@ const parseOr = input =>
 ```
 
 Therefore, function composition is an important part of functional programming, because it allows us to compose complex software out of simple functions.
-Because both, Go and JavaScript, have support for higher-order functions, the differences, mentioned in the higher-order functions section, are also applicable to function composition.
+Because both, Go and JavaScript, have support for higher-order functions, the differences, as mentioned in the higher-order functions section, are also applicable to function composition.
 
 ### Pure functions
 
