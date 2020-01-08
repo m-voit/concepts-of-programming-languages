@@ -41,10 +41,10 @@ However, to stay within the scope of this paper, the focus will be on the functi
 
 ## Parser for Boolean expressions
 
-The parser for Boolean expressions is a practical example to compare functional programming in Go and JavaScript.
-It is implemented using functional programming concepts and will be used to provide code examples for various functional programming concepts discussed later.
+The parser for Boolean expressions is a practical example to compare functional programming in Go with JavaScript.
+It is implemented in a functional style and will be used to provide code examples for various functional programming concepts discussed later.
 Generally speaking the parser is built using parser combinators, which are well suited to be implemented with functional programming.
-The parser parses Boolean expressions of the following EBNF grammar.
+The resulting parser parses Boolean expressions of the following EBNF grammar.
 
 ```ebnf
 <expression> ::= <term> { <or> <term> }
@@ -57,9 +57,9 @@ The parser parses Boolean expressions of the following EBNF grammar.
 ```
 
 `A & B | !C` is an example of an expression, that can be parsed by the parser.
-Depending on the values of A, B and C, which can be true or false, the parser determines the result of the expression.
+Depending on the values of A, B and C, which can be `True` or `False`, the parser determines the result of the expression.
 The expression is then parsed by building an abstract syntax tree (AST), consisting of `Or`, `And`, `Not` and `Value` nodes, mimicking the EBNF grammar.
-The created AST allows it to determine the results of the expression, when A, B and C are replaced by either `TRUE` or `FALSE`.
+The created AST allows it to determine the results of the expression, when replacing A, B and C by either `True` or `False`.
 
 ## Functional programming concepts
 
