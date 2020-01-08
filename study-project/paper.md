@@ -56,7 +56,7 @@ The parser parses Boolean expressions of the following EBNF grammar.
 <var> ::= '[a-zA-Z0-9]*'
 ```
 
-`A & B | !C` is a possible expression, that can be parsed by the parser.
+`A & B | !C` is an example of an expression, that can be parsed by the parser.
 Depending on the values of A, B and C, which can be true or false, the parser determines the result of the expression.
 The expression is then parsed by building an abstract syntax tree (AST), consisting of `Or`, `And`, `Not` and `Value` nodes, mimicking the EBNF grammar.
 The created AST allows it to determine the results of the expression, when A, B and C are replaced by either `TRUE` or `FALSE`.
