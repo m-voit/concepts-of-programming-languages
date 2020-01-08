@@ -370,7 +370,7 @@ Only some advanced concepts like pattern matching or algebraic data types are mi
 The only real downside is the dynamic and weakly typed type system of JavaScript.
 While this makes it easy to write reusable functions, it also makes it difficult to detect errors.
 This is especially the case with some parser functions that take many inputs, such as the `convert()` function.
-However, this disadvantage is a more general problem in JavaScript than a specific problem in functional programming.
+However, this issue is a more general problem in JavaScript than a specific problem in functional programming.
 
 When it comes to implementing the parser, the differences between Go and JavaScript are subtle.
 The only outstanding difference is the higher verbosity of the Go code, due to type annotations and type casts.
