@@ -17,6 +17,7 @@ At the end of the paper there will be an evaluation and summary on how suitable 
     1. [First-class functions](#first-class-functions)
     1. [Closures and lambda expressions](#closures-and-lambda-expressions)
     1. [Higher-order functions](#higher-order-functions)
+    1. [Function composition](#function-composition)
     1. [Pure functions](#pure-functions)
     1. [Lazy evaluation](#lazy-evaluation)
     1. [Recursion and tail-call optimization](#recursion-and-tail-call-optimization)
@@ -263,7 +264,7 @@ const parseOr = input =>
   )(input);
 ```
 
-Therefore, function composition is an important part of functional programming, because it allows us to compose software out of functions.
+Therefore, function composition is an important part of functional programming, because it allows us to compose complex software out of simple functions.
 Because both, Go and JavaScript, support higher-order functions, the same differences, mentioned in the higher-order functions section, are applicable to function composition.
 
 ### Pure functions
