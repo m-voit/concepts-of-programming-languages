@@ -1,21 +1,21 @@
-import { Or, And, Not, Value } from "../ast/ast";
+import { And, Not, Or, Value } from "../ast/ast";
 import {
-  Nothing,
-  first,
-  second,
   andThen,
-  optional,
+  convert,
   expectIdentifier,
   expectSpaces,
   expectString,
-  convert,
-  repeated,
-  maybeSpacesBefore,
-  orElse,
+  first,
   // eslint-disable-next-line no-unused-vars
   Input,
+  maybeSpacesBefore,
+  Nothing,
+  optional,
+  orElse,
   // eslint-disable-next-line no-unused-vars
   Pair,
+  repeated,
+  second,
 } from "../parser/parser";
 
 /**
@@ -38,7 +38,7 @@ import {
  * @param {Input} input The input to be parsed.
  * @returns An AST of the parsed expression.
  */
-export const parseExpression = input =>
+export const parseExpression = (input) =>
   first(andThen(parseOr, optional(expectSpaces)))(input);
 
 /**
@@ -51,7 +51,7 @@ export const parseExpression = input =>
  * @param {Input} input The input to be parsed.
  * @returns A tree of AST nodes.
  */
-export const parseOr = input =>
+export const parseOr = (input) =>
   convert(
     andThen(parseAnd, optional(second(andThen(expect("|"), parseOr)))),
     makeOr,
@@ -67,7 +67,7 @@ export const parseOr = input =>
  * @param {Input} input The input to be parsed.
  * @returns A tree of AST nodes.
  */
-export const parseAnd = input =>
+export const parseAnd = (input) =>
   convert(
     andThen(parseNot, optional(second(andThen(expect("&"), parseAnd)))),
     makeAnd,
@@ -83,8 +83,8 @@ export const parseAnd = input =>
  * @param {Input} input The input to be parsed.
  * @returns A tree of AST nodes.
  */
-export const parseNot = input =>
-  convert(andThen(parseExclamationMarks, parseAtom), pair => {
+export const parseNot = (input) =>
+  convert(andThen(parseExclamationMarks, parseAtom), (pair) => {
     return makeNot(pair.first, pair.second);
   })(input);
 
@@ -97,8 +97,8 @@ export const parseNot = input =>
  * @param {Input} input The input to be parsed.
  * @returns A new result.
  */
-export const parseExclamationMarks = input =>
-  convert(repeated(expect("!")), arg => arg.length)(input);
+export const parseExclamationMarks = (input) =>
+  convert(repeated(expect("!")), (arg) => arg.length)(input);
 
 /**
  * Parse the grammar: Atom := Variable | "(" ^ Expression ^ ")"
@@ -108,7 +108,7 @@ export const parseExclamationMarks = input =>
  * @param {Input} input The input to be parsed.
  * @returns A tree of AST nodes.
  */
-export const parseAtom = input =>
+export const parseAtom = (input) =>
   orElse(
     parseVariable,
     second(first(andThen(andThen(expect("("), parseExpression), expect(")")))),
@@ -122,8 +122,8 @@ export const parseAtom = input =>
  * @param {Input} input The input to be parsed.
  * @returns A new VALUE node.
  */
-export const parseVariable = input =>
-  convert(maybeSpacesBefore(expectIdentifier), arg => new Value(arg))(input);
+export const parseVariable = (input) =>
+  convert(maybeSpacesBefore(expectIdentifier), (arg) => new Value(arg))(input);
 
 /**
  * Wrap nodes into NOT nodes.
@@ -145,7 +145,7 @@ export const makeNot = (number, node) =>
  * @param {Pair} pair A pair of Nodes.
  * @returns A new AND node.
  */
-export const makeAnd = pair =>
+export const makeAnd = (pair) =>
   pair.second instanceof Nothing
     ? pair.first
     : new And(pair.first, pair.second);
@@ -160,7 +160,7 @@ export const makeAnd = pair =>
  * @param {Pair} pair A pair of Nodes.
  * @returns A new OR node.
  */
-export const makeOr = pair =>
+export const makeOr = (pair) =>
   pair.second instanceof Nothing ? pair.first : new Or(pair.first, pair.second);
 
 /**
@@ -169,4 +169,4 @@ export const makeOr = pair =>
  *
  * @param {string} string
  */
-export const expect = string => maybeSpacesBefore(expectString(string));
+export const expect = (string) => maybeSpacesBefore(expectString(string));

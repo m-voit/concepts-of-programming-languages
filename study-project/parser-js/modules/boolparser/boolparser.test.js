@@ -1,15 +1,15 @@
 // @ts-nocheck
 
-import { Or, And, Not, Value } from "../ast/ast";
-import { Nothing, stringToInput, Input, Result, Pair } from "../parser/parser";
+import { And, Not, Or, Value } from "../ast/ast";
+import { Input, Nothing, Pair, Result, stringToInput } from "../parser/parser";
 import {
-  makeNot,
-  makeAnd,
-  makeOr,
-  parseExpression,
-  parseExclamationMarks,
-  parseVariable,
   expect as expectThis,
+  makeAnd,
+  makeNot,
+  makeOr,
+  parseExclamationMarks,
+  parseExpression,
+  parseVariable,
 } from "./boolparser";
 
 test("makeNot", () => {

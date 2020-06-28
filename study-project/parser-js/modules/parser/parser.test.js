@@ -1,27 +1,27 @@
 // @ts-nocheck
 
+import { Value } from "../ast/ast";
 import {
-  Input,
-  Result,
-  Nothing,
+  andThen,
   expectCodePoint,
   expectCodePoints,
   expectSeveral,
-  isIdentifierStartChar,
-  isDigit,
-  isIdentifierChar,
-  isSpaceChar,
-  optional,
-  stringToInput,
-  Pair,
+  expectString,
   getFirst,
   getSecond,
-  andThen,
-  orElse,
-  expectString,
+  Input,
+  isDigit,
+  isIdentifierChar,
+  isIdentifierStartChar,
+  isSpaceChar,
   maybeSpacesBefore,
+  Nothing,
+  optional,
+  orElse,
+  Pair,
+  Result,
+  stringToInput,
 } from "./parser";
-import { Value } from "../ast/ast";
 
 describe("Test parser.js", () => {
   test("expectCodePoint", () => {

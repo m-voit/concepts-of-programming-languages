@@ -80,7 +80,7 @@ export class Result {
  * @param {string} expectedCodePoint
  * @returns A new result.
  */
-export const expectCodePoint = expectedCodePoint => input =>
+export const expectCodePoint = (expectedCodePoint) => (input) =>
   expectedCodePoint === input.currentCodePoint()
     ? new Result(expectedCodePoint, input.remainingInput())
     : new Result(null, input);
@@ -94,7 +94,7 @@ export const expectCodePoint = expectedCodePoint => input =>
  * @param {string} expectedCodePoints
  * @returns A new Result.
  */
-export const expectCodePoints = expectedCodePoints => input => {
+export const expectCodePoints = (expectedCodePoints) => (input) => {
   let remainingInput = input;
 
   for (let expectedCodePoint of expectedCodePoints) {
@@ -122,7 +122,7 @@ export const expectCodePoints = expectedCodePoints => input => {
  * @param {string} expectedString
  * @returns A new Result.
  */
-export const expectString = expectedString => input =>
+export const expectString = (expectedString) => (input) =>
   expectCodePoints(expectedString)(input);
 
 /**
@@ -132,7 +132,7 @@ export const expectString = expectedString => input =>
  * @param {any} parser The parser.
  * @returns A new Result.
  */
-export const repeated = parser => input => {
+export const repeated = (parser) => (input) => {
   const result = new Result([], input);
 
   while (result.remainingInput !== null) {
@@ -162,7 +162,7 @@ export const repeated = parser => input => {
  * @param {any} alternativeParser An alternative parser to be used when first parser fails.
  * @returns A new Result.
  */
-export const orElse = (parser, alternativeParser) => input => {
+export const orElse = (parser, alternativeParser) => (input) => {
   const firstResult = parser(input);
 
   return firstResult.result !== null ? firstResult : alternativeParser(input);
@@ -175,7 +175,7 @@ export const orElse = (parser, alternativeParser) => input => {
  * @param {Pair | any} pair A pair.
  * @returns A new Result.
  */
-export const getFirst = pair => (pair instanceof Pair ? pair.first : pair);
+export const getFirst = (pair) => (pair instanceof Pair ? pair.first : pair);
 
 /**
  * Extract the second component of a pair or
@@ -184,7 +184,7 @@ export const getFirst = pair => (pair instanceof Pair ? pair.first : pair);
  * @param {Pair | any} pair A pair.
  * @returns An new Result.
  */
-export const getSecond = pair => (pair instanceof Pair ? pair.second : pair);
+export const getSecond = (pair) => (pair instanceof Pair ? pair.second : pair);
 
 /**
  * Extract the first component of the result of a successful parse.
@@ -193,7 +193,7 @@ export const getSecond = pair => (pair instanceof Pair ? pair.second : pair);
  * @param {any} parser The parser
  * @returns A new Result.
  */
-export const first = parser => convert(parser, getFirst);
+export const first = (parser) => convert(parser, getFirst);
 
 /**
  * Extract the second component of the result of a successful parse.
@@ -202,7 +202,7 @@ export const first = parser => convert(parser, getFirst);
  * @param {any} parser The parser.
  * @returns A new Result.
  */
-export const second = parser => convert(parser, getSecond);
+export const second = (parser) => convert(parser, getSecond);
 
 /**
  * Apply the firstParser to the Input and then the
@@ -213,7 +213,7 @@ export const second = parser => convert(parser, getSecond);
  * @param {any} secondParser The parser to apply second.
  * @returns A new Result.
  */
-export const andThen = (parser, secondParser) => input => {
+export const andThen = (parser, secondParser) => (input) => {
   const firstResult = parser(input);
 
   if (firstResult.result !== null) {
@@ -240,7 +240,7 @@ export const andThen = (parser, secondParser) => input => {
  * @param {any} converter A function to be applied to the parser result.
  * @returns A new Result.
  */
-export const convert = (parser, converter) => input => {
+export const convert = (parser, converter) => (input) => {
   const result = parser(input);
 
   if (result.result !== null) {
@@ -258,7 +258,7 @@ export const convert = (parser, converter) => input => {
  * @param {any} parser The parser.
  * @returns A new Result.
  */
-export const optional = parser => input => {
+export const optional = (parser) => (input) => {
   const result = parser(input);
 
   if (result.result === null) {
@@ -275,7 +275,7 @@ export const optional = parser => input => {
  * @param {string} text
  * @returns A new input class instance.
  */
-export const stringToInput = text => new Input(text, 0);
+export const stringToInput = (text) => new Input(text, 0);
 
 /**
  * Check if firstCodePoint is the identifierStartChar.
@@ -283,7 +283,7 @@ export const stringToInput = text => new Input(text, 0);
  * @param {string} firstCodePoint
  * @returns True or false.
  */
-export const isIdentifierStartChar = firstCodePoint =>
+export const isIdentifierStartChar = (firstCodePoint) =>
   ("a" <= firstCodePoint && firstCodePoint <= "z") ||
   ("A" <= firstCodePoint && firstCodePoint <= "Z") ||
   "_" == firstCodePoint;
@@ -294,7 +294,7 @@ export const isIdentifierStartChar = firstCodePoint =>
  * @param {string} codePoint
  * @returns True or false.
  */
-export const isDigit = codePoint => "0" <= codePoint && codePoint <= "9";
+export const isDigit = (codePoint) => "0" <= codePoint && codePoint <= "9";
 
 /**
  * Check if codepoint is either an identifierStartChar or a digit.
@@ -303,7 +303,7 @@ export const isDigit = codePoint => "0" <= codePoint && codePoint <= "9";
  * @returns True when it's either an identifierStartChar or a digit,
  * otherwise return false.
  */
-export const isIdentifierChar = codePoint =>
+export const isIdentifierChar = (codePoint) =>
   isIdentifierStartChar(codePoint) || isDigit(codePoint);
 
 /**
@@ -312,7 +312,7 @@ export const isIdentifierChar = codePoint =>
  * @param {string} codePoint
  * @returns True or false.
  */
-export const isSpaceChar = codePoint =>
+export const isSpaceChar = (codePoint) =>
   codePoint == " " ||
   codePoint == "\n" ||
   codePoint == "\r" ||
@@ -329,7 +329,7 @@ export const isSpaceChar = codePoint =>
  * @param {any} isLaterChar A function.
  * @returns A new Result.
  */
-export const expectSeveral = (isFirstChar, isLaterChar) => input => {
+export const expectSeveral = (isFirstChar, isLaterChar) => (input) => {
   if (null === input) {
     return new Result(null, input);
   }
@@ -377,5 +377,5 @@ export const expectSpaces = optional(expectSeveral(isSpaceChar, isSpaceChar));
  *
  * @param {any} parser The parser.
  */
-export const maybeSpacesBefore = parser =>
+export const maybeSpacesBefore = (parser) =>
   second(andThen(expectSpaces, parser));
