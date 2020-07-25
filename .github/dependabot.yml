@@ -10,6 +10,7 @@ updates:
     directory: "/study-project/parser-go"
     schedule:
       interval: "weekly"
+
   # JavaScript parser dependencies.
   - package-ecosystem: "npm"
     directory: "/study-project/parser-js"
