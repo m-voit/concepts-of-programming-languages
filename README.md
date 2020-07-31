@@ -12,7 +12,7 @@ The Boolean expression parser was then used to compare the support of functional
 
 A running installation of Node.js 14.x is assumed. Other versions may work, but were not tested.
 
-- To install dependencies required for running the tests run `npm install`.
+- Run `npm install` to install dependencies required for running the tests.
 
 ## Usage
 
