@@ -5,10 +5,10 @@
 Study project to compare functional programming concepts in Go and JavaScript.
 It was developed as part of a Computer Science (Master’s Degree) course at Rosenheim Technical University of Applied Sciences.
 
+## Paper
+
 The paper written in this study project is based on a parser for Boolean expressions developed in Go and JavaScript using parser combiners.
 The Boolean expression parser was then used to compare the support of functional programming concepts in the two programming languages.
-
-## Paper
 
 [Compare functional programming in Go with JavaScript](../blob/master/study-project/paper.md)
 
