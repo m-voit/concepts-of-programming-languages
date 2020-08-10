@@ -3,7 +3,7 @@
 ![parser-js-ci](https://github.com/m-voit/concepts-of-programming-languages/workflows/parser-js-ci/badge.svg)
 
 Study project to compare functional programming concepts in Go and JavaScript.
-It was developed as part of a Computer Science (Master’s Degree) course at Rosenheim Technical University of Applied Sciences.
+It was developed as part of a master's course in computer science at Rosenheim Technical University of Applied Sciences.
 
 ## Paper
 
