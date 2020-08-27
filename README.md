@@ -1,5 +1,6 @@
 # Concepts of programming languages
 
+![codeql](https://github.com/m-voit/concepts-of-programming-languages/workflows/codeql/badge.svg)
 ![js-parser-ci](https://github.com/m-voit/concepts-of-programming-languages/workflows/js-parser-ci/badge.svg)
 
 Study project to compare functional programming concepts in Go and JavaScript.
