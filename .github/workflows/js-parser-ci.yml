@@ -1,4 +1,4 @@
-name: parser-js-ci
+name: js-parser-ci
 
 on: [push]
 
@@ -7,16 +7,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout code.
       - uses: actions/checkout@v2
 
-      # Run on Node.js 14.x
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
 
-      # Cache npm dependencies as long as os and package-lock.json do not change.
+      # Cache node modules as long as os and package-lock.json do not change.
       - name: Cache node modules
         uses: actions/cache@v2
         env:
@@ -29,11 +27,14 @@ jobs:
             ${{ runner.os }}-test-
             ${{ runner.os }}-
 
-      # Test js parser.
-      - name: Install dependencies and test parser.
+      - name: Install dependencies.
         working-directory: ./study-project/parser-js
-        run: |
-          npm ci
-          npm test
+        run: npm ci
+        env:
+          CI: true
+      
+      - name: Test parser.
+        working-directory: ./study-project/parser-js
+        run: npm run test
         env:
           CI: true

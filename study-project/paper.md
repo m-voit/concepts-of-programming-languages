@@ -312,7 +312,7 @@ JavaScript supports TCO since the introduction of ECMAScript 6 in 2015.
 
 Go on the other side has no support for TCO and according to the Go developers, they don't see this as a problem that affects many people, so they won't add support for TCO [git04].
 This means that the heavy use of recursion and functional programming in Go will have an impact on performance.
-In fact, there are some workarounds for this issue, but they are beyond of the scope of this paper [med02][she17].
+In fact, there are some workarounds for this issue, but they are beyond the scope of this paper [med02][she17].
 
 Summarized, JavaScript has more advanced support for efficient recursive programming than Go.
 
