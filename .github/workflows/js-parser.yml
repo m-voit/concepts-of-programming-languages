@@ -34,13 +34,13 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install dependencies.
-        working-directory: ./study-project/parser-js
+        working-directory: ./js-parser
         run: npm ci
         env:
           CI: true
 
       - name: Test parser.
-        working-directory: ./study-project/parser-js
+        working-directory: ./js-parser
         run: npm run test
         env:
           CI: true

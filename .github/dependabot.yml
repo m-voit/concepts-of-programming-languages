@@ -7,12 +7,12 @@ version: 2
 updates:
   # Go parser dependencies.
   - package-ecosystem: "gomod"
-    directory: "/study-project/parser-go"
+    directory: "/go-parser"
     schedule:
       interval: "weekly"
 
   # JavaScript parser dependencies.
   - package-ecosystem: "npm"
-    directory: "/study-project/parser-js"
+    directory: "/js-parser"
     schedule:
       interval: "weekly"

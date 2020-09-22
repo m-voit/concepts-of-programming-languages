@@ -12,7 +12,7 @@ It was developed as part of a master's course in computer science at Rosenheim T
 The paper written in this study project is based on a parser for Boolean expressions developed in Go and JavaScript using parser combinators.
 The Boolean expression parser was then used to compare the support of functional programming concepts in the two programming languages.
 
-[Compare functional programming in Go with JavaScript](../master/study-project/paper.md)
+[Compare functional programming in Go with JavaScript](../master/paper.md)
 
 ## Setup and requirements
 
@@ -22,7 +22,7 @@ A running installation of Node.js 14.x is assumed. Other versions may work, but 
 
 ## Usage
 
-Open a terminal in the directory `./study-project/parser-js`.
+Open a terminal in the directory `./js-parser`.
 
 - Run `npm run test` to execute the tests.
 - Run `npm run test:coverage` to get a test coverage report.
