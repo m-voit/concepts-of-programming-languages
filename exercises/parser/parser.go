@@ -8,7 +8,7 @@
 
 package parser
 
-import ("github.com/m-voit/concepts-of-programming-languages/exercise-4-1/lexer")
+import ("github.com/m-voit/concepts-of-programming-languages/exercises/lexer")
 
 type node interface {
 	Eval(vars map[string]bool) bool

@@ -1,8 +1,8 @@
 package client
 
 import (
-	"github.com/m-voit/concepts-of-programming-languages/exercise-3-2/mail"
-	"github.com/m-voit/concepts-of-programming-languages/exercise-3-2/utils"
+	"github.com/m-voit/concepts-of-programming-languages/exercises/mail"
+	"github.com/m-voit/concepts-of-programming-languages/exercises/utils"
 )
 
 // Registry :

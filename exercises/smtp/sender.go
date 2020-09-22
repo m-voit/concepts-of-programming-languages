@@ -2,7 +2,7 @@ package smtp
 
 import (
 	"log"
-	"github.com/m-voit/concepts-of-programming-languages/exercise-3-2/mail"
+	"github.com/m-voit/concepts-of-programming-languages/exercises/mail"
 )
 
 // MailSenderImpl :
