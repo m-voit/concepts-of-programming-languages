@@ -102,23 +102,3 @@ export class Value {
     return vars.get(this.name);
   }
 }
-
-/**
- * Or is the logical OR Operator in an AST.
- */
-// const Or = (lhs, rhs) => vars => lhs(vars) || rhs(vars);
-
-/**
- * And is the logical AND Operator in an AST.
- */
-// const And = (lhs, rhs) => vars => lhs(vars) && rhs(vars);
-
-/**
- * Not is the NOT operator in the AST.
- */
-// const Not = ex => vars => ex(vars);
-
-/**
- * Value is a boolean variable in an AST.
- */
-// const Value = name => vars => vars.get(name);

@@ -46,7 +46,7 @@ export const parseExpression = (input) =>
  * If the parser for ("|" ^ Or)? produces nothing then return the
  * tree returned by And. Otherwise return a new OR Node containing
  * the sub-trees returned by the recursive calls. It uses expect to parse
- * the symbol "|", i. e. it actually allows for Space* ^ "|".
+ * the symbol "|", i.e. it actually allows for Space* ^ "|".
  *
  * @param {Input} input The input to be parsed.
  * @returns A tree of AST nodes.
@@ -62,7 +62,7 @@ export const parseOr = (input) =>
  * If the parser for ("&" ^ And)? produces nothing then return the
  * tree returned by Not. Otherwise return a new AND Node containing
  * the sub-trees returned by the recursive calls. It uses expect to parse
- * the symbol "&", i. e. it actually allows for Space* ^ "&".
+ * the symbol "&", i.e. it actually allows for Space* ^ "&".
  *
  * @param {Input} input The input to be parsed.
  * @returns A tree of AST nodes.

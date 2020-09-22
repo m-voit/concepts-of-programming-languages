@@ -11,7 +11,7 @@ test("ast", () => {
 
   /**
    * Table to test all combinations for A, B, C -> 2^3 = 8 combinations.
-   * Format of Table { Value for A, Value for B, Value for C, Expected Result }
+   * Format of Table: [ Value for A, Value for B, Value for C, Expected Result ]
    */
   const truthTable = [
     [false, false, false, true],
@@ -25,14 +25,14 @@ test("ast", () => {
   ];
 
   truthTable.forEach(entry => {
-    const vars = new Map();
+    const values = new Map();
 
-    vars.set("A", entry[0]);
-    vars.set("B", entry[1]);
-    vars.set("C", entry[2]);
+    values.set("A", entry[0]);
+    values.set("B", entry[1]);
+    values.set("C", entry[2]);
 
     const expected = entry[3];
-    const result = ast.evaluate(vars);
+    const result = ast.evaluate(values);
 
     expect(result).toBe(expected);
   });
