@@ -1,7 +1,7 @@
-package parser
+package boolparser
 
 import (
-	"testing"
+  "testing"
 )
 
 func TestMakeOr(t *testing.T) {

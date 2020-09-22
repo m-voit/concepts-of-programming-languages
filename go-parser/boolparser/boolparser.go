@@ -1,9 +1,10 @@
-package parser
+package boolparser
 
 import (
 	"container/list"
 
-	"github.com/m-voit/concepts-of-programming-languages/study-project/parser-go/ast"
+  "github.com/m-voit/concepts-of-programming-languages/go-parser/ast"
+  "github.com/m-voit/concepts-of-programming-languages/go-parser/parser"
 )
 
 /** parseExpression parses the following grammar:
