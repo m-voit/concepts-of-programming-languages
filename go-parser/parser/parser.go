@@ -231,16 +231,16 @@ func (Input RuneArrayInput) RemainingInput() Input {
 	return RuneArrayInput{Input.Text, Input.CurrentPosition + 1}
 }
 
-// CurrentCodePoint is necessary for RuneArrayInput to implement Input
+// CurrentCodePoint is necessary for RuneArrayInput to implement Input.
 func (Input RuneArrayInput) CurrentCodePoint() rune {
 	if Input.CurrentPosition >= len(Input.Text) {
 		return '\x00' // only happens with empty Input now?!
 	}
+
 	return Input.Text[Input.CurrentPosition]
 }
 
-// StringToInput converts a string to a RuneArrayInput so you can use parsers
-// on it.
+// StringToInput converts a string to a RuneArrayInput so you can use parsers on it.
 func StringToInput(Text string) Input {
 	return RuneArrayInput{[]rune(Text), 0}
 }
