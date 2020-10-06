@@ -9,7 +9,7 @@ It was developed as part of a master's course in computer science at Rosenheim T
 
 ## Paper
 
-The paper written in this study project is based on a parser for Boolean expressions developed in Go and JavaScript using parser combinators.
+The paper written as part of this study project is based on a parser for Boolean expressions developed in Go and JavaScript using parser combinators.
 The Boolean expression parser was then used to compare the support of functional programming concepts in the two programming languages.
 
 [Compare functional programming in Go with JavaScript](../master/paper.md)
