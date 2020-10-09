@@ -1,1 +1,3 @@
-console.error("Not implemented!");
+const { parseExpression } = require("./modules/boolparser/boolparser");
+
+exports.parseExpression = parseExpression;
