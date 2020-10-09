@@ -1,5 +1,12 @@
 {
-  "name": "js-parser",
+  "name": "@m-voit/js-parser",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/m-voit/concepts-of-programming-languages"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/m-voit"
+  },
   "version": "1.0.0",
   "description": "Boolean expression parser written in functional JavaScript.",
   "main": "main.js",
