@@ -12,13 +12,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out code.
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v1
+      - uses: actions/setup-node@v1
         with:
-          node-version: 14.x
+          node-version: 14
 
       # Cache node modules as long as os and package-lock.json do not change.
       - name: Cache node modules
@@ -33,14 +31,31 @@ jobs:
             ${{ runner.os }}-test-
             ${{ runner.os }}-
 
-      - name: Install dependencies.
+      - name: Test js parser.
         working-directory: ./js-parser
-        run: npm ci
+        run: |
+          npm ci
+          npm test
         env:
           CI: true
+          
+  publish-gpr:
+    needs: test
+    runs-on: ubuntu-latest
 
-      - name: Test parser.
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          registry-url: https://npm.pkg.github.com/
+
+      - name: Publish js parser.
         working-directory: ./js-parser
-        run: npm run test
+        run: |
+          npm ci
+          npm test
         env:
           CI: true
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
