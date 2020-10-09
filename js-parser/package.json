@@ -1,5 +1,5 @@
 {
-  "name": "@m-voit/js-parser",
+  "name": "js-parser",
   "version": "1.0.0",
   "description": "Boolean expression parser written in functional JavaScript.",
   "main": "main.js",
