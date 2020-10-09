@@ -1,5 +1,5 @@
 {
-  "name": "js-parser",
+  "name": "@m-voit/js-parser",
   "version": "1.0.0",
   "description": "Boolean expression parser written in functional JavaScript.",
   "main": "main.js",
@@ -10,7 +10,7 @@
   },
   "author": "Markus Voit",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "devDependencies": {
     "@babel/core": "^7.11.6",
     "@babel/preset-env": "^7.11.5",
