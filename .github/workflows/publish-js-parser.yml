@@ -1,0 +1,40 @@
+name: publish-js-parser
+
+on:
+  release:
+    types: [created]
+ 
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          
+      - name: Test js parser.
+        working-directory: ./js-parser
+        run: |
+          npm ci
+          npm test
+
+  publish-gpr:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Setup .npmrc file to publish to GitHub Packages.
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          registry-url: https://npm.pkg.github.com/
+          scope: "@m-voit"
+
+      - name: Publish js parser.
+        working-directory: ./js-parser
+        run: |
+          npm ci
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
