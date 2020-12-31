@@ -219,7 +219,7 @@ export const andThen = (parser, secondParser) => (input) => {
   if (firstResult.result !== null) {
     const secondResult = secondParser(firstResult.remainingInput);
 
-    if (secondResult !== null) {
+    if (secondResult.result !== null) {
       return new Result(
         new Pair(firstResult.result, secondResult.result),
         secondResult.remainingInput,

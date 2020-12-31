@@ -19,11 +19,20 @@ import {
   optional,
   orElse,
   Pair,
+  repeated,
   Result,
   stringToInput,
 } from "./parser";
 
 describe("Test parser.js", () => {
+  test("Input.currentCodePoint", () => {
+    const input = new Input("a&b", 3);
+    const result = input.currentCodePoint();
+    const expected = "\x00";
+
+    expect(result).toStrictEqual(expected);
+  });
+
   test("expectCodePoint", () => {
     let input = new Input("a&b", 0);
     let result = expectCodePoint("a")(input);
@@ -54,6 +63,14 @@ describe("Test parser.js", () => {
     input = new Input("a&b|c", 0);
     result = expectCodePoints("a&b")(input);
     expected = new Result("a&b", new Input("a&b|c", 3));
+
+    expect(result).toStrictEqual(expected);
+  });
+
+  test("repeated", () => {
+    const input = null;
+    const result = new Result([], input);
+    const expected = repeated(null)(input);
 
     expect(result).toStrictEqual(expected);
   });
@@ -105,12 +122,19 @@ describe("Test parser.js", () => {
   });
 
   test("andThen", () => {
-    let firstParser = expectSeveral(isSpaceChar, isSpaceChar);
-    let secondParser = expectSeveral(isIdentifierStartChar, isIdentifierChar);
+    const firstParser = expectSeveral(isSpaceChar, isSpaceChar);
+    const secondParser = expectSeveral(isIdentifierStartChar, isIdentifierChar);
     let input = new Input(" a&b", 0);
 
     let result = andThen(firstParser, secondParser)(input);
     let expected = new Result(new Pair(" ", "a"), new Input(" a&b", 2));
+
+    expect(result).toStrictEqual(expected);
+
+    input = new Input("<>", 0);
+
+    result = andThen(firstParser, secondParser)(input);
+    expected = new Result(null, new Input("<>", 0));
 
     expect(result).toStrictEqual(expected);
   });
