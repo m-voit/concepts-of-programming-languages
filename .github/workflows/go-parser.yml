@@ -17,12 +17,12 @@ jobs:
 
       - name: Get parser dependencies.
         working-directory: ./go-parser
-        run: go get ./... -v -t -d
+        run: go get -v -t -d ./...
 
       - name: Build parser.
         working-directory: ./go-parser
-        run: go build ./... -v
+        run: go build -v ./...
 
       - name: Test parser.
         working-directory: ./go-parser
-        run: go test ./... -v -cover
+        run: go test -v -cover ./...
