@@ -7,7 +7,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/m-voit"
   },
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A parser for Boolean expressions developed in functional JavaScript using parser combinators.",
   "main": "main.js",
   "scripts": {
