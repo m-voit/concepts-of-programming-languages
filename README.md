@@ -15,13 +15,31 @@ The Boolean expression parser was then used to compare the support of functional
 
 [Compare functional programming in Go with JavaScript](./paper.md)
 
-## Setup and requirements
+## Go parser requirements and setup
+
+A running installation of Go 1.15 is assumed. Other versions may work, but were not tested.
+
+Open a terminal in the directory `./go-parser`.
+
+- Run `go get -t -d ./...` to get dependencies of the parser.
+- Run `go build ./...` to build the parser.
+
+## Go parser usage
+
+Open a terminal in the directory `./js-parser`.
+
+- Run `go test -v ./...` to execute the tests.
+- Run `go test -v -cover ./...` to get a test coverage report.
+
+## JavaScript parser requirements and setup
 
 A running installation of Node.js 14.x is assumed. Other versions may work, but were not tested.
 
-- Run `npm install` to install dependencies required for running the tests.
+Open a terminal in the directory `./js-parser`.
 
-## Usage
+- Run `npm install` to get dependencies of the parser.
+
+## JavaScript parser usage
 
 Open a terminal in the directory `./js-parser`.
 
