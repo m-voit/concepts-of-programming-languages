@@ -6,13 +6,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - name: Check out code.
+        uses: actions/checkout@v2
+
+      - name: Setup Node 14.x
+        uses: actions/setup-node@v1
         with:
           node-version: 14
 
-      # Cache node modules as long as os and package-lock.json do not change.
-      - name: Cache node modules.
+      - name: Cache node modules as long as os and package-lock.json do not change.
         uses: actions/cache@v2
         env:
           cache-name: cache-node-modules
@@ -28,5 +30,4 @@ jobs:
         working-directory: ./js-parser
         run: |
           npm ci
-          npm test
-  
+          npm test:coverage
