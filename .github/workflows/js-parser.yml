@@ -29,5 +29,5 @@ jobs:
       - name: Test js parser.
         working-directory: ./js-parser
         run: |
-          npm ci
-          npm test:coverage
+          npm run ci
+          npm run test:coverage
