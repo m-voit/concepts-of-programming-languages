@@ -14,18 +14,6 @@ jobs:
         with:
           node-version: 14
 
-      - name: Cache node modules as long as os and package-lock.json do not change.
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-test-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-test-${{ env.cache-name }}-
-            ${{ runner.os }}-test-
-            ${{ runner.os }}-
-
       - name: Test js parser.
         working-directory: ./js-parser
         run: |
