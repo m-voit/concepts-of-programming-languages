@@ -359,7 +359,7 @@ const evaluate = (vars, node) => case (node) {
 ```
 
 In Go, by contrast, there is no support for pattern matching and there are no plans to introduce it to the language.
-But it even in absent of pattern matching in Go, something similar can be achieved by using interfaces and switch statements [eli01].
+But even in absent of pattern matching in Go, something similar can be achieved by using interfaces and switch statements [eli01].
 
 ## Summary
 
